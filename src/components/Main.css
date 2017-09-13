@@ -1,0 +1,50 @@
+.Main {
+    text-align: center;
+}
+  
+.Main-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+  
+.Main-content {
+    font-size: large;
+}
+
+.custom {
+  display: flex;
+}
+
+.custom ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 1;
+}
+
+.custom ul li {
+  margin: 0 10px 10px 0;
+  padding: 18px;
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 1px grey;
+  font-size: 3em;  
+}
+
+.custom ul li:active {
+  box-shadow: 0 0 5px grey;
+}
+
+.custom ul li i {
+  position: relative;
+  top: -350%;
+  left: -70%;
+}
+
+#c {
+  border-top: 0.1px solid grey;
+  border-right: 0.1px solid grey;
+  border-bottom: 0.1px solid grey;
+}
