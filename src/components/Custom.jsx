@@ -1,18 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { fabric } from 'fabric';
-import { Title, Textfield, Button, Drawer, DrawerHeader, Icon, DrawerContent, GridList, Tile, TilePrimary, TileContent } from 'react-mdc-web/lib';
+import 'fabric-customise-controls';
+import { Body2, Title, Textfield, Button, Drawer, DrawerHeader, Icon, DrawerContent, GridList, Tile, TilePrimary, TileContent } from 'react-mdc-web/lib';
 import '../material+icons.css';
 import './Custom.css';
 import img1 from '../imgs/1.jpeg';
 import img2 from '../imgs/2.jpeg';
 import img3 from '../imgs/3.jpeg';
+import del from '../imgs/control/handle_del.png';
+import rotate from '../imgs/control/handle_rotate.png';
+import zoom from '../imgs/control/handle_zoom.png';
 
 const style = {
     drawerHeader: {
         overflow: 'scroll'
     }
 };
+
+fabric.Object.prototype.customiseCornerIcons({
+    settings: {
+        borderColor: 'black',
+        cornerSize: 50,
+        cornerShape: 'rect',
+        cornerPadding: 10
+    },
+    tl: {
+        icon: del
+    },
+    tr: {
+        icon: rotate
+    },
+    br: {
+        icon: zoom
+    }
+});
+
+fabric.Canvas.prototype.customiseControls({
+    tl: {
+        cursor: 'pointer'
+    },
+    tr: {
+        action: 'rotate',
+        cursor: 'pointer'
+    },
+    br: {
+        action: 'scale'
+    }
+});
 
 class Custom extends React.Component {
 
@@ -31,13 +66,19 @@ class Custom extends React.Component {
 
         this.addText = this.addText.bind(this);
         this.addImage = this.addImage.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
 
     componentDidMount() {
-        const canvas = new fabric.Canvas('c', {
-            width: window.innerWidth - 70,
-            height: 400
-        });
+        const
+            ruler = document.querySelector('#ruler'), 
+            canvas = new fabric.Canvas('c', {
+                width: window.innerWidth - 70,
+                height: 400
+            });
+
+        ruler.style.width = canvas.width + 'px';
+        ruler.style.height = '398px';
 
         this.setState({
             canvas: canvas
@@ -56,7 +97,8 @@ class Custom extends React.Component {
         const t = new fabric.Text('输入文字', {
             left: 100,
             top: 100,
-            fontSize: 30
+            fontSize: 30,
+            hasBorders: false
         });
 
         canvas.add(t);
@@ -74,10 +116,23 @@ class Custom extends React.Component {
         const { images, canvas } = this.state;
 
         for (let image of images) {
-            fabric.Image.fromURL(image.src, function (img) {
+            fabric.Image.fromURL(image.src, (img) => {
                 img.scale(0.3);
-                canvas.add(img);
-                canvas.renderAll();
+                img.hasBorders = false;
+
+                img.filters.push(new fabric.Image.filters.Grayscale());
+                img.filters.push(new fabric.Image.filters.RemoveWhite({
+                    threshold: 90,
+                    distance: 40
+                }));                
+
+                img.filters.push(new fabric.Image.filters.Multiply({
+                    color: 'black'
+                }));
+
+                console.log(img);
+
+                img.applyFilters(canvas.add(img).renderAll.bind(canvas));
             });
         }
 
@@ -105,8 +160,31 @@ class Custom extends React.Component {
         console.log(images);
 
         this.setState({
-            gallery: gallery,
             images: images
+        });
+    }
+
+    uploadImage() {
+        const
+            files = ReactDOM.findDOMNode(this.refs.file).files,
+            file = files[0],
+            reader = new FileReader(),
+            { gallery } = this.state,
+            img = {
+                id: gallery.length + 1,
+                src: null,
+                isSelected: false
+            };;
+
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            img.src = reader.result;
+        }
+
+        gallery.push(img);
+
+        this.setState({
+            gallery: gallery
         });
     }
 
@@ -142,7 +220,10 @@ class Custom extends React.Component {
 
         return (
             <div className="custom">
-                <canvas id="c">您的浏览器不支持 canvas</canvas>
+                <div id="canvas_container">
+                    <div id='ruler'>刻度线框</div>
+                    <canvas id="c">您的浏览器不支持 canvas</canvas>
+                </div>
                 <ul>
                     {
                         ctrls.map((key) => (
@@ -183,7 +264,7 @@ class Custom extends React.Component {
                         <Title>图片</Title>
                         <hr />
                         <DrawerContent>
-                            <GridList ref="myImageList">
+                            <GridList id="gallery" ref="myImageList">
                                 {
                                     gallery.map((key) => (
                                         <Tile
@@ -199,7 +280,10 @@ class Custom extends React.Component {
                                     ))
                                 }
                             </GridList>
-                            <Button raised>导入图片</Button>
+                            <span className="uploadImage">
+                                <Body2>上传图片</Body2>
+                                <input type="file" ref="file" onChange={this.uploadImage} />
+                            </span>
                             <Button raised onClick={this.addImage}>添加图片</Button>
                         </DrawerContent>
                     </DrawerHeader>

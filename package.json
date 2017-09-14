@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "fabric": "^1.7.18",
+    "fabric-customise-controls": "^0.3.5",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-mdc-web": "^0.14.0",

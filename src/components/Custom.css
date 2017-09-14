@@ -29,8 +29,40 @@
     top: -350%;
     left: -70%;
 }
+
+#ruler {
+    position: absolute;
+    margin: 1px 4px;
+    border: 1px solid red;
+}
   
 #c {
     margin: 0 5px;
     border: 0.1px solid grey;
+}
+
+.uploadImage {
+    margin: 0 5px;
+    padding: 0 6px;
+    position: relative;
+    display: inline-block;
+    color: black;
+    box-shadow: 0 0 2px grey;
+}
+
+.uploadImage:hover {
+    background: #eee;
+}
+
+.uploadImage p {
+    margin: 7px; 
+}
+
+input[type="file"] {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    cursor: pointer;      
 }
