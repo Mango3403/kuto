@@ -9,9 +9,6 @@ class Main extends Component {
 				<div className="Main-header">
 					<h2>定制平台</h2>
 				</div>
-				<p className="Main-main">
-					画布区域
-        		</p>
 				<Custom />
 			</div>
 		);

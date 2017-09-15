@@ -1,0 +1,27 @@
+.uploadImage {
+    margin: 0 5px;
+    padding: 0 6px;
+    position: relative;
+    display: inline-block;
+    color: white;
+    font-size: 14px;
+    background: #3195e0;
+    border-radius: 5px;
+}
+
+.uploadImage:hover {
+    background: #2185d0;
+}
+
+.uploadImage p {
+    margin: 7px; 
+}
+
+input[type="file"] {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    cursor: pointer;      
+}
