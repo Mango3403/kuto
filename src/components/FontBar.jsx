@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { Sidebar, Menu, Icon, Button, Accordion, Input } from 'semantic-ui-react';
+import { Card, Sidebar, Icon, Button, Accordion, Input } from 'semantic-ui-react';
 import { fabric } from 'fabric';
+
+const font = {
+    // 银色
+    color: '#D6D8EA',
+    fontSize: 30
+};
 
 class FontBar extends Component {
 
@@ -31,12 +37,13 @@ class FontBar extends Component {
             };
 
         const t = new fabric.Text('输入文字', {
-            left: 100,
-            top: 100,
-            fontSize: 30,
-            fill: '#D6D8EA',
-            hasBorders: false
+            fontSize: font.fontSize,
+            fill: font.color,
+            lockRotation: true,
+            hasBorders: true
         });
+
+        canvas.viewportCenterObject(t);
 
         canvas.add(t);
 
@@ -53,7 +60,7 @@ class FontBar extends Component {
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='font' />
-                <Sidebar as={Menu} animation='overlay' direction='bottom' visible={visible} inverted>
+                <Sidebar as={Card} animation='overlay' direction='bottom' visible={visible}>
                     <Button primary onClick={this.addText}>添加文字</Button>
                     {
                         text.map(i => (
@@ -74,7 +81,7 @@ class FontBar extends Component {
                                     />
                                 </Accordion.Title>
                                 <Accordion.Content>
-                                    <p style={{color: 'white'}}>字体\斜体\粗体</p>
+                                    <p>字体\斜体\粗体</p>
                                 </Accordion.Content>
                             </Accordion>
                         ))

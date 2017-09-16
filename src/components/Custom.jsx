@@ -28,6 +28,7 @@ fabric.Object.prototype.customiseCornerIcons({
 
 fabric.Canvas.prototype.customiseControls({
     tl: {
+        action: 'remove',
         cursor: 'pointer'
     },
     tr: {
@@ -35,14 +36,14 @@ fabric.Canvas.prototype.customiseControls({
         cursor: 'pointer'
     },
     br: {
-        action: 'scale'
+        action: 'scale',
+        cursor: 'pointer'
     }
 });
 
 class Custom extends React.Component {
 
     constructor() {
-
         super();
 
         this.state = {
@@ -54,7 +55,7 @@ class Custom extends React.Component {
         const
             ruler = document.querySelector('#ruler'),
             canvas = new fabric.Canvas('c', {
-                width: window.innerWidth - 100,
+                width: window.innerWidth - 10,
                 height: 400
             });
 

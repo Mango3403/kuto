@@ -30,19 +30,23 @@ class Gallery extends Component {
         const { images, gallery } = this.state;
         const image = document.querySelectorAll('img').item(id);
 
+        console.log(gallery);
+
         gallery[id].isSelected = !isSelected;
 
         if (isSelected) {
             image.style.boxShadow = '';
             images.pop();
         } else {
-            image.style.boxShadow = '0 0 10px red';
+            image.style.boxShadow = '0 0 10px #3195e0';
             images.push(gallery[id]);
         }
 
         this.setState({
             images: images
         });
+
+        console.log(images);        
     }
 
     render() {

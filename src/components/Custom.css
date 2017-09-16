@@ -1,14 +1,17 @@
 .custom {
-    margin: 10px 0;
-    display: flex;
+  margin: 15px 0;
+  display: inline-block;
 }
 
 #ruler {
-    position: absolute;
-    margin: 1px;
-    border: 1px solid red;
+  position: absolute;
+  margin: 1px;
 }
-  
+
 #c {
-    border: 0.1px solid grey;
+  width: 100%;
+  height: 600px;
+  user-select: none;
+  box-shadow: 0 0 2px grey;
+  border-radius: 5px;
 }

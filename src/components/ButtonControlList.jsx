@@ -3,6 +3,16 @@ import { Menu } from 'semantic-ui-react'
 import GalleryBar from './GalleryBar';
 import FontBar from './FontBar';
 import Remove from './Remove';
+import Background from './Background';
+
+const styles = {
+	menu: {
+		position: 'absolute',
+		right: '10px',
+		top: '150px',
+		zIndex: '100'
+	}
+};
 
 class ButtonControlList extends Component {
 
@@ -27,7 +37,7 @@ class ButtonControlList extends Component {
 		const { activeItem, canvas } = this.state
 
 		return (
-			<Menu icon vertical>
+			<Menu icon vertical style={styles.menu}>
 				<Menu.Item name='font' active={activeItem === 'font'} onClick={this.handleItemClick}>
 					<FontBar canvas={canvas} />
 				</Menu.Item>
@@ -38,6 +48,10 @@ class ButtonControlList extends Component {
 
 				<Menu.Item name='trash' active={activeItem === 'trash'} onClick={this.handleItemClick}>
 					<Remove canvas={canvas} />
+				</Menu.Item>
+
+				<Menu.Item name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
+					<Background canvas={canvas} />
 				</Menu.Item>
 			</Menu>
 		)

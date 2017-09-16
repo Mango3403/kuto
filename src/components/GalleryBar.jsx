@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
-import { Button, Sidebar, Menu, Icon } from 'semantic-ui-react';
+import { Card, Button, Sidebar, Icon } from 'semantic-ui-react';
 import { fabric } from 'fabric';
 import Gallery from './Gallery';
 import './GalleryBar.css';
@@ -9,6 +9,10 @@ import img1 from '../imgs/1.jpeg';
 import img2 from '../imgs/2.jpeg';
 import img3 from '../imgs/3.jpeg';
 
+const colors = {
+    silver: '#D6D8EA'
+};
+
 class GalleryBar extends Component {
     constructor() {
         super();
@@ -16,10 +20,10 @@ class GalleryBar extends Component {
         this.state = {
             visible: false,
             gallery: [
-                {id: 0, src: img0, isSelected: false},
-                {id: 1, src: img1, isSelected: false},
-                {id: 2, src: img2, isSelected: false},
-                {id: 3, src: img3, isSelected: false}
+                { id: 0, src: img0, isSelected: false },
+                { id: 1, src: img1, isSelected: false },
+                { id: 2, src: img2, isSelected: false },
+                { id: 3, src: img3, isSelected: false }
             ],
             images: [],
             canvas: {}
@@ -36,21 +40,23 @@ class GalleryBar extends Component {
     addImage() {
         const { images, canvas } = this.state;
 
-        console.log(images);
-
         for (let image of images) {
             fabric.Image.fromURL(image.src, (img) => {
+
                 img.scale(0.3);
+
+                canvas.viewportCenterObject(img);
+                img.lockRotation = true;
                 img.hasBorders = false;
 
                 img.filters.push(new fabric.Image.filters.Grayscale());
                 img.filters.push(new fabric.Image.filters.RemoveWhite({
                     threshold: 90,
                     distance: 40
-                }));                
+                }));
 
                 img.filters.push(new fabric.Image.filters.Multiply({
-                    color: '#D6D8EA'
+                    color: colors.silver
                 }));
 
                 img.applyFilters(canvas.add(img).renderAll.bind(canvas));
@@ -69,7 +75,7 @@ class GalleryBar extends Component {
             reader = new FileReader(),
             { gallery } = this.state,
             img = {
-                id: gallery.length + 1,
+                id: gallery.length,
                 src: null,
                 isSelected: false
             };;
@@ -94,7 +100,7 @@ class GalleryBar extends Component {
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='picture' />
-                <Sidebar as={Menu} animation='push' width='thin' direction='bottom' visible={visible} vertical inverted>
+                <Sidebar as={Card} animation='push' width='thin' direction='bottom' visible={visible}>
                     <Button primary onClick={this.addImage}>添加选中图片</Button>
                     <span className="uploadImage">
                         <p>上传图片</p>

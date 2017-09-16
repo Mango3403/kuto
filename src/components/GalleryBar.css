@@ -1,12 +1,12 @@
 .uploadImage {
-    margin: 0 5px;
     padding: 0 6px;
+    width: 100%;
     position: relative;
     display: inline-block;
     color: white;
     font-size: 14px;
     background: #3195e0;
-    border-radius: 5px;
+    border-radius: 1px;
 }
 
 .uploadImage:hover {
