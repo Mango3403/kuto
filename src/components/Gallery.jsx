@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Image } from 'semantic-ui-react'
+import { Image, Popup } from 'semantic-ui-react';
+import { fabric } from 'fabric';
 import './Gallery.css';
 
-const style = {
-    grid: {
-        height: '200px'
-    }
+const timeoutLength = 2500;
+
+const colors = {
+    silver: '#D6D8EA'
 };
 
 class Gallery extends Component {
@@ -14,60 +15,127 @@ class Gallery extends Component {
         super(props);
 
         this.state = {
+            isTipsOpen: false,
             gallery: [],
-            images: []
+            // images: [],
+            canvas: null
         }
+
+        this.addImage = this.addImage.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
             gallery: nextProps.gallery,
-            images: nextProps.images
+            // images: nextProps.images,
+            canvas: nextProps.canvas
         });
     }
 
-    selectImage({ id, isSelected }) {
-        const { images, gallery } = this.state;
-        const image = document.querySelectorAll('img').item(id);
+    handleOpen = () => {
+        this.setState({ isTipsOpen: true })
 
-        console.log(gallery);
+        this.timeout = setTimeout(() => {
+            this.setState({ isTipsOpen: false })
+        }, timeoutLength)
+    }
 
-        gallery[id].isSelected = !isSelected;
+    handleClose = () => {
+        this.setState({ isOpen: false })
+        clearTimeout(this.timeout)
+    }
 
-        if (isSelected) {
-            image.style.boxShadow = '';
-            images.pop();
-        } else {
-            image.style.boxShadow = '0 0 10px #3195e0';
-            images.push(gallery[id]);
-        }
+    addImage(e) {
+        const { canvas } = this.state;
 
-        this.setState({
-            images: images
+        fabric.Image.fromURL(e.target.src, img => {
+
+            img.scale(0.3);
+
+            canvas.viewportCenterObject(img);
+            img.lockRotation = false;
+            img.hasBorders = true;
+            img.lockUniScaling = true;
+            img.centeredScaling = true;
+
+            img.setControlsVisibility({
+                mtr: false
+            });
+
+            img.filters.push(new fabric.Image.filters.Grayscale());
+            img.filters.push(new fabric.Image.filters.RemoveWhite({
+                threshold: 90,
+                distance: 40
+            }));
+
+            img.filters.push(new fabric.Image.filters.Multiply({
+                color: colors.silver
+            }));
+
+            img.applyFilters(canvas.add(img).renderAll.bind(canvas));
         });
 
-        console.log(images);        
+        // this.setState({
+        //     // images: [],
+        //     // visible: !visible
+        // });
     }
+
+    // selectImage({ id, isSelected }) {
+    //     const { images, gallery } = this.state;
+    //     const image = document.querySelectorAll('img').item(id);
+
+    //     gallery[id].isSelected = !isSelected;
+
+    //     if (isSelected) {
+    //         image.style.boxShadow = '';
+    //         images.pop();
+    //     } else {
+    //         image.style.boxShadow = '0 0 10px #3195e0';
+    //         images.push(gallery[id]);
+    //     }
+
+    //     this.setState({
+    //         images: images
+    //     });
+    // }
 
     render() {
         const { gallery } = this.state;
 
         return (
-            <Grid columns={2} divided style={style.grid}>
-                <Grid.Row stretched>
-                    {
-                        gallery.map(i => (
-                            <Grid.Column
-                                key={i.id}
-                            >
-                                <Image src={i.src} onClick={() => {this.selectImage(i)}} />
-                            </Grid.Column>
-                        ))
+            <div style={{ margin: '5px', height: '170px', width: '100vw', overflow: 'auto' }}>
+                <Popup
+                    trigger={
+                        <Image.Group style={{ display: 'flex' }}>
+                            {
+                                gallery.map(i => (
+                                    <Image key={i.id} onDoubleClick={this.addImage} src={i.src} />
+                                ))
+                            }
+                        </Image.Group>
                     }
-                </Grid.Row>
-            </Grid>
+                    content='双击图片加入画板'
+                    hideOnScroll
+                />
+
+            </div>
         );
     }
 }
+
+/* <Grid columns={2} divided style={style.grid}>
+<Grid.Row stretched>
+    {
+        gallery.map(i => (
+            <Grid.Column
+                key={i.id}
+            >
+                <Image onDoubleClick={this.addImage} src={i.src} />
+            </Grid.Column>
+        ))
+    }
+</Grid.Row>
+</Grid> */
 
 export default Gallery;

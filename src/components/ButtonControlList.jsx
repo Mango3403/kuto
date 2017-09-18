@@ -11,7 +11,8 @@ const styles = {
 		right: '10px',
 		top: '150px',
 		zIndex: '100'
-	}
+	},
+	menuItem: { padding: '10px', fontSize: '2em' }
 };
 
 class ButtonControlList extends Component {
@@ -23,13 +24,12 @@ class ButtonControlList extends Component {
 			activeItem: '',
 			canvas: props.canvas
 		}
-
 	}
 
 	componentWillReceiveProps(nextProps) {
-        this.setState({ canvas: nextProps.canvas})
+		this.setState({ canvas: nextProps.canvas })
 	}
-	
+
 
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -38,19 +38,19 @@ class ButtonControlList extends Component {
 
 		return (
 			<Menu icon vertical style={styles.menu}>
-				<Menu.Item name='font' active={activeItem === 'font'} onClick={this.handleItemClick}>
+				<Menu.Item style={styles.menuItem} name='font' active={activeItem === 'font'} onClick={this.handleItemClick}>
 					<FontBar canvas={canvas} />
 				</Menu.Item>
 
-				<Menu.Item name='picture' active={activeItem === 'picture'} onClick={this.handleItemClick}>
+				<Menu.Item style={styles.menuItem} name='picture' active={activeItem === 'picture'} onClick={this.handleItemClick}>
 					<GalleryBar canvas={canvas} />
 				</Menu.Item>
 
-				<Menu.Item name='trash' active={activeItem === 'trash'} onClick={this.handleItemClick}>
+				<Menu.Item style={styles.menuItem} name='trash' active={activeItem === 'trash'} onClick={this.handleItemClick}>
 					<Remove canvas={canvas} />
 				</Menu.Item>
 
-				<Menu.Item name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
+				<Menu.Item style={styles.menuItem} name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
 					<Background canvas={canvas} />
 				</Menu.Item>
 			</Menu>

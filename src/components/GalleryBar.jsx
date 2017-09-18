@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
-import { Card, Button, Sidebar, Icon } from 'semantic-ui-react';
-import { fabric } from 'fabric';
+import { Card, Sidebar, Icon } from 'semantic-ui-react';
+// import { fabric } from 'fabric';
 import Gallery from './Gallery';
 import './GalleryBar.css';
 import img0 from '../imgs/0.jpeg';
@@ -9,9 +9,9 @@ import img1 from '../imgs/1.jpeg';
 import img2 from '../imgs/2.jpeg';
 import img3 from '../imgs/3.jpeg';
 
-const colors = {
-    silver: '#D6D8EA'
-};
+// const colors = {
+//     silver: '#D6D8EA'
+// };
 
 class GalleryBar extends Component {
     constructor() {
@@ -20,16 +20,16 @@ class GalleryBar extends Component {
         this.state = {
             visible: false,
             gallery: [
-                { id: 0, src: img0, isSelected: false },
-                { id: 1, src: img1, isSelected: false },
-                { id: 2, src: img2, isSelected: false },
-                { id: 3, src: img3, isSelected: false }
+                { id: 0, src: img0 },
+                { id: 1, src: img1 },
+                { id: 2, src: img2 },
+                { id: 3, src: img3 }
             ],
-            images: [],
-            canvas: {}
+            // images: [],
+            canvas: null
         }
 
-        this.addImage = this.addImage.bind(this);
+        // this.addImage = this.addImage.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
     }
 
@@ -37,36 +37,37 @@ class GalleryBar extends Component {
         this.setState({ canvas: nextProps.canvas })
     }
 
-    addImage() {
-        const { images, canvas } = this.state;
+    // addImage() {
+    //     const { images, canvas, visible } = this.state;
 
-        for (let image of images) {
-            fabric.Image.fromURL(image.src, (img) => {
+    //     for (let image of images) {
+    //         fabric.Image.fromURL(image.src, (img) => {
 
-                img.scale(0.3);
+    //             img.scale(0.3);
 
-                canvas.viewportCenterObject(img);
-                img.lockRotation = true;
-                img.hasBorders = false;
+    //             canvas.viewportCenterObject(img);
+    //             img.lockRotation = true;
+    //             img.hasBorders = false;
 
-                img.filters.push(new fabric.Image.filters.Grayscale());
-                img.filters.push(new fabric.Image.filters.RemoveWhite({
-                    threshold: 90,
-                    distance: 40
-                }));
+    //             img.filters.push(new fabric.Image.filters.Grayscale());
+    //             img.filters.push(new fabric.Image.filters.RemoveWhite({
+    //                 threshold: 90,
+    //                 distance: 40
+    //             }));
 
-                img.filters.push(new fabric.Image.filters.Multiply({
-                    color: colors.silver
-                }));
+    //             img.filters.push(new fabric.Image.filters.Multiply({
+    //                 color: colors.silver
+    //             }));
 
-                img.applyFilters(canvas.add(img).renderAll.bind(canvas));
-            });
-        }
+    //             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
+    //         });
+    //     }
 
-        this.setState({
-            images: []
-        });
-    }
+    //     this.setState({
+    //         images: [],
+    //         visible: !visible
+    //     });
+    // }
 
     uploadImage() {
         const
@@ -76,9 +77,8 @@ class GalleryBar extends Component {
             { gallery } = this.state,
             img = {
                 id: gallery.length,
-                src: null,
-                isSelected: false
-            };;
+                src: null
+            };
 
         reader.readAsDataURL(file);
         reader.onload = (event) => {
@@ -95,18 +95,18 @@ class GalleryBar extends Component {
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     render() {
-        const { visible, gallery, images } = this.state;
+        const { visible, gallery, canvas } = this.state;
 
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='picture' />
                 <Sidebar as={Card} animation='push' width='thin' direction='bottom' visible={visible}>
-                    <Button primary onClick={this.addImage}>添加选中图片</Button>
+                    {/* <Button primary onDoubleClick={this.addImage}>添加选中图片</Button> */}
                     <span className="uploadImage">
                         <p>上传图片</p>
                         <input type="file" ref="file" onChange={this.uploadImage} />
                     </span>
-                    <Gallery gallery={gallery} images={images} />
+                    <Gallery gallery={gallery} canvas={canvas} />
                 </Sidebar>
             </div>
         )

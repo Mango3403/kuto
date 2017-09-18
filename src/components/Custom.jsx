@@ -2,7 +2,6 @@ import React from 'react';
 import { fabric } from 'fabric';
 import 'fabric-customise-controls';
 import ButtonControlList from './ButtonControlList';
-import '../material+icons.css';
 import './Custom.css';
 import del from '../imgs/control/handle_del.png';
 import rotate from '../imgs/control/handle_rotate.png';

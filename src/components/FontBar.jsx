@@ -39,8 +39,14 @@ class FontBar extends Component {
         const t = new fabric.Text('输入文字', {
             fontSize: font.fontSize,
             fill: font.color,
-            lockRotation: true,
-            hasBorders: true
+            lockRotation: false,
+            hasBorders: true,
+            lockUniScaling: true,
+            centeredScaling: true
+        });
+
+        t.setControlsVisibility({
+            mtr: false
         });
 
         canvas.viewportCenterObject(t);
