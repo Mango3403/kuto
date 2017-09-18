@@ -3,11 +3,13 @@ import { Image, Popup } from 'semantic-ui-react';
 import { fabric } from 'fabric';
 import './Gallery.css';
 
-const timeoutLength = 2500;
+const
+    timeoutLength = 2500,
+    colors = {
+        silver: '#D6D8EA'
+    };
 
-const colors = {
-    silver: '#D6D8EA'
-};
+let clickTimer = null;
 
 class Gallery extends Component {
 
@@ -16,9 +18,10 @@ class Gallery extends Component {
 
         this.state = {
             isTipsOpen: false,
+            tapedTwice: false,
             gallery: [],
             // images: [],
-            canvas: null
+            canvas: null,
         }
 
         this.addImage = this.addImage.bind(this);
@@ -43,6 +46,32 @@ class Gallery extends Component {
     handleClose = () => {
         this.setState({ isOpen: false })
         clearTimeout(this.timeout)
+    }
+
+    touchStart = (e) => {
+        if (clickTimer == null) {
+            clickTimer = setTimeout(function () {
+                clickTimer = null;
+            }, 500);
+        } else {
+            clearTimeout(clickTimer);
+            clickTimer = null;
+            this.addImage(e);
+        }
+    }
+
+    dblTapHandler = (e) => {
+        let tapedTwice = false;
+
+        if (!tapedTwice) {
+            tapedTwice = true;
+            setTimeout(function () { tapedTwice = false; }, 300);
+            return false;
+        }
+        e.preventDefault();
+        //action on double tap goes below
+        // alert('You tapped me Twice !!!');
+        this.addImage();
     }
 
     addImage(e) {
@@ -110,7 +139,7 @@ class Gallery extends Component {
                         <Image.Group style={{ display: 'flex' }}>
                             {
                                 gallery.map(i => (
-                                    <Image key={i.id} onDoubleClick={this.addImage} src={i.src} />
+                                    <Image key={i.id} onDoubleClick={this.addImage} onTouchStart={this.touchStart} src={i.src} />
                                 ))
                             }
                         </Image.Group>

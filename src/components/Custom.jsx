@@ -55,11 +55,11 @@ class Custom extends React.Component {
             ruler = document.querySelector('#ruler'),
             canvas = new fabric.Canvas('c', {
                 width: window.innerWidth - 10,
-                height: 400
+                height: 500
             });
 
         ruler.style.width = canvas.width + 'px';
-        ruler.style.height = '400px';
+        ruler.style.height = canvas.height;
 
         this.setState({
             canvas: canvas
@@ -76,7 +76,9 @@ class Custom extends React.Component {
         return (
             <div className="custom">
                 <div id="canvas_container">
-                    <div id='ruler'>刻度线框</div>
+                    <div id='ruler'>
+                        <h1>定制图案</h1>
+                    </div>
                     <canvas id="c">您的浏览器不支持 canvas</canvas>
                 </div>
                 <ButtonControlList canvas={canvas} />

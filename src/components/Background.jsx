@@ -38,8 +38,16 @@ class Background extends Component {
                 <Sidebar as={Card} animation='overlay' direction='bottom' visible={visible}>
                     <Message>
                         <Message.Header>
-                            添加背景图
+                            画布设置
                         </Message.Header>
+                        <label htmlFor="">背景色: </label>
+                        <input
+                            type="color"
+                            onChange={({ target: { value } }) => {
+                                canvas.backgroundColor = value;
+                                canvas.renderAll();
+                            }}
+                        />
                         <Image.Group size='tiny'>
                             {
                                 background.map(i => (
@@ -59,18 +67,6 @@ class Background extends Component {
                                 ))
                             }
                         </Image.Group>
-                    </Message>
-                    <Message>
-                        <Message.Header>
-                            设置背景色
-                        </Message.Header>
-                        <input
-                            type="color"
-                            onChange={({ target: { value } }) => {
-                                canvas.backgroundColor = value;
-                                canvas.renderAll();
-                            }}
-                        />
                     </Message>
                 </Sidebar>
             </div>

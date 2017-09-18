@@ -4,8 +4,8 @@
   
 .Main-header {
     background-color: #222;
-    height: 130px;
-    padding: 20px;
+    height: 0;
+    padding: 0;
     color: white;
 }
   
