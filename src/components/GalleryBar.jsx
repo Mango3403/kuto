@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
-import { Card, Sidebar, Icon } from 'semantic-ui-react';
+// import ReactDOM from 'react-dom';
+import { Message, Sidebar, Icon } from 'semantic-ui-react';
 // import { fabric } from 'fabric';
 import Gallery from './Gallery';
-import './GalleryBar.css';
 import img0 from '../imgs/0.jpeg';
 import img1 from '../imgs/1.jpeg';
 import img2 from '../imgs/2.jpeg';
@@ -12,6 +11,12 @@ import img3 from '../imgs/3.jpeg';
 // const colors = {
 //     silver: '#D6D8EA'
 // };
+
+const styles = {
+    sideBar: {
+        fontSize: '0.5em'
+    }
+};
 
 class GalleryBar extends Component {
     constructor() {
@@ -30,7 +35,7 @@ class GalleryBar extends Component {
         }
 
         // this.addImage = this.addImage.bind(this);
-        this.uploadImage = this.uploadImage.bind(this);
+        // this.uploadImage = this.uploadImage.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,29 +74,6 @@ class GalleryBar extends Component {
     //     });
     // }
 
-    uploadImage() {
-        const
-            files = ReactDOM.findDOMNode(this.refs.file).files,
-            file = files[0],
-            reader = new FileReader(),
-            { gallery } = this.state,
-            img = {
-                id: gallery.length,
-                src: null
-            };
-
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-            img.src = reader.result;
-        }
-
-        gallery.push(img);
-
-        this.setState({
-            gallery: gallery
-        });
-    }
-
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     render() {
@@ -100,12 +82,10 @@ class GalleryBar extends Component {
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='picture' />
-                <Sidebar as={Card} animation='push' width='thin' direction='bottom' visible={visible}>
+                <Sidebar style={styles.sideBar} as={Message} animation='push' width='thin' direction='bottom' visible={visible}>
                     {/* <Button primary onDoubleClick={this.addImage}>添加选中图片</Button> */}
-                    <span className="uploadImage">
-                        <p>上传图片</p>
-                        <input type="file" ref="file" onChange={this.uploadImage} />
-                    </span>
+                    <Icon onClick={this.toggleVisibility} name='close' />
+                    <br />
                     <Gallery gallery={gallery} canvas={canvas} />
                 </Sidebar>
             </div>

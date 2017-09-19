@@ -1,56 +1,57 @@
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
+import { Confirm, Icon } from 'semantic-ui-react';
 
 class Remove extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
-            canvas: {},
+            open: false,
+            canvas: null,
             text: []
         }
+
+        this.clear = this.clear.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ 
+        this.setState({
             canvas: nextProps.canvas,
             text: nextProps.text
-        })
+        });
     }
 
-    remove() {
-        const { text, canvas } = this.state;
+    show = () => this.setState({ open: true })
+    handleConfirm = () => {this.clear(); this.setState({ open: false }); }
+    handleCancel = () => this.setState({ open: false })
 
-        console.log(text);        
+    close = () => this.setState({ open: false })
 
-        if (canvas.getActiveObject()) {
-            console.log(canvas.getActiveObject());
-            
-            // // 判断选中对象类型，删除数据再删除对象
-            // switch (canvas.getActiveObject().get('type')) {
-            //     case 'text':
-            //         text.pop();
-            //         this.setState({
-            //             text: text
-            //         });
-            //         break;
+    clear() {
+        const { canvas } = this.state;
 
-            //     default:
-            //         break;
-            // }
-            canvas.remove(canvas.getActiveObject());
-        }
+        canvas.clear();
+
+        this.setState({
+            text: []
+        });
     }
 
     render() {
+        const { open } = this.state;
+
         return (
-            <Icon name='trash' onClick={() => {this.remove()}} />
+            <div>
+                <Icon name='trash' onClick={this.show} />
+                <Confirm
+                    open={open}
+                    content='确定要清空画布吗?'
+                    onCancel={this.handleCancel}
+                    onConfirm={this.handleConfirm}
+                />
+            </div>
         );
     }
-}
-
-Remove.defaultProps = {
-    canvas: {}
 }
 
 export default Remove;

@@ -6,13 +6,14 @@ import './Custom.css';
 import del from '../imgs/control/handle_del.png';
 import rotate from '../imgs/control/handle_rotate.png';
 import zoom from '../imgs/control/handle_zoom.png';
+import change from '../imgs/control/handle_change.png';
 
 fabric.Object.prototype.customiseCornerIcons({
     settings: {
         borderColor: 'black',
         cornerSize: 50,
         cornerShape: 'rect',
-        cornerPadding: 10
+        cornerPadding: 20
     },
     tl: {
         icon: del
@@ -22,6 +23,9 @@ fabric.Object.prototype.customiseCornerIcons({
     },
     br: {
         icon: zoom
+    },
+    bl: {
+        icon: change
     }
 });
 
@@ -36,6 +40,12 @@ fabric.Canvas.prototype.customiseControls({
     },
     br: {
         action: 'scale',
+        cursor: 'pointer'
+    },
+    bl: {
+        action: function (e, target) {
+            console.log(target);
+        },
         cursor: 'pointer'
     }
 });
@@ -61,13 +71,15 @@ class Custom extends React.Component {
         ruler.style.width = canvas.width + 'px';
         ruler.style.height = canvas.height;
 
+        canvas.stopContextMenu = true;
+
         this.setState({
             canvas: canvas
         });
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ canvas: nextProps.canvas})
+        this.setState({ canvas: nextProps.canvas })
     }
 
     render() {

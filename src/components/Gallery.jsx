@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { Image, Popup } from 'semantic-ui-react';
 import { fabric } from 'fabric';
 import './Gallery.css';
 
-const
-    timeoutLength = 2500,
-    colors = {
-        silver: '#D6D8EA'
-    };
+const timeoutLength = 4000;
+
+const styles = {
+    img: {
+        // 银色
+        color: '#D6D8EA'
+    },
+    imageGroup: {
+        display: 'flex'
+    }
+};
 
 let clickTimer = null;
 
@@ -25,6 +32,7 @@ class Gallery extends Component {
         }
 
         this.addImage = this.addImage.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -74,6 +82,29 @@ class Gallery extends Component {
         this.addImage();
     }
 
+    uploadImage() {
+        const
+            files = ReactDOM.findDOMNode(this.refs.file).files,
+            file = files[0],
+            reader = new FileReader(),
+            { gallery } = this.state,
+            img = {
+                id: gallery.length,
+                src: null
+            };
+
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            img.src = reader.result;
+        }
+
+        gallery.push(img);
+
+        this.setState({
+            gallery: gallery
+        });
+    }
+
     addImage(e) {
         const { canvas } = this.state;
 
@@ -98,7 +129,7 @@ class Gallery extends Component {
             }));
 
             img.filters.push(new fabric.Image.filters.Multiply({
-                color: colors.silver
+                color: styles.img.color
             }));
 
             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
@@ -133,21 +164,24 @@ class Gallery extends Component {
         const { gallery } = this.state;
 
         return (
-            <div style={{ margin: '5px', height: '170px', width: '100vw', overflow: 'auto' }}>
-                <Popup
-                    trigger={
-                        <Image.Group style={{ display: 'flex' }}>
-                            {
-                                gallery.map(i => (
-                                    <Image key={i.id} onDoubleClick={this.addImage} onTouchStart={this.touchStart} src={i.src} />
-                                ))
-                            }
-                        </Image.Group>
+            <div style={{ padding: '5px', height: 'auto', width: '90vw' }}>
+                <div className="fileInputContainer">
+                    <input className="fileInput" type="file" ref="file" onChange={this.uploadImage} />
+                </div>
+                <Image.Group style={styles.imageGroup}>
+                    {
+                        gallery.map(i => (
+                            <Popup
+                                key={i.id}
+                                trigger={
+                                    <Image onDoubleClick={this.addImage} onTouchStart={this.touchStart} src={i.src} />
+                                }
+                                content='双击图片加入画板'
+                                hideOnScroll
+                            />
+                        ))
                     }
-                    content='双击图片加入画板'
-                    hideOnScroll
-                />
-
+                </Image.Group>
             </div>
         );
     }

@@ -3,13 +3,21 @@ import { Menu } from 'semantic-ui-react'
 import GalleryBar from './GalleryBar';
 import FontBar from './FontBar';
 import Remove from './Remove';
-import Background from './Background';
+import BackgroundBar from './BackgroundBar';
+// import { fabric } from 'fabric';
+
 
 const styles = {
+	text: {
+        // 银色
+        color: '#D6D8EA',
+        fontSize: 30
+    },
 	menu: {
 		position: 'absolute',
-		right: '10px',
-		top: '150px',
+		// 56.53 224.63
+		left: (window.innerWidth - 10 - 224) / 2,
+		top: '450px',
 		zIndex: '100'
 	},
 	menuItem: { padding: '10px', fontSize: '2em' }
@@ -22,14 +30,51 @@ class ButtonControlList extends Component {
 
 		this.state = {
 			activeItem: '',
-			canvas: props.canvas
+			canvas: props.canvas,
+			text: []
 		}
+
+		// this.addText = this.addText.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ canvas: nextProps.canvas })
+		this.setState({
+			canvas: nextProps.canvas
+		})
 	}
 
+	// addText() {
+	// 	const
+	// 		{ text, canvas } = this.state,
+	// 		newText = {
+	// 			id: text.length,
+	// 			obj: null
+	// 		};
+
+	// 	const t = new fabric.Text('输入文字', {
+	// 		fontSize: styles.text.fontSize,
+	// 		fill: styles.text.color,
+	// 		lockRotation: false,
+	// 		hasBorders: true,
+	// 		lockUniScaling: true,
+	// 		centeredScaling: true
+	// 	});
+
+	// 	t.setControlsVisibility({
+	// 		mtr: false
+	// 	});
+
+	// 	canvas.viewportCenterObject(t);
+
+	// 	canvas.add(t);
+
+	// 	newText.obj = t;
+	// 	text.push(newText);
+
+	// 	this.setState({
+	// 		text: text
+	// 	});
+	// }
 
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -37,7 +82,8 @@ class ButtonControlList extends Component {
 		const { activeItem, canvas } = this.state
 
 		return (
-			<Menu icon vertical style={styles.menu}>
+			<Menu icon style={styles.menu}>
+				{/* <Menu.Item style={styles.menuItem} name='font' active={activeItem === 'font'} onClick={this.addText}> */}
 				<Menu.Item style={styles.menuItem} name='font' active={activeItem === 'font'} onClick={this.handleItemClick}>
 					<FontBar canvas={canvas} />
 				</Menu.Item>
@@ -51,7 +97,7 @@ class ButtonControlList extends Component {
 				</Menu.Item>
 
 				<Menu.Item style={styles.menuItem} name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
-					<Background canvas={canvas} />
+					<BackgroundBar canvas={canvas} />
 				</Menu.Item>
 			</Menu>
 		)

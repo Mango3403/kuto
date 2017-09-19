@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { Card, Sidebar, Icon, Button, Accordion, Input } from 'semantic-ui-react';
+import { Sidebar, Icon, Button, Accordion, Input, Message } from 'semantic-ui-react';
 import { fabric } from 'fabric';
 
-const font = {
-    // 银色
-    color: '#D6D8EA',
-    fontSize: 30
-};
+const styles = {
+    text: {
+        // 银色
+        color: '#D6D8EA',
+        fontSize: 30
+    },
+    sideBar: {
+        fontSize: '0.5em'
+    }
+}
 
 class FontBar extends Component {
 
@@ -23,7 +28,9 @@ class FontBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ canvas: nextProps.canvas })
+        this.setState({  
+            canvas: nextProps.canvas 
+        });
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
@@ -37,8 +44,8 @@ class FontBar extends Component {
             };
 
         const t = new fabric.Text('输入文字', {
-            fontSize: font.fontSize,
-            fill: font.color,
+            fontSize: styles.text.fontSize,
+            fill: styles.text.color,
             lockRotation: false,
             hasBorders: true,
             lockUniScaling: true,
@@ -66,7 +73,9 @@ class FontBar extends Component {
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='font' />
-                <Sidebar as={Card} animation='overlay' direction='bottom' visible={visible}>
+                <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
+                    <Icon onClick={this.toggleVisibility} name='close' />
+                    <br />
                     <Button primary onClick={this.addText}>添加文字</Button>
                     {
                         text.map(i => (
