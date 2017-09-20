@@ -8,11 +8,11 @@ img {
     float: left;
     margin: 0 5px;
     height: 150px;
-    width: 150px;
+    width: 100px;
     box-shadow: 0 0 10px #3195e0;
     background: url('../imgs/upload.png') no-repeat;
     background-size: 70px 70px;
-    background-position: 40px 40px;
+    background-position: 14px 40px;
 }
 
 .fileInput {

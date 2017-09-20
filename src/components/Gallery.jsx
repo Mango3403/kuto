@@ -4,7 +4,7 @@ import { Image, Popup } from 'semantic-ui-react';
 import { fabric } from 'fabric';
 import './Gallery.css';
 
-const timeoutLength = 4000;
+const timeoutLength = 2500;
 
 const styles = {
     img: {
@@ -12,7 +12,8 @@ const styles = {
         color: '#D6D8EA'
     },
     imageGroup: {
-        display: 'flex'
+        display: 'flex',
+        overflowX: 'scroll'
     }
 };
 
@@ -78,7 +79,7 @@ class Gallery extends Component {
         }
         e.preventDefault();
         //action on double tap goes below
-        // alert('You tapped me Twice !!!');
+        alert('You tapped me Twice !!!');
         this.addImage();
     }
 
@@ -133,6 +134,7 @@ class Gallery extends Component {
             }));
 
             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
+            canvas.setActiveObject(img);
         });
 
         // this.setState({
@@ -164,7 +166,7 @@ class Gallery extends Component {
         const { gallery } = this.state;
 
         return (
-            <div style={{ padding: '5px', height: 'auto', width: '90vw' }}>
+            <div style={{ padding: '5px', height: 'auto' }}>
                 <div className="fileInputContainer">
                     <input className="fileInput" type="file" ref="file" onChange={this.uploadImage} />
                 </div>

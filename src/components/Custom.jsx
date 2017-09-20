@@ -61,17 +61,99 @@ class Custom extends React.Component {
     }
 
     componentDidMount() {
-        const
-            ruler = document.querySelector('#ruler'),
-            canvas = new fabric.Canvas('c', {
-                width: window.innerWidth - 10,
-                height: 500
-            });
+        this.init();
+    }
 
-        ruler.style.width = canvas.width + 'px';
-        ruler.style.height = canvas.height;
+    init() {
+        const canvas = new fabric.Canvas('c', {
+            width: window.innerWidth - 10,
+            height: 500
+        });
 
-        canvas.stopContextMenu = true;
+        canvas.stopContextMenu = true;   
+
+        const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const hintY = new fabric.Line([canvas.width / 2, canvas.height / 2 - 5, canvas.width / 2, canvas.height / 2 + 5], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+
+        const tlx = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4 + 10, canvas.height / 4], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const tly = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4, canvas.height / 4 + 10], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const trx = new fabric.Line([canvas.width * (3 / 4), canvas.height / 4, canvas.width * (3 / 4) - 10, canvas.height / 4], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const tr_y = new fabric.Line([canvas.width * (3 / 4), canvas.height / 4, canvas.width * (3 / 4), canvas.height / 4 + 10], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const blx = new fabric.Line([canvas.width / 4, canvas.height * (3 / 4), canvas.width / 4 + 10, canvas.height * (3 / 4)], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const bly = new fabric.Line([canvas.width / 4, canvas.height * (3 / 4), canvas.width / 4, canvas.height * (3 / 4) - 10], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const brx = new fabric.Line([canvas.width * (3 / 4), canvas.height * (3 / 4), canvas.width * (3 / 4) - 10, canvas.height * (3 / 4)], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        const bry = new fabric.Line([canvas.width * (3 / 4), canvas.height * (3 / 4), canvas.width * (3 / 4), canvas.height * (3 / 4) - 10], {
+            strokeWidth: 2,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+
+        canvas.add(hintX);
+        canvas.add(hintY);
+        canvas.add(tlx);
+        canvas.add(tly);
+        canvas.add(trx);
+        canvas.add(tr_y);
+        canvas.add(blx);
+        canvas.add(bly);
+        canvas.add(brx);
+        canvas.add(bry);
 
         this.setState({
             canvas: canvas
@@ -87,12 +169,7 @@ class Custom extends React.Component {
 
         return (
             <div className="custom">
-                <div id="canvas_container">
-                    <div id='ruler'>
-                        <h1>定制图案</h1>
-                    </div>
-                    <canvas id="c">您的浏览器不支持 canvas</canvas>
-                </div>
+                <canvas id="c">您的浏览器不支持 canvas</canvas>
                 <ButtonControlList canvas={canvas} />
             </div>
         );

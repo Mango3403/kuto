@@ -6,7 +6,7 @@ const styles = {
     text: {
         // 银色
         color: '#D6D8EA',
-        fontSize: 30
+        fontSize: 40
     },
     sideBar: {
         fontSize: '0.5em'
@@ -57,8 +57,8 @@ class FontBar extends Component {
         });
 
         canvas.viewportCenterObject(t);
-
         canvas.add(t);
+        canvas.setActiveObject(t);
 
         newText.obj = t;
         text.push(newText);

@@ -83,7 +83,6 @@ class GalleryBar extends Component {
             <div>
                 <Icon onClick={this.toggleVisibility} name='picture' />
                 <Sidebar style={styles.sideBar} as={Message} animation='push' width='thin' direction='bottom' visible={visible}>
-                    {/* <Button primary onDoubleClick={this.addImage}>添加选中图片</Button> */}
                     <Icon onClick={this.toggleVisibility} name='close' />
                     <br />
                     <Gallery gallery={gallery} canvas={canvas} />

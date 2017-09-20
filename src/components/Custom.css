@@ -15,3 +15,38 @@
   box-shadow: 0 0 2px grey;
   border-radius: 5px;
 }
+
+.tl, .tr, .bl, .br {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.tl {
+  border-right: none;
+  border-bottom: none;
+  top: calc(500px - 350px);
+  right: calc(100vw - 10px - 25%);
+}
+
+.tr {
+  border-left: none;
+  border-bottom: none;
+  top: calc(500px - 350px);
+  left: calc(100vw - 10px - 25%);
+}
+
+.bl {
+  border-top: none;
+  border-right: none;
+  top: calc(500px - 150px);
+  right: calc(100vw - 10px - 25%);
+}
+
+.br {
+  border-top: none;
+  border-left: none;
+  top: calc(500px - 150px);  
+  left: calc(100vw - 10px - 25%);
+}

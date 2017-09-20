@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Message, Image, Sidebar, Icon, Item } from 'semantic-ui-react';
-import bg1 from '../imgs/material/1.png';
+import bg1 from '../imgs/material/a.jpg';
 
 const styles = {
     img: {
@@ -13,10 +13,13 @@ const styles = {
 };
 
 const colors = [
-    { name: '白色', color: 'white' },
-    { name: '红色', color: 'red' },
-    { name: '蓝色', color: 'blue' },
-    { name: '绿色', color: 'green' }
+    {name: '灰', color: 'grey'},    
+    {name: '红', color: 'red'},
+    {name: '黄', color: 'yellow'},
+    {name: '粉', color: 'pink'},
+    {name: '绿', color: 'green'},
+    {name: '蓝', color: 'blue'},
+    {name: '黑', color: 'black'}
 ];
 
 class BackgroundBar extends Component {
@@ -29,32 +32,51 @@ class BackgroundBar extends Component {
             canvasvisible: false,
             canvas: props.canvas,
             background: [
-                { id: 0, src: bg1 }
+                { id: 0, src: bg1 },
             ]
         }
 
-        this.handleAClick = this.handleAClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.setImage = this.setImage.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({ canvas: nextProps.canvas })
     }
 
-    handleAClick(e, { name, color }) {
+    handleClick(e, { color }) {
+        this.setColor(color);
+        this.setState({ active: color });
+    }
+
+    setColor(color) {
         const { canvas } = this.state;
 
-        canvas.backgroundColor = color;
+        canvas.setBackgroundColor(color);
         canvas.renderAll();
         this.setState({
-            canvas: canvas,
-            active: color
+            canvas: canvas
+        });
+    }
+
+    setImage(e, { src }) {
+        const { canvas } = this.state;
+
+        canvas.setBackgroundImage(e.target.src, canvas.renderAll.bind(canvas), {
+            opacity: 0.5,
+            originX: 'left',
+            originY: 'top'
+        });
+
+        this.setState({
+            canvas: canvas
         });
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
     render() {
-        const { visible, canvas, background, active } = this.state;
+        const { visible, background, active } = this.state;
 
         return (
             <div>
@@ -64,13 +86,13 @@ class BackgroundBar extends Component {
                     <br />
                     <Item.Group>
                         <Item>
-                            <Menu compact inverted style={{ position: 'absolute' }}>
+                            <Menu inverted widths={8} style={{overflowX: 'auto'}}>
                                 {colors.map(c => (
-                                    <Menu.Item key={c.color} name={c.name} active={active === c.color} color={c.color} onClick={this.handleAClick} />
+                                    <Menu.Item key={c.name} name={c.name} active={active === c.color} color={c.color} onClick={this.handleClick} />
                                 ))}
                             </Menu>
                         </Item>
-                        <br/>
+                        <br />
                         <Item>
                             <Image.Group size='tiny'>
                                 {
@@ -78,15 +100,9 @@ class BackgroundBar extends Component {
                                         <Image
                                             key={i.id}
                                             src={i.src}
-                                            shape='circular'
                                             style={styles.img}
                                             floated='left'
-                                            onClick={() => {
-                                                canvas.setBackgroundColor({
-                                                    source: i.src,
-                                                    repeat: 'repeat'
-                                                }, canvas.renderAll.bind(canvas));
-                                            }}
+                                            onClick={this.setImage}
                                         />
                                     ))
                                 }
