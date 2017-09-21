@@ -19,7 +19,7 @@ class FontBar extends Component {
         super(props);
 
         this.state = {
-            canvasvisible: false,
+            visible: false,
             canvas: props.canvas,
             text: []
         }

@@ -78,105 +78,51 @@ class Custom extends React.Component {
     }
 
     init() {
-        const canvas = new fabric.Canvas('c', {
-            width: window.innerWidth - 10,
-            height: 500
-        });
+        const
+            canvas = new fabric.Canvas('c', {
+                width: window.innerWidth - 10,
+                height: 500
+            }),
+            config = {
+                strokeWidth: 1,
+                fill: 'red',
+                stroke: 'red',
+                originX: 'center',
+                originY: 'center',
+                selectable: false
+            };
 
         canvas.stopContextMenu = true;
 
-        const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
-        });
-        const hintY = new fabric.Line([canvas.width / 2, canvas.height / 2 - 5, canvas.width / 2, canvas.height / 2 + 5], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], config);
+        const hintY = hintX.clone(i => {
+            i.angle = 90;
         });
 
-        const tlx = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4 + 10, canvas.height / 4], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const tlx = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4 + 10, canvas.height / 4]);
+        const tly = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4, canvas.height / 4 + 10]);
+    
+        const trx = tlx.clone(i => {
+            i.left += canvas.width / 2 - i.width;
         });
-        const tly = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4, canvas.height / 4 + 10], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const tr_y = tly.clone(i => {
+            i.left += canvas.width / 2;
         });
-        const trx = new fabric.Line([canvas.width * (3 / 4), canvas.height / 4, canvas.width * (3 / 4) - 10, canvas.height / 4], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const blx = tlx.clone(i => {
+            i.top += canvas.height / 2;
         });
-        const tr_y = new fabric.Line([canvas.width * (3 / 4), canvas.height / 4, canvas.width * (3 / 4), canvas.height / 4 + 10], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const bly = tly.clone(i => {
+            i.top += canvas.height / 2 - i.height;
         });
-        const blx = new fabric.Line([canvas.width / 4, canvas.height * (3 / 4), canvas.width / 4 + 10, canvas.height * (3 / 4)], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const brx = blx.clone(i => {
+            i.left += canvas.width / 2 - i.width;
         });
-        const bly = new fabric.Line([canvas.width / 4, canvas.height * (3 / 4), canvas.width / 4, canvas.height * (3 / 4) - 10], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
-        });
-        const brx = new fabric.Line([canvas.width * (3 / 4), canvas.height * (3 / 4), canvas.width * (3 / 4) - 10, canvas.height * (3 / 4)], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
-        });
-        const bry = new fabric.Line([canvas.width * (3 / 4), canvas.height * (3 / 4), canvas.width * (3 / 4), canvas.height * (3 / 4) - 10], {
-            strokeWidth: 2,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center',
-            selectable: false
+        const bry = bly.clone(i => {
+            i.left += canvas.width / 2;
         });
 
-        canvas.add(hintX);
-        canvas.add(hintY);
-        canvas.add(tlx);
-        canvas.add(tly);
-        canvas.add(trx);
-        canvas.add(tr_y);
-        canvas.add(blx);
-        canvas.add(bly);
-        canvas.add(brx);
-        canvas.add(bry);
+        const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry], config);
+        canvas.add(group);
 
         this.setState({
             canvas: canvas

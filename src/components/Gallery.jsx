@@ -71,19 +71,6 @@ class Gallery extends Component {
         });
     }
 
-    handleOpen = () => {
-        this.setState({ isTipsOpen: true })
-
-        this.timeout = setTimeout(() => {
-            this.setState({ isTipsOpen: false })
-        }, timeoutLength)
-    }
-
-    handleClose = () => {
-        this.setState({ isOpen: false })
-        clearTimeout(this.timeout)
-    }
-
     touchStart = (e) => {
         if (clickTimer == null) {
             clickTimer = setTimeout(function () {
@@ -94,20 +81,6 @@ class Gallery extends Component {
             clickTimer = null;
             this.addImage(e);
         }
-    }
-
-    dblTapHandler = (e) => {
-        let tapedTwice = false;
-
-        if (!tapedTwice) {
-            tapedTwice = true;
-            setTimeout(function () { tapedTwice = false; }, 300);
-            return false;
-        }
-        e.preventDefault();
-        //action on double tap goes below
-        alert('You tapped me Twice !!!');
-        this.addImage();
     }
 
     uploadImage() {
@@ -162,6 +135,8 @@ class Gallery extends Component {
 
             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
             canvas.setActiveObject(img);
+
+            console.log(canvas);            
         });
 
     }
