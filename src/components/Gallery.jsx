@@ -2,18 +2,45 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Image, Popup } from 'semantic-ui-react';
 import { fabric } from 'fabric';
-import './Gallery.css';
+import upload from '../images/upload.png';
 
 const timeoutLength = 2500;
 
 const styles = {
+    gallery: {
+        padding: '5px', height: 'auto'
+    },
     img: {
+
+        margin: '5px 0',
+        height: '150px',
+        boxShadow: '0 0 5px grey'
+    },
+    imgObj: {
         // 银色
-        color: '#D6D8EA'
+        color: '#D6D8EA',
     },
     imageGroup: {
         display: 'flex',
         overflowX: 'scroll'
+    },
+    fileInputContainer: {
+        float: 'left',
+        margin: '0 5px',
+        height: '150px',
+        width: '100px',
+        boxShadow: '0 0 10px #3195e0',
+        background: 'url(' + upload + ') no-repeat',
+        backgroundSize: '70px 70px',
+        backgroundPosition: '14px 40px',
+    },
+    fileInput: {
+        height: '150px',
+        fontSize: '1px',
+        position: 'relative',
+        left: 0,
+        top: 0,
+        opacity: 0,
     }
 };
 
@@ -130,45 +157,22 @@ class Gallery extends Component {
             }));
 
             img.filters.push(new fabric.Image.filters.Multiply({
-                color: styles.img.color
+                color: styles.imgObj.color
             }));
 
             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
             canvas.setActiveObject(img);
         });
 
-        // this.setState({
-        //     // images: [],
-        //     // visible: !visible
-        // });
     }
-
-    // selectImage({ id, isSelected }) {
-    //     const { images, gallery } = this.state;
-    //     const image = document.querySelectorAll('img').item(id);
-
-    //     gallery[id].isSelected = !isSelected;
-
-    //     if (isSelected) {
-    //         image.style.boxShadow = '';
-    //         images.pop();
-    //     } else {
-    //         image.style.boxShadow = '0 0 10px #3195e0';
-    //         images.push(gallery[id]);
-    //     }
-
-    //     this.setState({
-    //         images: images
-    //     });
-    // }
 
     render() {
         const { gallery } = this.state;
 
         return (
-            <div style={{ padding: '5px', height: 'auto' }}>
-                <div className="fileInputContainer">
-                    <input className="fileInput" type="file" ref="file" onChange={this.uploadImage} />
+            <div style={styles.gallery}>
+                <div style={styles.fileInputContainer}>
+                    <input style={styles.fileInput} type="file" ref="file" onChange={this.uploadImage} />
                 </div>
                 <Image.Group style={styles.imageGroup}>
                     {
@@ -176,7 +180,7 @@ class Gallery extends Component {
                             <Popup
                                 key={i.id}
                                 trigger={
-                                    <Image onDoubleClick={this.addImage} onTouchStart={this.touchStart} src={i.src} />
+                                    <Image onDoubleClick={this.addImage} onTouchStart={this.touchStart} src={i.src} style={styles.img} />
                                 }
                                 content='双击图片加入画板'
                                 hideOnScroll
@@ -188,19 +192,5 @@ class Gallery extends Component {
         );
     }
 }
-
-/* <Grid columns={2} divided style={style.grid}>
-<Grid.Row stretched>
-    {
-        gallery.map(i => (
-            <Grid.Column
-                key={i.id}
-            >
-                <Image onDoubleClick={this.addImage} src={i.src} />
-            </Grid.Column>
-        ))
-    }
-</Grid.Row>
-</Grid> */
 
 export default Gallery;

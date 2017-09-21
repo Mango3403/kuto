@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import 'semantic-ui-css/semantic.min.css';
-import './index.css';
-import Main from './components/Main';
-// import Test from './components/Test';
+import { render } from 'react-dom';
+import './style.css';
+import Custom from './components/Custom';
 
+const MOUNT_NODE = document.getElementById('root');
 
-ReactDOM.render(<Main />, document.getElementById('root'));
-// ReactDOM.render(<Test />, document.getElementById('root'));
+render(<Custom />, MOUNT_NODE);

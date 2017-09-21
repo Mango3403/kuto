@@ -2,11 +2,24 @@ import React from 'react';
 import { fabric } from 'fabric';
 import 'fabric-customise-controls';
 import ButtonControlList from './ButtonControlList';
-import './Custom.css';
-import del from '../imgs/control/handle_del.png';
-import rotate from '../imgs/control/handle_rotate.png';
-import zoom from '../imgs/control/handle_zoom.png';
-import change from '../imgs/control/handle_change.png';
+import del from '../images/control/handle_del.png';
+import rotate from '../images/control/handle_rotate.png';
+import zoom from '../images/control/handle_zoom.png';
+import change from '../images/control/handle_change.png';
+
+const styles = {
+    custom: {
+        margin: '15px 0',
+        display: 'inline-block'
+    },
+    c: {
+        width: '100%',
+        height: '600px',
+        userSelect: 'none',
+        boxShadow: '0 0 2px grey',
+        borderRadius: '5px',
+    }
+};
 
 fabric.Object.prototype.customiseCornerIcons({
     settings: {
@@ -70,7 +83,7 @@ class Custom extends React.Component {
             height: 500
         });
 
-        canvas.stopContextMenu = true;   
+        canvas.stopContextMenu = true;
 
         const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], {
             strokeWidth: 2,
@@ -78,6 +91,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const hintY = new fabric.Line([canvas.width / 2, canvas.height / 2 - 5, canvas.width / 2, canvas.height / 2 + 5], {
             strokeWidth: 2,
@@ -85,6 +99,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
 
         const tlx = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4 + 10, canvas.height / 4], {
@@ -93,6 +108,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const tly = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4, canvas.height / 4 + 10], {
             strokeWidth: 2,
@@ -100,6 +116,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const trx = new fabric.Line([canvas.width * (3 / 4), canvas.height / 4, canvas.width * (3 / 4) - 10, canvas.height / 4], {
             strokeWidth: 2,
@@ -107,6 +124,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const tr_y = new fabric.Line([canvas.width * (3 / 4), canvas.height / 4, canvas.width * (3 / 4), canvas.height / 4 + 10], {
             strokeWidth: 2,
@@ -114,6 +132,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const blx = new fabric.Line([canvas.width / 4, canvas.height * (3 / 4), canvas.width / 4 + 10, canvas.height * (3 / 4)], {
             strokeWidth: 2,
@@ -121,6 +140,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const bly = new fabric.Line([canvas.width / 4, canvas.height * (3 / 4), canvas.width / 4, canvas.height * (3 / 4) - 10], {
             strokeWidth: 2,
@@ -128,6 +148,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const brx = new fabric.Line([canvas.width * (3 / 4), canvas.height * (3 / 4), canvas.width * (3 / 4) - 10, canvas.height * (3 / 4)], {
             strokeWidth: 2,
@@ -135,6 +156,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
         const bry = new fabric.Line([canvas.width * (3 / 4), canvas.height * (3 / 4), canvas.width * (3 / 4), canvas.height * (3 / 4) - 10], {
             strokeWidth: 2,
@@ -142,6 +164,7 @@ class Custom extends React.Component {
             stroke: 'red',
             originX: 'center',
             originY: 'center',
+            selectable: false
         });
 
         canvas.add(hintX);
@@ -168,8 +191,8 @@ class Custom extends React.Component {
         const { canvas } = this.state;
 
         return (
-            <div className="custom">
-                <canvas id="c">您的浏览器不支持 canvas</canvas>
+            <div style={styles.custom}>
+                <canvas id="c" style={styles.c}>您的浏览器不支持 canvas</canvas>
                 <ButtonControlList canvas={canvas} />
             </div>
         );

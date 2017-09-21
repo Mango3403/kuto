@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import { Message, Sidebar, Icon } from 'semantic-ui-react';
 // import { fabric } from 'fabric';
 import Gallery from './Gallery';
-import img0 from '../imgs/0.jpeg';
-import img1 from '../imgs/1.jpeg';
-import img2 from '../imgs/2.jpeg';
-import img3 from '../imgs/3.jpeg';
+import img0 from '../images/0.jpeg';
+import img1 from '../images/1.jpeg';
+import img2 from '../images/2.jpeg';
+import img3 from '../images/3.jpeg';
 
 // const colors = {
 //     silver: '#D6D8EA'

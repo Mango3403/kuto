@@ -1,0 +1,23 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "modules": false
+            }
+        ],
+        "react",
+        "stage-0"
+    ],
+    "plugins": [
+        [
+            "lodash",
+            {
+                "id": [
+                    "lodash",
+                    "semantic-ui-react"
+                ]
+            }
+        ]
+    ]
+}

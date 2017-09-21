@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Message, Image, Sidebar, Icon, Item } from 'semantic-ui-react';
-import bg1 from '../imgs/material/a.jpg';
+import bg1 from '../images/material/a.jpg';
 
 const styles = {
     img: {

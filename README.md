@@ -3,7 +3,7 @@
 ## 框架
 * ui: semantic-ui-react
 * canvas: fabric.js
-* main: react (create-react-app)
+* main: react (webpack3)
 
 ## 功能
 1. 添加文字
