@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 import GalleryBar from './GalleryBar';
 import FontBar from './FontBar';
 import Remove from './Remove';
@@ -17,17 +17,15 @@ const styles = {
 	menu1: {
 		position: 'absolute',
 		// 56.53 224.63
-		left: (window.innerWidth - 10 - 280) / 2,
+		left: (window.innerWidth - 10 - 332) / 2,
 		top: '460px',
-		zIndex: '100'
+		zIndex: '1'
 	},
 	menu2: {
 		position: 'absolute',
 		// 56.53 224.63
-		// right: (window.innerWidth - 10 - 280) / 2,
-		right: '5px',
-		top: '250px',
-		zIndex: '100'
+		left: (window.innerWidth - 10 - 332) / 2,
+		top: '500px',
 	},
 	menuItem: { padding: '10px', fontSize: '2em' }
 };
@@ -74,13 +72,17 @@ class ButtonControlList extends Component {
 						<BackgroundBar canvas={canvas} />
 					</Menu.Item>
 
+					<Menu.Item style={styles.menuItem} name='paint brush' active={activeItem === 'paint brush'} onClick={this.handleItemClick}>
+						<FilterBar canvas={canvas} />
+					</Menu.Item>
+
 					<Menu.Item style={styles.menuItem} name='save' active={activeItem === 'save'} onClick={this.handleItemClick}>
 						<Save canvas={canvas} />
 					</Menu.Item>
 				</Menu>
-				<Menu icon vertical style={styles.menu2}>
-					<Menu.Item style={styles.menuItem} name='pencil' active={activeItem === 'pencil'} onClick={this.handleItemClick}>
-						<FilterBar canvas={canvas} />
+				<Menu icon style={styles.menu2}>
+					<Menu.Item style={styles.menuItem}>
+						<Icon name="eye" onClick={() => {alert('功能调试中')}} />
 					</Menu.Item>
 				</Menu>
 			</div>

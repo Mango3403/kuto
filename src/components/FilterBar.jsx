@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
-import { Sidebar, Icon, Message, Rating } from 'semantic-ui-react';
+import { Sidebar, Icon, Message, Rating, Popup } from 'semantic-ui-react';
 
 const styles = {
     sideBar: {
@@ -92,15 +92,20 @@ class FilterBar extends Component {
         const { visible, canvas, rating, imgObj } = this.state;
         return (
             <div>
-                <Icon
-                    onClick={() => {
-                        console.log(canvas.getActiveObject().type)
-                        if (canvas.getActiveObject() && canvas.getActiveObject().type == 'image') {
-                            this.toggleVisibility()
-                        }
-                        return false;
-                    }}
-                    name='pencil'
+                <Popup
+                    trigger={
+                        <Icon
+                            onClick={() => {
+                                console.log(canvas.getActiveObject().type)
+                                if (canvas.getActiveObject() && canvas.getActiveObject().type == 'image') {
+                                    this.toggleVisibility()
+                                }
+                                return false;
+                            }}
+                            name='pencil'
+                        />
+                    }
+                    content='请选中一张图片'
                 />
                 <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
                     <Icon onClick={this.toggleVisibility} name='close' />
