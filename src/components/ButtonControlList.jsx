@@ -7,6 +7,8 @@ import BackgroundBar from './BackgroundBar';
 import Save from './Save';
 import FilterBar from './FilterBar';
 
+let visibleGuides1 = true;
+
 const styles = {
 	text: {
 		// 银色
@@ -37,20 +39,35 @@ class ButtonControlList extends Component {
 		this.state = {
 			activeItem: '',
 			canvas: null,
+			rul: null,
 			text: []
 		}
+
+		this.setRulerVisible = this.setRulerVisible.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			canvas: nextProps.canvas
+			canvas: nextProps.canvas,
+			rul: nextProps.rul
 		});
 	}
 
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+	setRulerVisible() {
+		const { rul } = this.state;
+		console.log(rul);
+
+		rul.api.toggleRulerVisibility(visibleGuides1 = !visibleGuides1);
+
+		this.setState({
+			rul: rul
+		});
+	}
+
 	render() {
-		const { activeItem, canvas } = this.state
+		const { activeItem, canvas, ruler } = this.state
 
 		return (
 			<div>
@@ -81,7 +98,7 @@ class ButtonControlList extends Component {
 				</Menu>
 				<Menu icon vertical style={styles.menu2}>
 					<Menu.Item style={styles.menuItem}>
-						<Icon name="eye" onClick={() => { alert('功能调试中') }} />
+						<Icon name="eye" onClick={this.setRulerVisible} />
 					</Menu.Item>
 				</Menu>
 			</div>

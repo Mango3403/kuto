@@ -12,9 +12,14 @@ const styles = {
         margin: '15px 0',
         display: 'inline-block'
     },
+    ruler: {
+        position: 'absolute',
+        width: 'calc(100% - 10px)',
+        height: '500px'
+    },
     c: {
         width: '100%',
-        height: '600px',
+        height: '500px',
         userSelect: 'none',
         boxShadow: '0 0 2px grey',
         borderRadius: '5px',
@@ -69,7 +74,8 @@ class Custom extends React.Component {
         super();
 
         this.state = {
-            canvas: null
+            canvas: null,
+            rul: null
         }
     }
 
@@ -78,6 +84,8 @@ class Custom extends React.Component {
     }
 
     init() {
+        const rul = document.getElementById('ruler');
+
         const
             canvas = new fabric.Canvas('c', {
                 width: window.innerWidth - 10,
@@ -98,48 +106,40 @@ class Custom extends React.Component {
         const hintY = hintX.clone(i => {
             i.angle = 90;
         });
-
         const tlx = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4 + 10, canvas.height / 4]);
         const tly = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4, canvas.height / 4 + 10]);
-    
-        const trx = tlx.clone(i => {
-            i.left += canvas.width / 2 - i.width;
-        });
-        const tr_y = tly.clone(i => {
-            i.left += canvas.width / 2;
-        });
-        const blx = tlx.clone(i => {
-            i.top += canvas.height / 2;
-        });
-        const bly = tly.clone(i => {
-            i.top += canvas.height / 2 - i.height;
-        });
-        const brx = blx.clone(i => {
-            i.left += canvas.width / 2 - i.width;
-        });
-        const bry = bly.clone(i => {
-            i.left += canvas.width / 2;
-        });
+        const trx = tlx.clone(i => i.left += canvas.width / 2 - i.width);
+        const tr_y = tly.clone(i => i.left += canvas.width / 2);
+        const blx = tlx.clone(i => i.top += canvas.height / 2);
+        const bly = tly.clone(i => i.top += canvas.height / 2 - i.height);
+        const brx = blx.clone(i => i.left += canvas.width / 2 - i.width);
+        const bry = bly.clone(i => i.left += canvas.width / 2);
 
         const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry], config);
         canvas.add(group);
 
+        const rul1 = new ruler({
+            container: rul
+        });
+        rul1.api.setPos({ 
+            x: canvas.width / 2 - 16,
+            y: canvas.height / 2 - 15
+        });
+
         this.setState({
-            canvas: canvas
+            canvas: canvas,
+            rul: rul1
         });
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ canvas: nextProps.canvas })
-    }
-
     render() {
-        const { canvas } = this.state;
+        const { canvas, rul } = this.state;
 
         return (
             <div style={styles.custom}>
+                <div id="ruler" style={styles.ruler}></div>
                 <canvas id="c" style={styles.c}>您的浏览器不支持 canvas</canvas>
-                <ButtonControlList canvas={canvas} />
+                <ButtonControlList canvas={canvas} rul={rul} />
             </div>
         );
     }
