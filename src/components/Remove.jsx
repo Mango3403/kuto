@@ -28,7 +28,16 @@ class Remove extends React.Component {
     close = () => this.setState({ open: false })
 
     clear() {
-        const { canvas } = this.state;
+        const
+            { canvas } = this.state,
+            config = {
+                strokeWidth: 1,
+                fill: 'red',
+                stroke: 'red',
+                originX: 'center',
+                originY: 'center',
+                selectable: false
+            };
 
         canvas.clear();
 
@@ -59,7 +68,7 @@ class Remove extends React.Component {
             i.left += canvas.width / 2;
         });
 
-        const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry]);
+        const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry], config);
         canvas.add(group);
 
         this.setState({

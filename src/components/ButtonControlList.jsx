@@ -7,7 +7,6 @@ import BackgroundBar from './BackgroundBar';
 import Save from './Save';
 import FilterBar from './FilterBar';
 
-
 const styles = {
 	text: {
 		// 银色
@@ -23,9 +22,9 @@ const styles = {
 	},
 	menu2: {
 		position: 'absolute',
+		right: '5px',
 		// 56.53 224.63
-		left: (window.innerWidth - 10 - 332) / 2,
-		top: '500px',
+		top: '390px',
 	},
 	menuItem: { padding: '10px', fontSize: '2em' }
 };
@@ -45,7 +44,7 @@ class ButtonControlList extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			canvas: nextProps.canvas
-		})
+		});
 	}
 
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -80,9 +79,9 @@ class ButtonControlList extends Component {
 						<Save canvas={canvas} />
 					</Menu.Item>
 				</Menu>
-				<Menu icon style={styles.menu2}>
+				<Menu icon vertical style={styles.menu2}>
 					<Menu.Item style={styles.menuItem}>
-						<Icon name="eye" onClick={() => {alert('功能调试中')}} />
+						<Icon name="eye" onClick={() => { alert('功能调试中') }} />
 					</Menu.Item>
 				</Menu>
 			</div>
