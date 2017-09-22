@@ -70,19 +70,7 @@ class Gallery extends Component {
             canvas: nextProps.canvas
         });
     }
-
-    touchStart = (e) => {
-        if (clickTimer == null) {
-            clickTimer = setTimeout(function () {
-                clickTimer = null;
-            }, 500);
-        } else {
-            clearTimeout(clickTimer);
-            clickTimer = null;
-            this.addImage(e);
-        }
-    }
-
+    
     uploadImage() {
         const
             files = ReactDOM.findDOMNode(this.refs.file).files,
@@ -155,7 +143,7 @@ class Gallery extends Component {
                             <Popup
                                 key={i.id}
                                 trigger={
-                                    <Image onDoubleClick={this.addImage} onTouchStart={this.touchStart} src={i.src} style={styles.img} />
+                                    <Image onDoubleClick={this.addImage} src={i.src} style={styles.img} />
                                 }
                                 content='双击图片加入画板'
                                 hideOnScroll
