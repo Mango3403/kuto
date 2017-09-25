@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
-import { Sidebar, Icon, Message, Rating, Popup } from 'semantic-ui-react';
+import { Button, Sidebar, Icon, Message, Popup, List, Label } from 'semantic-ui-react';
 
 const styles = {
     sideBar: {
-        fontSize: '0.5em'
+        fontSize: '0.5em',
+        padding: '5px'
+    },
+    input: {
+        margin: '5px auto'
     }
 }
 
@@ -19,8 +23,7 @@ class FilterBar extends Component {
                 threshold: 90,
                 distance: 40
             },
-            canvas: null,
-            rating: 0
+            canvas: null
         }
 
         this.changeThreshold = this.changeThreshold.bind(this);
@@ -33,72 +36,79 @@ class FilterBar extends Component {
         });
     }
 
-    handleChange = e => this.setState({ rating: e.target.value })
-
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
-    changeThreshold(e) {
+    changeThresholdValue = (e) => this.setState({ imgObj: { threshold: parseInt(e.target.value), distance: this.state.imgObj.distance } })
+
+    handleThresholdAdd = (e) => this.setState({ imgObj: { threshold: this.state.imgObj.threshold + 1, distance: this.state.imgObj.distance } })
+    handleThresholdMinus = (e) => this.setState({ imgObj: { threshold: this.state.imgObj.threshold - 1, distance: this.state.imgObj.distance } })
+
+    changeDistanceValue = (e) => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: parseInt(e.target.value) } })
+
+    handleDistanceAdd = (e) => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: this.state.imgObj.distance + 1 } })
+    handleDistanceMinus = (e) => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: this.state.imgObj.distance - 1 } })
+
+    changeThreshold() {
         const
-            { canvas } = this.state,
+            { canvas, imgObj } = this.state,
             obj = canvas.getActiveObject(),
             distance = obj.filters[1].distance,
-            val = parseInt(e.target.value);
+            val = imgObj.threshold;
 
         obj.clone(obj => {
             obj.filters[1].threshold = val;
             obj.lockRotation = false;
+            obj.hasBorders = true;
+            obj.lockUniScaling = true;
+            obj.centeredScaling = true;
+
+            obj.setControlsVisibility({
+                mtr: false
+            });
 
             canvas.remove(canvas.getActiveObject());
             canvas.add(obj);
             canvas.setActiveObject(obj);
         });
 
-        this.setState({
-            imgObj: {
-                threshold: val,
-                distance: distance
-            }
-        });
-        console.log(this.state.imgObj);
     }
 
     changeDistance(e) {
         const
-            { canvas } = this.state,
+            { canvas, imgObj } = this.state,
             obj = canvas.getActiveObject(),
             threshold = obj.filters[1].threshold,
-            val = parseInt(e.target.value);
+            val = imgObj.distance;
 
         obj.clone(obj => {
             obj.filters[1].distance = val;
             obj.lockRotation = false;
+            obj.hasBorders = true;
+            obj.lockUniScaling = true;
+            obj.centeredScaling = true;
+
+            obj.setControlsVisibility({
+                mtr: false
+            });
 
             canvas.remove(canvas.getActiveObject());
             canvas.add(obj);
             canvas.setActiveObject(obj);
         });
 
-        this.setState({
-            imgObj: {
-                threshold: threshold,
-                distance: val
-            }
-        });
-        console.log(this.state.imgObj);
-
     }
 
     render() {
-        const { visible, canvas, rating, imgObj } = this.state;
+        const { visible, canvas, imgObj } = this.state;
         return (
             <div>
                 <Popup
                     trigger={
                         <Icon
-                            onClick={() => {
-                                console.log(canvas.getActiveObject().type)
+                            onClick={(e) => {
+                                e.preventDefault();
                                 if (canvas.getActiveObject() && canvas.getActiveObject().type == 'image') {
-                                    this.toggleVisibility()
+                                    this.toggleVisibility();
                                 }
                                 return false;
                             }}
@@ -110,12 +120,26 @@ class FilterBar extends Component {
                 <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
                     <Icon onClick={this.toggleVisibility} name='close' />
                     <br />
-                    <div>阈值: {imgObj.threshold}</div>
-                    <input type='range' min={0} max={200} value={imgObj.threshold} onChange={this.changeThreshold} />
-                    <div>阈值增量: {imgObj.distance}</div>
-                    <input type='range' min={0} max={200} value={imgObj.distance} onChange={this.changeDistance} />
-                    <br />
-                    <Rating rating={rating} maxRating={5} />
+                    <List>
+                        <List.Item>
+                            <Label size="large" horizontal>过滤梯度: </Label>
+                            <input type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} />
+                            <Button.Group size="mini">
+                                <Button disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
+                                <Label>{imgObj.distance}</Label>
+                                <Button disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
+                            </Button.Group>
+                        </List.Item>
+                        <List.Item>
+                            <Label size="large" horizontal>过滤像素: </Label>
+                            <input type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} />
+                            <Button.Group size="mini">
+                                <Button disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
+                                <Label>{imgObj.threshold}</Label>
+                                <Button disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
+                            </Button.Group>
+                        </List.Item>
+                    </List>
                 </Sidebar>
             </div>
         );

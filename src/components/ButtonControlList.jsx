@@ -39,32 +39,17 @@ class ButtonControlList extends Component {
 		this.state = {
 			activeItem: '',
 			canvas: null,
-			rul: null,
 			text: []
 		}
-
-		this.setRulerVisible = this.setRulerVisible.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			canvas: nextProps.canvas,
-			rul: nextProps.rul
+			canvas: nextProps.canvas
 		});
 	}
 
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-	setRulerVisible() {
-		const { rul } = this.state;
-		console.log(rul);
-
-		rul.api.toggleRulerVisibility(visibleGuides1 = !visibleGuides1);
-
-		this.setState({
-			rul: rul
-		});
-	}
 
 	render() {
 		const { activeItem, canvas, ruler } = this.state
@@ -80,25 +65,25 @@ class ButtonControlList extends Component {
 						<GalleryBar canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='trash' active={activeItem === 'trash'} onClick={this.handleItemClick}>
-						<Remove canvas={canvas} />
+					<Menu.Item style={styles.menuItem} name='paint brush' active={activeItem === 'paint brush'} onClick={this.handleItemClick}>
+						<FilterBar canvas={canvas} />
 					</Menu.Item>
 
 					<Menu.Item style={styles.menuItem} name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
 						<BackgroundBar canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='paint brush' active={activeItem === 'paint brush'} onClick={this.handleItemClick}>
-						<FilterBar canvas={canvas} />
-					</Menu.Item>
-
 					<Menu.Item style={styles.menuItem} name='save' active={activeItem === 'save'} onClick={this.handleItemClick}>
 						<Save canvas={canvas} />
 					</Menu.Item>
+
+					<Menu.Item style={styles.menuItem} name='trash' active={activeItem === 'trash'} onClick={this.handleItemClick}>
+						<Remove canvas={canvas} />
+					</Menu.Item>
 				</Menu>
-				<Menu icon vertical style={styles.menu2}>
-					<Menu.Item style={styles.menuItem}>
-						<Icon name="eye" onClick={this.setRulerVisible} />
+				<Menu icon style={styles.menu2}>
+					<Menu.Item style={styles.menuItem} name="object" active={activeItem === 'object'} onClick={this.handleItemClick}>
+						<Icon name="signup" />
 					</Menu.Item>
 				</Menu>
 			</div>
