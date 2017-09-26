@@ -49,32 +49,15 @@ class Save extends Component {
             };
 
         const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], config);
-        const hintY = hintX.clone(i => {
-            i.selectable = false;
-            i.angle = 90;
-        });
-
-        const tlx = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4 + 10, canvas.height / 4]);
-        const tly = new fabric.Line([canvas.width / 4, canvas.height / 4, canvas.width / 4, canvas.height / 4 + 10]);
-
-        const trx = tlx.clone(i => {
-            i.left += canvas.width / 2 - i.width;
-        });
-        const tr_y = tly.clone(i => {
-            i.left += canvas.width / 2;
-        });
-        const blx = tlx.clone(i => {
-            i.top += canvas.height / 2;
-        });
-        const bly = tly.clone(i => {
-            i.top += canvas.height / 2 - i.height;
-        });
-        const brx = blx.clone(i => {
-            i.left += canvas.width / 2 - i.width;
-        });
-        const bry = bly.clone(i => {
-            i.left += canvas.width / 2;
-        });
+        const hintY = hintX.clone(i => i.angle = 90);
+        const tlx = new fabric.Line([(canvas.width - 200) / 2, (canvas.height - 200) / 2, (canvas.width - 200) / 2 + 10, (canvas.height - 200) / 2]);
+        const tly = new fabric.Line([(canvas.width - 200) / 2, (canvas.height - 200) / 2, (canvas.width - 200) / 2, (canvas.height - 200) / 2 + 10]);
+        const trx = tlx.clone(i => i.left += 200 - i.width);
+        const tr_y = tly.clone(i => i.left += 200);
+        const blx = tlx.clone(i => i.top += 200);
+        const bly = tly.clone(i => i.top += 200 - i.height);
+        const brx = blx.clone(i => i.left += 200 - i.width);
+        const bry = bly.clone(i => i.left += 200);
 
         const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry], config);
         canvas.getObjects().unshift(group);
@@ -83,8 +66,6 @@ class Save extends Component {
         this.setState({
             canvas: canvas
         });
-
-        console.log(canvas);
     }
 
     saveImage() {

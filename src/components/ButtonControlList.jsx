@@ -6,8 +6,7 @@ import Remove from './Remove';
 import BackgroundBar from './BackgroundBar';
 import Save from './Save';
 import FilterBar from './FilterBar';
-
-let visibleGuides1 = true;
+import ObjectControlBar from './ObjectControlBar';
 
 const styles = {
 	text: {
@@ -52,7 +51,7 @@ class ButtonControlList extends Component {
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
 	render() {
-		const { activeItem, canvas, ruler } = this.state
+		const { activeItem, canvas } = this.state
 
 		return (
 			<div>
@@ -83,7 +82,7 @@ class ButtonControlList extends Component {
 				</Menu>
 				<Menu icon style={styles.menu2}>
 					<Menu.Item style={styles.menuItem} name="object" active={activeItem === 'object'} onClick={this.handleItemClick}>
-						<Icon name="signup" />
+						<ObjectControlBar canvas={canvas} />
 					</Menu.Item>
 				</Menu>
 			</div>

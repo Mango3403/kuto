@@ -66,9 +66,7 @@ class FilterBar extends Component {
                 mtr: false
             });
 
-            canvas.remove(canvas.getActiveObject());
-            canvas.add(obj);
-            canvas.setActiveObject(obj);
+            canvas.remove(canvas.getActiveObject()).add(obj).setActiveObject(obj);
         });
 
     }
@@ -105,7 +103,7 @@ class FilterBar extends Component {
                 <Popup
                     trigger={
                         <Icon
-                            onClick={(e) => {
+                            onClick={e => {
                                 e.preventDefault();
                                 if (canvas.getActiveObject() && canvas.getActiveObject().type == 'image') {
                                     this.toggleVisibility();
@@ -117,7 +115,7 @@ class FilterBar extends Component {
                     }
                     content='请选中一张图片'
                 />
-                <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible}>
                     <Icon onClick={this.toggleVisibility} name='close' />
                     <br />
                     <List>

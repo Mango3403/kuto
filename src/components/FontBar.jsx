@@ -5,13 +5,14 @@ import { fabric } from 'fabric';
 const styles = {
     text: {
         // 银色
-        color: '#D6D8EA',
+        // color: '#D6D8EA',
+        color: '#9698AA',
         fontSize: 40
     },
     sideBar: {
         fontSize: '0.5em'
     }
-}
+};
 
 class FontBar extends Component {
 
@@ -28,8 +29,8 @@ class FontBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({  
-            canvas: nextProps.canvas 
+        this.setState({
+            canvas: nextProps.canvas
         });
     }
 
@@ -72,10 +73,9 @@ class FontBar extends Component {
         const { visible, text, canvas } = this.state;
         return (
             <div>
-                <Icon onClick={this.toggleVisibility} name='font' />
-                <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
-                    <Icon onClick={this.toggleVisibility} name='close' />
-                    <br />
+                <Icon onClick={this.toggleVisibility} name="font" />
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible}>
+                    <Icon onClick={this.toggleVisibility} name="close" />
                     <Button primary onClick={this.addText}>添加文字</Button>
                     {
                         text.map(i => (

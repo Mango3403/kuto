@@ -11,14 +11,13 @@ const styles = {
         padding: '5px', height: 'auto'
     },
     img: {
-
         margin: '5px 0',
-        height: '150px',
+        height: '120px',
         boxShadow: '0 0 5px grey'
     },
     imgObj: {
         // 银色
-        color: '#D6D8EA',
+        color: '#9698AA',
     },
     imageGroup: {
         display: 'flex',
@@ -26,16 +25,16 @@ const styles = {
     },
     fileInputContainer: {
         float: 'left',
-        margin: '0 5px',
-        height: '150px',
+        margin: '5px',
+        height: '120px',
         width: '100px',
         boxShadow: '0 0 10px #3195e0',
         background: 'url(' + upload + ') no-repeat',
         backgroundSize: '70px 70px',
-        backgroundPosition: '14px 40px',
+        backgroundPosition: '15px 30px',
     },
     fileInput: {
-        height: '150px',
+        height: '120px',
         fontSize: '1px',
         position: 'relative',
         left: 0,
@@ -85,13 +84,12 @@ class Gallery extends Component {
         reader.readAsDataURL(file);
         reader.onload = (event) => {
             img.src = reader.result;
+            gallery.unshift(img);
+
+            this.setState({
+                gallery: gallery
+            });
         }
-
-        gallery.push(img);
-
-        this.setState({
-            gallery: gallery
-        });
     }
 
     addImage(e) {
@@ -116,8 +114,7 @@ class Gallery extends Component {
                 threshold: 90,
                 distance: 40
             }));
-
-            img.filters.push(new fabric.Image.filters.Multiply({
+            img.filters.push(new fabric.Image.filters.Tint({
                 color: styles.imgObj.color
             }));
 
@@ -139,9 +136,9 @@ class Gallery extends Component {
                 </div>
                 <Image.Group style={styles.imageGroup}>
                     {
-                        gallery.map(i => (
+                        gallery.map((i, index) => (
                             <Popup
-                                key={i.id}
+                                key={index}
                                 trigger={
                                     <Image onDoubleClick={this.addImage} src={i.src} style={styles.img} />
                                 }

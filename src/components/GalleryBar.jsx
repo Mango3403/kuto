@@ -8,10 +8,6 @@ import img1 from '../images/1.jpeg';
 import img2 from '../images/2.jpeg';
 import img3 from '../images/3.jpeg';
 
-// const colors = {
-//     silver: '#D6D8EA'
-// };
-
 const styles = {
     sideBar: {
         fontSize: '0.5em'
@@ -19,60 +15,21 @@ const styles = {
 };
 
 class GalleryBar extends Component {
-    constructor() {
-        super();
 
-        this.state = {
-            visible: false,
-            gallery: [
-                { id: 0, src: img0 },
-                { id: 1, src: img1 },
-                { id: 2, src: img2 },
-                { id: 3, src: img3 }
-            ],
-            // images: [],
-            canvas: null
-        }
-
-        // this.addImage = this.addImage.bind(this);
-        // this.uploadImage = this.uploadImage.bind(this);
+    state = {
+        visible: false,
+        gallery: [
+            { src: img0 },
+            { src: img1 },
+            { src: img2 },
+            { src: img3 }
+        ],
+        canvas: null
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({ canvas: nextProps.canvas })
     }
-
-    // addImage() {
-    //     const { images, canvas, visible } = this.state;
-
-    //     for (let image of images) {
-    //         fabric.Image.fromURL(image.src, (img) => {
-
-    //             img.scale(0.3);
-
-    //             canvas.viewportCenterObject(img);
-    //             img.lockRotation = true;
-    //             img.hasBorders = false;
-
-    //             img.filters.push(new fabric.Image.filters.Grayscale());
-    //             img.filters.push(new fabric.Image.filters.RemoveWhite({
-    //                 threshold: 90,
-    //                 distance: 40
-    //             }));
-
-    //             img.filters.push(new fabric.Image.filters.Multiply({
-    //                 color: colors.silver
-    //             }));
-
-    //             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
-    //         });
-    //     }
-
-    //     this.setState({
-    //         images: [],
-    //         visible: !visible
-    //     });
-    // }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
@@ -82,13 +39,13 @@ class GalleryBar extends Component {
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='picture' />
-                <Sidebar style={styles.sideBar} as={Message} animation='push' width='thin' direction='bottom' visible={visible}>
-                    <Icon onClick={this.toggleVisibility} name='close' />
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible}>
+                    <Icon onClick={this.toggleVisibility} name="close" />
                     <br />
                     <Gallery gallery={gallery} canvas={canvas} />
                 </Sidebar>
             </div>
-        )
+        );
     }
 }
 

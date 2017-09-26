@@ -13,13 +13,13 @@ const styles = {
 };
 
 const colors = [
-    {name: '灰', color: 'grey'},    
-    {name: '红', color: 'red'},
-    {name: '黄', color: 'yellow'},
-    {name: '粉', color: 'pink'},
-    {name: '绿', color: 'green'},
-    {name: '蓝', color: 'blue'},
-    {name: '黑', color: 'black'}
+    { name: '灰', color: 'grey' },
+    { name: '红', color: 'red' },
+    { name: '黄', color: 'yellow' },
+    { name: '粉', color: 'pink' },
+    { name: '绿', color: 'green' },
+    { name: '蓝', color: 'blue' },
+    { name: '黑', color: 'black' }
 ];
 
 class BackgroundBar extends Component {
@@ -32,7 +32,7 @@ class BackgroundBar extends Component {
             canvasvisible: false,
             canvas: props.canvas,
             background: [
-                { id: 0, src: bg1 },
+                { src: bg1 }
             ]
         }
 
@@ -83,22 +83,20 @@ class BackgroundBar extends Component {
                 <Icon onClick={this.toggleVisibility} name='delicious' />
                 <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
                     <Icon onClick={this.toggleVisibility} name='close' />
-                    <br />
                     <Item.Group>
                         <Item>
-                            <Menu inverted widths={8} style={{overflowX: 'auto'}}>
+                            <Menu inverted widths={8} style={{ overflowX: 'auto' }} size="mini">
                                 {colors.map(c => (
                                     <Menu.Item key={c.name} name={c.name} active={active === c.color} color={c.color} onClick={this.handleClick} />
                                 ))}
                             </Menu>
                         </Item>
-                        <br />
                         <Item>
                             <Image.Group size='tiny'>
                                 {
-                                    background.map(i => (
+                                    background.map((i, index) => (
                                         <Image
-                                            key={i.id}
+                                            key={index}
                                             src={i.src}
                                             style={styles.img}
                                             floated='left'
