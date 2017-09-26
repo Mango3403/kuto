@@ -22,7 +22,13 @@ const styles = {
         height: '500px',
         userSelect: 'none',
         boxShadow: '0 0 2px grey',
-        borderRadius: '5px',
+        borderRadius: '5px'
+    },
+    sc: {
+        position: 'absolute',
+        top: '15px',
+        left: '4px',
+        zIndex: '-1'
     }
 };
 
@@ -76,7 +82,7 @@ class Custom extends React.Component {
         this.state = {
             canvas: null,
             rul: null
-        }
+        };
     }
 
     componentDidMount() {
@@ -86,23 +92,27 @@ class Custom extends React.Component {
     init() {
         const rul = document.getElementById('ruler');
 
-        const
-            canvas = new fabric.Canvas('c', {
-                preserveObjectStacking: true,
-                selection: false,
-                width: window.innerWidth - 10,
-                height: 500
-            }),
-            config = {
-                strokeWidth: 1,
-                fill: 'red',
-                stroke: 'red',
-                originX: 'center',
-                originY: 'center',
-                selectable: false
-            };
+        const canvas = new fabric.Canvas('c', {
+            preserveObjectStacking: true,
+            selection: false,
+            width: window.innerWidth - 10,
+            height: 500
+        });
 
-        canvas.stopContextMenu = true;
+        const staticCanvas = new fabric.StaticCanvas('sc', {
+            width: window.innerWidth - 10,
+            height: 500
+        });
+
+        canvas.stopContextMenu = true;        
+
+        const config = {
+            strokeWidth: 1,
+            fill: 'red',
+            stroke: 'red',
+            originX: 'center',
+            originY: 'center'
+        };
 
         const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], config);
         const hintY = hintX.clone(i => {
@@ -118,8 +128,7 @@ class Custom extends React.Component {
         const bry = bly.clone(i => i.left += 200);
 
         const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry], config);
-        canvas.add(group);
-        group.bringForward();
+        staticCanvas.add(group);
 
         const rul1 = new ruler({
             container: rul
@@ -143,6 +152,7 @@ class Custom extends React.Component {
             <div style={styles.custom}>
                 <div id="ruler" style={styles.ruler}></div>
                 <canvas id="c" style={styles.c}>您的浏览器不支持 canvas</canvas>
+                <canvas id="sc" style={styles.sc}></canvas>
                 <ButtonControlList canvas={canvas} rul={rul} />
             </div>
         );
