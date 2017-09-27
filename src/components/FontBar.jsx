@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Sidebar, Icon, Button, Accordion, Input, Message } from 'semantic-ui-react';
+import { Sidebar, Icon, Accordion, Input, Message } from 'semantic-ui-react';
 import { fabric } from 'fabric';
+import 'fabric-customise-controls';
 
 const styles = {
     text: {
@@ -16,16 +17,18 @@ const styles = {
 
 class FontBar extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             visible: false,
-            canvas: props.canvas,
-            text: []
-        }
+            canvas: null,
+            text: null
+        };
 
         this.addText = this.addText.bind(this);
+        this.addTextNew = this.addTextNew.bind(this);
+        this.updateText = this.updateText.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -34,15 +37,28 @@ class FontBar extends Component {
         });
     }
 
+    componentDidMount() {
+        fabric.Canvas.prototype.customiseControls({
+            bl: {
+                action: this.updateText,
+                cursor: 'pointer'
+            }
+        });
+    }
+
+    updateText(e, target) {
+        this.toggleVisibility();
+        this.setState({
+            text: target
+        });
+    }
+
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     addText() {
-        const
-            { text, canvas } = this.state,
-            newText = {
-                id: text.length,
-                obj: null
-            };
+        console.log(fabric.Canvas.prototype);
+
+        const { text, canvas } = this.state;
 
         const t = new fabric.Text('输入文字', {
             fontSize: styles.text.fontSize,
@@ -60,51 +76,82 @@ class FontBar extends Component {
         canvas.viewportCenterObject(t);
         canvas.add(t);
         canvas.setActiveObject(t);
+    }
 
-        newText.obj = t;
-        text.push(newText);
+    addTextNew() {
+        const { canvas } = this.state;
 
-        this.setState({
-            text: text
-        });
+        if (canvas.getActiveObject()) {
+            if (canvas.getActiveObject().isType('text')) {
+                this.toggleVisibility();
+            }
+        }
     }
 
     render() {
         const { visible, text, canvas } = this.state;
         return (
             <div>
-                <Icon onClick={this.toggleVisibility} name="font" />
+                <Icon
+                    onClick={this.addText}
+                    name="font"
+                />
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible}>
                     <Icon onClick={this.toggleVisibility} name="close" />
-                    <Button primary onClick={this.addText}>添加文字</Button>
-                    {
-                        text.map(i => (
-                            <Accordion
-                                key={i.id}
-                            >
-                                <Accordion.Title>
-                                    <Icon name='dropdown' />
-                                    <Input
-                                        placeholder='输入文字'
-                                        onChange={({ target: { value } }) => {
-                                            text[i.id].obj.text = value;
-                                            this.setState({
-                                                text: text
-                                            });
-                                            canvas.renderAll();
-                                        }}
-                                    />
-                                </Accordion.Title>
-                                <Accordion.Content>
-                                    <p>字体\斜体\粗体</p>
-                                </Accordion.Content>
-                            </Accordion>
-                        ))
-                    }
+                    <Accordion>
+                        <Accordion.Title>
+                            <Icon name='dropdown' />
+                            <Input
+                                placeholder={text ? text.text : '输入文字'}
+                                onChange={({ target: { value } }) => {
+                                    text.text = value;
+                                    this.setState({
+                                        text: text
+                                    });
+                                    canvas.renderAll();
+                                }}
+                            />
+                        </Accordion.Title>
+                    </Accordion>
                 </Sidebar>
             </div>
-        )
+        );
     }
 }
 
 export default FontBar;
+
+{/* <div>
+<Icon
+    onClick={this.addTextNew}
+    name="font"
+/>
+<Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible}>
+    <Icon onClick={this.toggleVisibility} name="close" />
+    <Button primary onClick={this.addText}>添加文字</Button>
+    {
+        text.map(i => (
+            <Accordion
+                key={i.id}
+            >
+                <Accordion.Title>
+                    <Icon name='dropdown' />
+                    <Input
+                        placeholder='输入文字'
+                        onChange={({ target: { value } }) => {
+                            text[i.id].obj.text = value;
+                            this.setState({
+                                text: text
+                            });
+                            canvas.renderAll();
+                        }}
+                    />
+                </Accordion.Title>
+                <Accordion.Content>
+                    <p>字体\斜体\粗体</p>
+                </Accordion.Content>
+            </Accordion>
+        ))
+    }
+</Sidebar>
+</div> */}

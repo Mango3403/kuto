@@ -105,7 +105,7 @@ class FilterBar extends Component {
                         <Icon
                             onClick={e => {
                                 e.preventDefault();
-                                if (canvas.getActiveObject() && canvas.getActiveObject().type == 'image') {
+                                if (canvas.getActiveObject() && canvas.getActiveObject().isType('image')) {
                                     this.toggleVisibility();
                                 }
                                 return false;

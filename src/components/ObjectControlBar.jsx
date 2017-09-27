@@ -13,6 +13,8 @@ class ObjectControlBar extends React.Component {
 
         this.sendToBack = this.sendToBack.bind(this);
         this.sendToFront = this.sendToFront.bind(this);
+        this.bringForward = this.bringForward.bind(this);
+        this.sendBackwards = this.sendBackwards.bind(this);
         this.center = this.center.bind(this);
     }
 
@@ -36,6 +38,18 @@ class ObjectControlBar extends React.Component {
         const { canvas } = this.state;
 
         canvas.sendToFront(canvas.getActiveObject());
+    }
+
+    bringForward() {
+        const { canvas } = this.state;
+
+        canvas.bringForward(canvas.getActiveObject());
+    }
+
+    sendBackwards() {
+        const { canvas } = this.state;
+
+        canvas.sendBackwards(canvas.getActiveObject());
     }
 
     center() {
@@ -68,45 +82,20 @@ class ObjectControlBar extends React.Component {
                 <Sidebar as={Message} animation="overlay" direction="bottom" visible={visible}>
                     <Icon onClick={this.toggleVisibility} name="close" size="tiny" />
                     <div>
-                        <Button animated='fade' onClick={this.sendToFront}>
-                            <Button.Content visible>
-                                置顶
-                            </Button.Content>
-                            <Button.Content hidden>
-                                <Icon name="angle double up" />
-                            </Button.Content>
+                        <Button basic onClick={this.sendToFront}>
+                            置顶
                         </Button>
-                        <Button animated='fade' onClick={this.sendToBack}>
-                            <Button.Content visible>
-                                置底
-                            </Button.Content>
-                            <Button.Content hidden>
-                                <Icon name="angle double down" />
-                            </Button.Content>
+                        <Button basic onClick={this.sendToBack}>
+                            置底
                         </Button>
-                        <Button animated='fade'>
-                            <Button.Content visible>
-                                移至上一层
-                            </Button.Content>
-                            <Button.Content hidden>
-                                <Icon name="angle up" />
-                            </Button.Content>
+                        <Button basic onClick={this.bringForward}>
+                            向上一层
                         </Button>
-                        <Button animated='fade'>
-                            <Button.Content visible>
-                                移至下一层
-                            </Button.Content>
-                            <Button.Content hidden>
-                                <Icon name="angle down" />
-                            </Button.Content>
+                        <Button basic onClick={this.sendBackwards}>
+                            向下一层
                         </Button>
-                        <Button animated='fade' onClick={this.center}>
-                            <Button.Content visible>
-                                中心对齐
-                            </Button.Content>
-                            <Button.Content hidden>
-                                <Icon name="crosshairs" />
-                            </Button.Content>
+                        <Button basic onClick={this.center}>
+                            中心对齐
                         </Button>
                     </div>
                 </Sidebar>

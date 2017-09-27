@@ -65,12 +65,6 @@ fabric.Canvas.prototype.customiseControls({
     br: {
         action: 'scale',
         cursor: 'pointer'
-    },
-    bl: {
-        action: function (e, target) {
-            console.log(target);
-        },
-        cursor: 'pointer'
     }
 });
 
