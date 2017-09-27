@@ -6,8 +6,8 @@ import 'fabric-customise-controls';
 const styles = {
     text: {
         // 银色
-        // color: '#D6D8EA',
-        color: '#9698AA',
+        color: '#D6D8EA',
+        // color: '#9698AA',
         fontSize: 40
     },
     sideBar: {
