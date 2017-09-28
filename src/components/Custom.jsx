@@ -32,54 +32,64 @@ const styles = {
     }
 };
 
-fabric.Object.prototype.customiseCornerIcons({
-    settings: {
-        borderColor: 'black',
-        cornerSize: 50,
-        cornerShape: 'rect',
-        cornerPadding: 20
-    },
-    tl: {
-        icon: del
-    },
-    tr: {
-        icon: rotate
-    },
-    br: {
-        icon: zoom
-    },
-    bl: {
-        icon: change
-    }
-});
-
-fabric.Canvas.prototype.customiseControls({
-    tl: {
-        action: 'remove',
-        cursor: 'pointer'
-    },
-    tr: {
-        action: 'rotate',
-        cursor: 'pointer'
-    },
-    br: {
-        action: 'scale',
-        cursor: 'pointer'
-    }
-});
-
 class Custom extends React.Component {
 
     constructor() {
         super();
 
         this.state = {
-            canvas: null,
-            rul: null
+            canvas: null
         };
+
+        this.saveLocalStorage = this.saveLocalStorage.bind(this);
+    }
+    
+    componentWillUpdate() {
+        window.onbeforeunload = this.saveLocalStorage
+    }
+
+    saveLocalStorage() {
+        const { canvas } = this.state;
+        localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));
     }
 
     componentDidMount() {
+        fabric.Object.prototype.customiseCornerIcons({
+            settings: {
+                borderColor: 'black',
+                cornerSize: 50,
+                cornerShape: 'rect',
+                cornerPadding: 20
+            },
+            tl: {
+                icon: del
+            },
+            tr: {
+                icon: rotate
+            },
+            br: {
+                icon: zoom
+            },
+            bl: {
+                icon: change
+            }
+        });
+
+        fabric.Canvas.prototype.customiseControls({
+            tl: {
+                action: 'remove',
+                cursor: 'pointer'
+            },
+            tr: {
+                action: 'rotate',
+                cursor: 'pointer'
+            },
+            br: {
+                action: 'scale',
+                cursor: 'pointer'
+            }
+        });
+
         this.init();
     }
 
@@ -98,7 +108,19 @@ class Custom extends React.Component {
             height: 500
         });
 
-        canvas.stopContextMenu = true;        
+        canvas.stopContextMenu = true;
+
+        const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null;
+
+        canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas), (o, object) => {
+            object.lockRotation = false;
+            object.hasBorders = true;
+            object.lockUniScaling = true;
+            object.centeredScaling = true;
+            object.setControlsVisibility({
+                mtr: false
+            });
+        });
 
         const config = {
             strokeWidth: 1,
@@ -134,20 +156,19 @@ class Custom extends React.Component {
         });
 
         this.setState({
-            canvas: canvas,
-            rul: rul1
+            canvas: canvas
         });
     }
 
     render() {
-        const { canvas, rul } = this.state;
+        const { canvas } = this.state;
 
         return (
             <div style={styles.custom}>
                 <div id="ruler" style={styles.ruler}></div>
                 <canvas id="c" style={styles.c}>您的浏览器不支持 canvas</canvas>
                 <canvas id="sc" style={styles.sc}></canvas>
-                <ButtonControlList canvas={canvas} rul={rul} />
+                <ButtonControlList canvas={canvas} />
             </div>
         );
     }

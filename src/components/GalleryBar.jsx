@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-// import ReactDOM from 'react-dom';
 import { Message, Sidebar, Icon } from 'semantic-ui-react';
-// import { fabric } from 'fabric';
 import Gallery from './Gallery';
 import img0 from '../images/0.jpeg';
 import img1 from '../images/1.jpeg';
@@ -28,7 +26,7 @@ class GalleryBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ canvas: nextProps.canvas })
+        this.setState({ canvas: nextProps.canvas });
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible })

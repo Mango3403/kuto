@@ -121,7 +121,7 @@ class Gallery extends Component {
             img.applyFilters(canvas.add(img).renderAll.bind(canvas));
             canvas.setActiveObject(img);
 
-            console.log(canvas);            
+            // localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));            
         });
 
     }

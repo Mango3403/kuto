@@ -121,7 +121,7 @@ class FilterBar extends Component {
                     <List>
                         <List.Item>
                             <Label size="large" horizontal>过滤梯度: </Label>
-                            <input type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} />
+                            <input type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
                             <Button.Group size="mini">
                                 <Button disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
                                 <Label>{imgObj.distance}</Label>
@@ -130,7 +130,7 @@ class FilterBar extends Component {
                         </List.Item>
                         <List.Item>
                             <Label size="large" horizontal>过滤像素: </Label>
-                            <input type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} />
+                            <input type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
                             <Button.Group size="mini">
                                 <Button disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
                                 <Label>{imgObj.threshold}</Label>

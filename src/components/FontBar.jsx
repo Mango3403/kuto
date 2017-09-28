@@ -56,8 +56,6 @@ class FontBar extends Component {
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     addText() {
-        console.log(fabric.Canvas.prototype);
-
         const { text, canvas } = this.state;
 
         const t = new fabric.Text('输入文字', {
@@ -76,6 +74,8 @@ class FontBar extends Component {
         canvas.viewportCenterObject(t);
         canvas.add(t);
         canvas.setActiveObject(t);
+
+        // localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));        
     }
 
     addTextNew() {
