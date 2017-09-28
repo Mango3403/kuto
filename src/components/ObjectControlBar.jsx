@@ -12,7 +12,7 @@ class ObjectControlBar extends React.Component {
         };
 
         this.sendToBack = this.sendToBack.bind(this);
-        this.sendToFront = this.sendToFront.bind(this);
+        this.bringToFront = this.bringToFront.bind(this);
         this.bringForward = this.bringForward.bind(this);
         this.sendBackwards = this.sendBackwards.bind(this);
         this.center = this.center.bind(this);
@@ -34,10 +34,10 @@ class ObjectControlBar extends React.Component {
         canvas.sendToBack(canvas.getActiveObject());
     }
 
-    sendToFront() {
+    bringToFront() {
         const { canvas } = this.state;
 
-        canvas.sendToFront(canvas.getActiveObject());
+        canvas.bringToFront(canvas.getActiveObject());
     }
 
     bringForward() {
@@ -82,7 +82,7 @@ class ObjectControlBar extends React.Component {
                 <Sidebar as={Message} animation="overlay" direction="bottom" visible={visible}>
                     <Icon onClick={this.toggleVisibility} name="close" size="tiny" />
                     <div>
-                        <Button basic onClick={this.sendToFront}>
+                        <Button basic onClick={this.bringToFront}>
                             置顶
                         </Button>
                         <Button basic onClick={this.sendToBack}>

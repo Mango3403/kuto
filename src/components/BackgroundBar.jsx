@@ -86,9 +86,11 @@ class BackgroundBar extends Component {
                     <Item.Group>
                         <Item>
                             <Menu inverted widths={8} style={{ overflowX: 'auto' }} size="mini">
-                                {colors.map(c => (
-                                    <Menu.Item key={c.name} name={c.name} active={active === c.color} color={c.color} onClick={this.handleClick} />
-                                ))}
+                                {
+                                    colors.map(c => (
+                                        <Menu.Item key={c.name} name={c.name} active={active === c.color} color={c.color} onClick={this.handleClick} />
+                                    ))
+                                }
                             </Menu>
                         </Item>
                         <Item>
