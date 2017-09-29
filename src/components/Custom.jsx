@@ -28,12 +28,74 @@ const styles = {
         position: 'absolute',
         top: '15px',
         left: '4px',
-        zIndex: '-1'
+        zIndex: -1
+    },
+    tc: {
+        position: 'absolute',
+        width: 'calc(100% - 10px)',
+        height: '500px'
+    },
+    tl: {
+        borderTop: '0.1px solid red',
+        borderLeft: '0.1px solid red',
+        position: 'absolute',
+        width: '10px',
+        height: '10px',
+        top: '150px',
+        left: 'calc((100% - 200px) / 2)',
+        zIndex: '1'
+    },
+    tr: {
+        borderTop: '0.1px solid red',
+        borderRight: '0.1px solid red',
+        position: 'absolute',
+        width: '10px',
+        height: '10px',
+        top: '150px',
+        right: 'calc((100% - 200px) / 2)',
+        zIndex: '1'        
+    },
+    bl: {
+        borderLeft: '0.1px solid red',
+        borderBottom: '0.1px solid red',
+        position: 'absolute',
+        width: '10px',
+        height: '10px',
+        top: '340px',
+        left: 'calc((100% - 200px) / 2)',
+        zIndex: '1'        
+    },
+    br: {
+        borderRight: '0.1px solid red',
+        borderBottom: '0.1px solid red',
+        position: 'absolute',
+        width: '10px',
+        height: '10px',
+        top: '340px',
+        right: 'calc((100% - 200px) / 2)',
+        zIndex: '1'        
+    },
+    ch: {
+        borderTop: '0.1px solid red',
+        position: 'absolute',
+        width: '10px',
+        height: '10px',
+        top: '250px',
+        left: 'calc(100% / 2 - 5px)',
+        zIndex: '1'
+    },
+    cv: {
+        borderRight: '0.1px solid red',
+        position: 'absolute',
+        width: '10px',
+        height: '10px',
+        top: '245px',
+        left: 'calc(100% / 2 - 10px)',
+        zIndex: '1'
     }
 };
 
 class Custom extends React.Component {
-
     constructor() {
         super();
 
@@ -99,16 +161,10 @@ class Custom extends React.Component {
         const canvas = new fabric.Canvas('c', {
             preserveObjectStacking: true,
             selection: false,
+            stopContextMenu: true,
             width: window.innerWidth - 10,
             height: 500
         });
-
-        const staticCanvas = new fabric.StaticCanvas('sc', {
-            width: window.innerWidth - 10,
-            height: 500
-        });
-
-        canvas.stopContextMenu = true;
 
         const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null;
 
@@ -121,30 +177,6 @@ class Custom extends React.Component {
                 mtr: false
             });
         });
-
-        const config = {
-            strokeWidth: 1,
-            fill: 'red',
-            stroke: 'red',
-            originX: 'center',
-            originY: 'center'
-        };
-
-        const hintX = new fabric.Line([canvas.width / 2 - 5, canvas.height / 2, canvas.width / 2 + 5, canvas.height / 2], config);
-        const hintY = hintX.clone(i => {
-            i.angle = 90;
-        });
-        const tlx = new fabric.Line([(canvas.width - 200) / 2, (canvas.height - 200) / 2, (canvas.width - 200) / 2 + 10, (canvas.height - 200) / 2]);
-        const tly = new fabric.Line([(canvas.width - 200) / 2, (canvas.height - 200) / 2, (canvas.width - 200) / 2, (canvas.height - 200) / 2 + 10]);
-        const trx = tlx.clone(i => i.left += 200 - i.width);
-        const tr_y = tly.clone(i => i.left += 200);
-        const blx = tlx.clone(i => i.top += 200);
-        const bly = tly.clone(i => i.top += 200 - i.height);
-        const brx = blx.clone(i => i.left += 200 - i.width);
-        const bry = bly.clone(i => i.left += 200);
-
-        const group = new fabric.Group([hintX, hintY, tlx, tly, trx, tr_y, blx, bly, brx, bry], config);
-        staticCanvas.add(group);
 
         const rul1 = new ruler({
             container: rul
@@ -165,9 +197,16 @@ class Custom extends React.Component {
 
         return (
             <div style={styles.custom}>
+                <div style={styles.tc}>
+                    <div style={styles.tl}></div>
+                    <div style={styles.tr}></div>
+                    <div style={styles.bl}></div>
+                    <div style={styles.br}></div>
+                    <div style={styles.ch}></div>
+                    <div style={styles.cv}></div>
+                </div>
                 <div id="ruler" style={styles.ruler}></div>
                 <canvas id="c" style={styles.c}>您的浏览器不支持 canvas</canvas>
-                <canvas id="sc" style={styles.sc}></canvas>
                 <ButtonControlList canvas={canvas} />
             </div>
         );

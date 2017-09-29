@@ -16,7 +16,6 @@ const styles = {
 };
 
 class FontBar extends Component {
-
     constructor() {
         super();
 
@@ -73,9 +72,7 @@ class FontBar extends Component {
 
         canvas.viewportCenterObject(t);
         canvas.add(t);
-        canvas.setActiveObject(t);
-
-        // localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));        
+        canvas.setActiveObject(t);        
     }
 
     addTextNew() {
@@ -90,14 +87,15 @@ class FontBar extends Component {
 
     render() {
         const { visible, text, canvas } = this.state;
+
         return (
             <div>
                 <Icon
                     onClick={this.addText}
                     name="font"
                 />
-                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible}>
-                    <Icon onClick={this.toggleVisibility} name="close" />
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible} onDismiss={this.toggleVisibility}>
+                    {/* <Icon onClick={this.toggleVisibility} name="close" /> */}
                     <Accordion>
                         <Accordion.Title>
                             <Icon name='dropdown' />
@@ -120,38 +118,3 @@ class FontBar extends Component {
 }
 
 export default FontBar;
-
-{/* <div>
-<Icon
-    onClick={this.addTextNew}
-    name="font"
-/>
-<Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible}>
-    <Icon onClick={this.toggleVisibility} name="close" />
-    <Button primary onClick={this.addText}>添加文字</Button>
-    {
-        text.map(i => (
-            <Accordion
-                key={i.id}
-            >
-                <Accordion.Title>
-                    <Icon name='dropdown' />
-                    <Input
-                        placeholder='输入文字'
-                        onChange={({ target: { value } }) => {
-                            text[i.id].obj.text = value;
-                            this.setState({
-                                text: text
-                            });
-                            canvas.renderAll();
-                        }}
-                    />
-                </Accordion.Title>
-                <Accordion.Content>
-                    <p>字体\斜体\粗体</p>
-                </Accordion.Content>
-            </Accordion>
-        ))
-    }
-</Sidebar>
-</div> */}

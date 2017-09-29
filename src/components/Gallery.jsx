@@ -12,7 +12,7 @@ const styles = {
     },
     img: {
         margin: '5px 0',
-        height: '120px',
+        height: '80px',
         boxShadow: '0 0 5px grey'
     },
     imgObj: {
@@ -26,12 +26,12 @@ const styles = {
     fileInputContainer: {
         float: 'left',
         margin: '5px',
-        height: '120px',
+        height: '80px',
         width: '100px',
         boxShadow: '0 0 10px #3195e0',
         background: 'url(' + upload + ') no-repeat',
         backgroundSize: '70px 70px',
-        backgroundPosition: '15px 30px',
+        backgroundPosition: '15px 5px',
     },
     fileInput: {
         height: '120px',

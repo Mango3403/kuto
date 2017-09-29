@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Message, Image, Sidebar, Icon, Item } from 'semantic-ui-react';
+import { Button, Grid, Message, Image, Sidebar, Icon, Item } from 'semantic-ui-react';
 import bg1 from '../images/material/a.jpg';
 
 const styles = {
@@ -23,7 +23,6 @@ const colors = [
 ];
 
 class BackgroundBar extends Component {
-
     constructor(props) {
         super(props);
 
@@ -54,9 +53,6 @@ class BackgroundBar extends Component {
 
         canvas.setBackgroundColor(color);
         canvas.renderAll();
-        this.setState({
-            canvas: canvas
-        });
     }
 
     setImage(e, { src }) {
@@ -85,13 +81,13 @@ class BackgroundBar extends Component {
                     <Icon onClick={this.toggleVisibility} name='close' />
                     <Item.Group>
                         <Item>
-                            <Menu inverted widths={8} style={{ overflowX: 'auto' }} size="mini">
+                            <Grid columns={7}>
                                 {
                                     colors.map(c => (
-                                        <Menu.Item key={c.name} name={c.name} active={active === c.color} color={c.color} onClick={this.handleClick} />
+                                        <Button key={c.name} color={c.color} onClick={this.handleClick}>{c.name}</Button>
                                     ))
                                 }
-                            </Menu>
+                            </Grid>
                         </Item>
                         <Item>
                             <Image.Group size='tiny'>

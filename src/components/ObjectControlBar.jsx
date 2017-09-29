@@ -69,9 +69,11 @@ class ObjectControlBar extends React.Component {
                         <Icon
                             onClick={e => {
                                 e.preventDefault();
+                                
                                 if (canvas.getActiveObject()) {
                                     this.toggleVisibility();
                                 }
+                                
                                 return false;
                             }}
                             name='signup'
