@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
-import { Modal, Icon, Button, Header, Image } from 'semantic-ui-react';
+import { Checkbox, Modal, Icon, Button, Header, Image } from 'semantic-ui-react';
 
 class Save extends Component {
     constructor() {
         super();
 
         this.state = {
+            checked: false,
             open: false,
             saveImages: {
                 src: '',
@@ -16,7 +17,10 @@ class Save extends Component {
         }
 
         this.download = this.download.bind(this);
+        this.close = this.close.bind(this);
     }
+
+    toggle = () => this.setState({ checked: !this.state.checked })
 
     componentWillReceiveProps(nextProps) {
         this.setState({
@@ -32,7 +36,16 @@ class Save extends Component {
         });
     }
 
-    close = () => this.setState({ open: false })
+    close() {
+        const { checked } = this.state;
+
+        if (checked) {
+            console.log(checked);
+            this.download();
+        }
+
+        this.setState({ open: false })
+    }
 
     saveImage() {
         const { canvas } = this.state;
@@ -62,11 +75,9 @@ class Save extends Component {
                 <Modal dimmer={dimmer} open={open} onClose={this.close}>
                     <Modal.Header>保存完毕</Modal.Header>
                     <Modal.Content image>
-                        <Image wrapped size='medium' src={saveImages.src} />
+                        <Image wrapped size='small' bordered src={saveImages.src} />
                         <Modal.Description>
-                            <Header>处理你的图片</Header>
-                            <p>保存图片到本地?</p>
-                            <Button onClick={this.download}>是</Button>
+                            <Checkbox label='保存图片到本地?' onChange={this.toggle} checked={this.state.checked} />
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>

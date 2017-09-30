@@ -11,6 +11,8 @@ const styles = {
         fontSize: 40
     },
     sideBar: {
+        padding: '5px',
+        paddingRight: '25px',
         fontSize: '0.5em'
     }
 };
@@ -52,6 +54,7 @@ class FontBar extends Component {
         });
     }
 
+    openVisibility = () => this.setState({ visible: true })
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     addText() {
@@ -72,7 +75,8 @@ class FontBar extends Component {
 
         canvas.viewportCenterObject(t);
         canvas.add(t);
-        canvas.setActiveObject(t);        
+        canvas.setActiveObject(t); 
+        this.openVisibility();       
     }
 
     addTextNew() {
@@ -95,7 +99,6 @@ class FontBar extends Component {
                     name="font"
                 />
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible} onDismiss={this.toggleVisibility}>
-                    {/* <Icon onClick={this.toggleVisibility} name="close" /> */}
                     <Accordion>
                         <Accordion.Title>
                             <Icon name='dropdown' />

@@ -8,6 +8,8 @@ const styles = {
         height: '50px'
     },
     sideBar: {
+        padding: '5px',
+        paddingRight: '25px',
         fontSize: '0.5em'
     }
 };
@@ -16,7 +18,6 @@ const colors = [
     { name: '灰', color: 'grey' },
     { name: '红', color: 'red' },
     { name: '黄', color: 'yellow' },
-    { name: '粉', color: 'pink' },
     { name: '绿', color: 'green' },
     { name: '蓝', color: 'blue' },
     { name: '黑', color: 'black' }
@@ -58,7 +59,7 @@ class BackgroundBar extends Component {
     setImage(e, { src }) {
         const { canvas } = this.state;
 
-        canvas.setBackgroundImage(e.target.src, canvas.renderAll.bind(canvas), {
+        canvas.setBackgroundImage(src, canvas.renderAll.bind(canvas), {
             opacity: 0.5,
             originX: 'left',
             originY: 'top'
@@ -81,12 +82,13 @@ class BackgroundBar extends Component {
                     <Icon onClick={this.toggleVisibility} name='close' />
                     <Item.Group>
                         <Item>
-                            <Grid columns={7}>
+                            <Grid columns={8}>
                                 {
                                     colors.map(c => (
                                         <Button key={c.name} color={c.color} onClick={this.handleClick}>{c.name}</Button>
                                     ))
                                 }
+                                <input type="color" onChange={e => this.setColor(e.target.value)} />
                             </Grid>
                         </Item>
                         <Item>

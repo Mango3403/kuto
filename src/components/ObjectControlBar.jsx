@@ -1,6 +1,14 @@
 import React from 'react';
 import { Icon, Sidebar, Message, Popup, Button } from 'semantic-ui-react';
 
+const styles = {
+    sideBar: {
+        padding: '5px',
+        paddingRight: '25px',
+        fontSize: '0.5em'
+    }
+};
+
 class ObjectControlBar extends React.Component {
 
     constructor() {
@@ -67,22 +75,18 @@ class ObjectControlBar extends React.Component {
                 <Popup
                     trigger={
                         <Icon
-                            onClick={e => {
-                                e.preventDefault();
-                                
-                                if (canvas.getActiveObject()) {
-                                    this.toggleVisibility();
-                                }
-                                
-                                return false;
-                            }}
-                            name='signup'
+                            name="signup"
                         />
                     }
-                    content='请选中一个对象'
+                    on="click"
+                    onOpen={e => {
+                        if (canvas.getActiveObject()) {
+                            this.toggleVisibility();
+                        }
+                    }}
+                    content="请选中一个对象"
                 />
-                <Sidebar as={Message} animation="overlay" direction="bottom" visible={visible}>
-                    <Icon onClick={this.toggleVisibility} name="close" size="tiny" />
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible} onDismiss={this.toggleVisibility}>
                     <div>
                         <Button basic onClick={this.bringToFront}>
                             置顶

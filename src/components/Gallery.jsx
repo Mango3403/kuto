@@ -7,11 +7,8 @@ import upload from '../images/upload.png';
 const timeoutLength = 2500;
 
 const styles = {
-    gallery: {
-        padding: '5px', height: 'auto'
-    },
     img: {
-        margin: '5px 0',
+        margin: '5px 3px',
         height: '80px',
         boxShadow: '0 0 5px grey'
     },
@@ -27,11 +24,11 @@ const styles = {
         float: 'left',
         margin: '5px',
         height: '80px',
-        width: '100px',
+        width: '50px',
         boxShadow: '0 0 10px #3195e0',
         background: 'url(' + upload + ') no-repeat',
-        backgroundSize: '70px 70px',
-        backgroundPosition: '15px 5px',
+        backgroundSize: '40px 40px',
+        backgroundPosition: '5px 15px',
     },
     fileInput: {
         height: '120px',
@@ -130,7 +127,7 @@ class Gallery extends Component {
         const { gallery } = this.state;
 
         return (
-            <div style={styles.gallery}>
+            <div>
                 <div style={styles.fileInputContainer}>
                     <input style={styles.fileInput} type="file" ref="file" onChange={this.uploadImage} />
                 </div>

@@ -5,7 +5,8 @@ import { Button, Sidebar, Icon, Message, Popup, List, Label } from 'semantic-ui-
 const styles = {
     sideBar: {
         fontSize: '0.5em',
-        padding: '5px'
+        padding: '5px',
+        paddingRight: '25px',
     },
     input: {
         margin: '5px auto'
@@ -115,9 +116,7 @@ class FilterBar extends Component {
                     }
                     content='请选中一张图片'
                 />
-                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible}>
-                    <Icon onClick={this.toggleVisibility} name='close' />
-                    <br />
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible} onDismiss={this.toggleVisibility}>
                     <List>
                         <List.Item>
                             <Label size="large" horizontal>过滤梯度: </Label>

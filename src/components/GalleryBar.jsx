@@ -8,6 +8,8 @@ import img3 from '../images/3.jpeg';
 
 const styles = {
     sideBar: {
+        padding: '5px',
+        paddingRight: '25px',
         fontSize: '0.5em'
     }
 };
@@ -37,9 +39,7 @@ class GalleryBar extends Component {
         return (
             <div>
                 <Icon onClick={this.toggleVisibility} name='picture' />
-                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible}>
-                    <Icon onClick={this.toggleVisibility} name="close" />
-                    <br />
+                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible} onDismiss={this.toggleVisibility}>
                     <Gallery gallery={gallery} canvas={canvas} />
                 </Sidebar>
             </div>
