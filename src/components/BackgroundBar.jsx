@@ -32,12 +32,13 @@ class BackgroundBar extends Component {
             canvasvisible: false,
             canvas: props.canvas,
             background: [
-                { src: bg1 }
+                { id: 0, src: bg1 }
             ]
         }
 
         this.handleClick = this.handleClick.bind(this);
         this.setImage = this.setImage.bind(this);
+        this.clear = this.clear.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -56,7 +57,7 @@ class BackgroundBar extends Component {
         canvas.renderAll();
     }
 
-    setImage(e, { src }) {
+    setImage(src) {
         const { canvas } = this.state;
 
         canvas.setBackgroundImage(src, canvas.renderAll.bind(canvas), {
@@ -64,10 +65,12 @@ class BackgroundBar extends Component {
             originX: 'left',
             originY: 'top'
         });
+    }
 
-        this.setState({
-            canvas: canvas
-        });
+    clear() {
+        const { canvas } = this.state;
+
+        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible });
@@ -100,10 +103,11 @@ class BackgroundBar extends Component {
                                             src={i.src}
                                             style={styles.img}
                                             floated='left'
-                                            onClick={this.setImage}
+                                            onClick={e => this.setImage(e.target.src)}
                                         />
                                     ))
                                 }
+                                <Image src={null} style={styles.img} floated='left' onClick={this.clear} />
                             </Image.Group>
                         </Item>
                     </Item.Group>

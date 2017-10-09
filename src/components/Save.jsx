@@ -37,12 +37,14 @@ class Save extends Component {
     }
 
     close() {
-        const { checked } = this.state;
+        const { checked, canvas } = this.state;
 
         if (checked) {
             console.log(checked);
             this.download();
         }
+
+        canvas.clear();
 
         this.setState({ open: false })
     }

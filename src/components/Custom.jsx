@@ -53,7 +53,7 @@ const styles = {
         height: '10px',
         top: '150px',
         right: 'calc((100% - 200px) / 2)',
-        zIndex: '1'        
+        zIndex: '1'
     },
     bl: {
         borderLeft: '0.1px solid red',
@@ -63,7 +63,7 @@ const styles = {
         height: '10px',
         top: '340px',
         left: 'calc((100% - 200px) / 2)',
-        zIndex: '1'        
+        zIndex: '1'
     },
     br: {
         borderRight: '0.1px solid red',
@@ -73,7 +73,7 @@ const styles = {
         height: '10px',
         top: '340px',
         right: 'calc((100% - 200px) / 2)',
-        zIndex: '1'        
+        zIndex: '1'
     },
     ch: {
         borderTop: '0.1px solid red',
@@ -105,7 +105,7 @@ class Custom extends React.Component {
 
         this.saveLocalStorage = this.saveLocalStorage.bind(this);
     }
-    
+
     componentWillUpdate() {
         window.onbeforeunload = this.saveLocalStorage
     }
@@ -196,7 +196,7 @@ class Custom extends React.Component {
         const { canvas } = this.state;
 
         return (
-            <div style={styles.custom}>
+            <div id="main" style={styles.custom}>
                 <div style={styles.tc}>
                     <div style={styles.tl}></div>
                     <div style={styles.tr}></div>

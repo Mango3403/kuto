@@ -28,7 +28,6 @@ class FontBar extends Component {
         };
 
         this.addText = this.addText.bind(this);
-        this.addTextNew = this.addTextNew.bind(this);
         this.updateText = this.updateText.bind(this);
     }
 
@@ -55,6 +54,7 @@ class FontBar extends Component {
     }
 
     openVisibility = () => this.setState({ visible: true })
+    closeVisibility = () => this.setState({ visible: false })
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     addText() {
@@ -76,17 +76,10 @@ class FontBar extends Component {
         canvas.viewportCenterObject(t);
         canvas.add(t);
         canvas.setActiveObject(t); 
-        this.openVisibility();       
-    }
-
-    addTextNew() {
-        const { canvas } = this.state;
-
-        if (canvas.getActiveObject()) {
-            if (canvas.getActiveObject().isType('text')) {
-                this.toggleVisibility();
-            }
-        }
+        this.setState({
+            text: t
+        });
+        this.openVisibility();  
     }
 
     render() {

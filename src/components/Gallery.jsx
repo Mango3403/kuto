@@ -31,7 +31,7 @@ const styles = {
         backgroundPosition: '5px 15px',
     },
     fileInput: {
-        height: '120px',
+        height: '100px',
         fontSize: '1px',
         position: 'relative',
         left: 0,
