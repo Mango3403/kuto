@@ -38,7 +38,9 @@ class BackgroundBar extends Component {
 
         this.handleClick = this.handleClick.bind(this);
         this.setImage = this.setImage.bind(this);
+        this.removeBackgroundImage = this.removeBackgroundImage.bind(this);
         this.clear = this.clear.bind(this);
+        this.setColor = this.setColor.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -67,10 +69,27 @@ class BackgroundBar extends Component {
         });
     }
 
-    clear() {
+    openInputColor() {
+        const inputColor = document.querySelector('input[type="color"]');
+
+        inputColor.click();
+        inputColor.addEventListener('change', function (e) {
+            this.setColor(e.target.value);
+        });        
+    }
+
+    removeBackgroundImage() {
         const { canvas } = this.state;
 
         canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
+    }
+
+    clear() {
+        const { canvas } = this.state;
+
+        canvas.setBackgroundColor(null);
+        canvas.setBackgroundImage(null);
+        canvas.renderAll();
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible });
@@ -91,6 +110,7 @@ class BackgroundBar extends Component {
                                         <Button key={c.name} color={c.color} onClick={this.handleClick}>{c.name}</Button>
                                     ))
                                 }
+                                {/* <Button onClick={this.openInputColor}>...</Button> */}
                                 <input type="color" onChange={e => this.setColor(e.target.value)} />
                             </Grid>
                         </Item>
@@ -107,7 +127,8 @@ class BackgroundBar extends Component {
                                         />
                                     ))
                                 }
-                                <Image src={null} style={styles.img} floated='left' onClick={this.clear} />
+                                <Image src={null} style={styles.img} floated='left' onClick={this.removeBackgroundImage} />
+                                <Button onClick={this.clear} size='big'>恢复默认</Button>
                             </Image.Group>
                         </Item>
                     </Item.Group>
