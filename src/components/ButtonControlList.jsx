@@ -27,8 +27,7 @@ const styles = {
 		position: 'absolute',
 		right: '5px',
 		// 56.53 224.63
-		top: '400px',
-		zIndex: '1100'
+		top: '400px'
 	},
 	menuItem: { padding: '7.5px', fontSize: '2em' }
 };
