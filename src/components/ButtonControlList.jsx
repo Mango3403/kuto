@@ -20,8 +20,7 @@ const styles = {
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
 		left: (window.innerWidth - 10 - 350) / 2,
-		top: '460px',
-		zIndex: '1100'
+		top: '460px'
 	},
 	menu2: {
 		position: 'absolute',

@@ -11,7 +11,7 @@ import img3 from '../images/3.jpeg';
 const styles = {
     img: {
         margin: '5px 3px',
-        height: '80px',
+        height: '85px',
         boxShadow: '0 0 5px grey'
     },
     imgObj: {
