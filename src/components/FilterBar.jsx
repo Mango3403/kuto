@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { fabric } from 'fabric';
 import { Button, Sidebar, Icon, Message, Popup, List, Label } from 'semantic-ui-react';
 
@@ -19,6 +20,7 @@ class FilterBar extends Component {
         super();
 
         this.state = {
+            isOpen: false,
             visible: false,
             imgObj: {
                 threshold: 90,
@@ -35,6 +37,20 @@ class FilterBar extends Component {
         this.setState({
             canvas: nextProps.canvas
         });
+    }
+
+    handleOpen = () => {
+        const { canvas } = this.state;
+
+        if (!(canvas.getActiveObject() && canvas.getActiveObject().isType('image'))) {
+            this.setState({ isOpen: true });
+        } else {
+            this.toggleVisibility();
+        }
+    }
+
+    handleClose = () => {
+        this.setState({ isOpen: false });
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
@@ -98,22 +114,20 @@ class FilterBar extends Component {
     }
 
     render() {
-        const { visible, canvas, imgObj } = this.state;
+        const { isOpen, visible, canvas, imgObj } = this.state;
+
         return (
             <div>
                 <Popup
                     trigger={
                         <Icon
-                            onClick={e => {
-                                e.preventDefault();
-                                if (canvas.getActiveObject() && canvas.getActiveObject().isType('image')) {
-                                    this.toggleVisibility();
-                                }
-                                return false;
-                            }}
                             name='pencil'
                         />
                     }
+                    on='click'
+                    open={isOpen}
+                    onOpen={this.handleOpen}
+                    onClose={this.handleClose}
                     content='请选中一张图片'
                 />
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible} onDismiss={this.toggleVisibility}>

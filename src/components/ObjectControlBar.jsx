@@ -15,6 +15,7 @@ class ObjectControlBar extends React.Component {
         super();
 
         this.state = {
+            isOpen: false,
             visible: false,
             canvas: null
         };
@@ -26,12 +27,24 @@ class ObjectControlBar extends React.Component {
         this.center = this.center.bind(this);
     }
 
-
-
     componentWillReceiveProps(nextProps) {
         this.setState({
             canvas: nextProps.canvas
         });
+    }
+
+    handleOpen = () => {
+        const { canvas } = this.state;
+
+        if (!canvas.getActiveObject()) {
+            this.setState({ isOpen: true });
+        } else {
+            this.toggleVisibility();
+        }
+    }
+
+    handleClose = () => {
+        this.setState({ isOpen: false });
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
@@ -68,7 +81,7 @@ class ObjectControlBar extends React.Component {
     }
 
     render() {
-        const { visible, canvas } = this.state;
+        const { isOpen, visible, canvas } = this.state;
 
         return (
             <div>
@@ -79,11 +92,9 @@ class ObjectControlBar extends React.Component {
                         />
                     }
                     on="click"
-                    onOpen={e => {
-                        if (canvas.getActiveObject()) {
-                            this.toggleVisibility();
-                        }
-                    }}
+                    open={isOpen}
+                    onOpen={this.handleOpen}
+                    onClose={this.handleClose}
                     content="请选中一个对象"
                 />
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible} onDismiss={this.toggleVisibility}>

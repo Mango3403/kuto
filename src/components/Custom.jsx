@@ -112,6 +112,7 @@ class Custom extends React.Component {
 
     saveLocalStorage() {
         const { canvas } = this.state;
+
         localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));
     }
 
@@ -166,7 +167,27 @@ class Custom extends React.Component {
             height: 500
         });
 
+        // 当 localStorage 中存在缓存并且缓存对象不为空时，提示是否读取缓存 
         const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null;
+        if (myCanvas && myCanvas.objects.length > 0) {
+            if (confirm("继续编辑未完成的内容？")) {
+                localStorage.getItem('myCanvas');
+            } else {
+                const rul1 = new ruler({
+                    container: rul
+                });
+                rul1.api.setScale(0.5);
+                rul1.api.setPos({
+                    x: canvas.width / 2 - 16,
+                    y: canvas.height / 2 - 16
+                });
+
+                this.setState({
+                    canvas: canvas
+                });
+                return true;
+            }
+        }
 
         canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas), (o, object) => {
             object.lockRotation = false;

@@ -7,8 +7,7 @@ class Remove extends React.Component {
 
         this.state = {
             open: false,
-            canvas: null,
-            text: []
+            canvas: null
         }
 
         this.clear = this.clear.bind(this);
@@ -16,8 +15,7 @@ class Remove extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            canvas: nextProps.canvas,
-            text: nextProps.text
+            canvas: nextProps.canvas
         });
     }
 
@@ -31,10 +29,6 @@ class Remove extends React.Component {
         const { canvas } = this.state;
 
         canvas.clear();
-
-        this.setState({
-            text: []
-        });
     }
 
     render() {
