@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { fabric } from 'fabric';
-import { Button, Sidebar, Icon, Message, Popup, List, Label } from 'semantic-ui-react';
+import { Button, Sidebar, Icon, Message, Popup, List, Label, Menu } from 'semantic-ui-react';
 
 const styles = {
     sideBar: {
@@ -133,22 +133,22 @@ class FilterBar extends Component {
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible} onDismiss={this.toggleVisibility}>
                     <List>
                         <List.Item>
-                            <Label size="large" horizontal>过滤梯度: </Label>
+                            <span style={{ fontFamily: '黑体', fontSize: '1.2em' }}>过滤梯度: </span>
                             <input type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
-                            <Button.Group size="mini">
-                                <Button disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
-                                <Label>{imgObj.distance}</Label>
-                                <Button disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
-                            </Button.Group>
+                            <Menu size='small' compact>
+                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
+                                <Menu.Item style={{height: '25px', padding: '0'}} name={imgObj.distance}/>
+                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance}/>
+                            </Menu>
                         </List.Item>
                         <List.Item>
-                            <Label size="large" horizontal>过滤像素: </Label>
+                            <span style={{ fontFamily: '黑体', fontSize: '1.2em' }}>过滤像素: </span>
                             <input type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
-                            <Button.Group size="mini">
-                                <Button disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
-                                <Label>{imgObj.threshold}</Label>
-                                <Button disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
-                            </Button.Group>
+                            <Menu size='small' compact>
+                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
+                                <Menu.Item style={{height: '25px', padding: '0'}} name={imgObj.threshold}/>
+                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
+                            </Menu>
                         </List.Item>
                     </List>
                 </Sidebar>

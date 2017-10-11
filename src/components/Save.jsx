@@ -40,11 +40,10 @@ class Save extends Component {
         const { checked, canvas } = this.state;
 
         if (checked) {
-            console.log(checked);
             this.download();
+            localStorage.removeItem('myCanvas');
+            window.onbeforeunload = null;       
         }
-
-        canvas.clear();
 
         this.setState({ open: false })
     }
@@ -83,7 +82,7 @@ class Save extends Component {
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button positive icon='checkmark' labelPosition='right' content="完成" onClick={this.close} />
+                        <Button positive content="下一步" onClick={this.close} />
                     </Modal.Actions>
                 </Modal>
             </div>

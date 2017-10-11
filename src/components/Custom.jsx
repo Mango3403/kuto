@@ -169,9 +169,18 @@ class Custom extends React.Component {
 
         // 当 localStorage 中存在缓存并且缓存对象不为空时，提示是否读取缓存 
         const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null;
-        if (myCanvas && myCanvas.objects.length > 0) {
+
+        if (localStorage.getItem('myCanvas') && myCanvas.objects.length > 0) {
             if (confirm("继续编辑未完成的内容？")) {
-                localStorage.getItem('myCanvas');
+                canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas), (o, object) => {
+                    object.lockRotation = false;
+                    object.hasBorders = true;
+                    object.lockUniScaling = true;
+                    object.centeredScaling = true;
+                    object.setControlsVisibility({
+                        mtr: false
+                    });
+                });
             } else {
                 const rul1 = new ruler({
                     container: rul
@@ -188,16 +197,6 @@ class Custom extends React.Component {
                 return true;
             }
         }
-
-        canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas), (o, object) => {
-            object.lockRotation = false;
-            object.hasBorders = true;
-            object.lockUniScaling = true;
-            object.centeredScaling = true;
-            object.setControlsVisibility({
-                mtr: false
-            });
-        });
 
         const rul1 = new ruler({
             container: rul

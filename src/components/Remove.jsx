@@ -1,5 +1,6 @@
 import React from 'react';
-import { Confirm, Icon } from 'semantic-ui-react';
+import { Confirm, Icon, Image } from 'semantic-ui-react';
+import clear from '../images/control/clear.png';
 
 class Remove extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class Remove extends React.Component {
 
         return (
             <div>
-                <Icon name='trash' onClick={this.show} />
+                <Icon as={Image} style={{width: '1.1em'}} src={clear} onClick={this.show} />
                 <Confirm
                     open={open}
                     content='确定要清空画布吗?'

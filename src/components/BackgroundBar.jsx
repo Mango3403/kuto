@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Grid, Message, Image, Sidebar, Icon, Item } from 'semantic-ui-react';
+import more from '../images/control/more.png';
 import bg1 from '../images/material/a.jpg';
 
 const styles = {
@@ -15,12 +16,11 @@ const styles = {
 };
 
 const colors = [
-    { name: '灰', color: 'grey' },
-    { name: '红', color: 'red' },
-    { name: '黄', color: 'yellow' },
-    { name: '绿', color: 'green' },
-    { name: '蓝', color: 'blue' },
-    { name: '黑', color: 'black' }
+    { name: '黑', color: 'black', value: 'rgba(30, 30, 30, 0.8)' },
+    { name: '白', value: '' },
+    { name: '蓝', color: 'blue', value: 'rgba(34, 58, 120, 0.8)' },
+    { name: '绿', color: 'green', value: 'rgba(40, 158, 19, 0.8)' },
+    { name: '青', color: 'teal', value: 'rgba(187, 217, 233, 0.8)' }
 ];
 
 class BackgroundBar extends Component {
@@ -47,8 +47,8 @@ class BackgroundBar extends Component {
         this.setState({ canvas: nextProps.canvas })
     }
 
-    handleClick(e, { color }) {
-        this.setColor(color);
+    handleClick(e, { color, value }) {
+        this.setColor(value);
         this.setState({ active: color });
     }
 
@@ -72,10 +72,7 @@ class BackgroundBar extends Component {
     openInputColor() {
         const inputColor = document.querySelector('input[type="color"]');
 
-        inputColor.click();
-        inputColor.addEventListener('change', function (e) {
-            this.setColor(e.target.value);
-        });        
+        inputColor.click();        
     }
 
     removeBackgroundImage() {
@@ -107,11 +104,11 @@ class BackgroundBar extends Component {
                             <Grid columns={8}>
                                 {
                                     colors.map(c => (
-                                        <Button key={c.name} color={c.color} onClick={this.handleClick}>{c.name}</Button>
+                                        <Button key={c.name} value={c.value} color={c.color} onClick={this.handleClick}>{c.name}</Button>
                                     ))
                                 }
-                                {/* <Button onClick={this.openInputColor}>...</Button> */}
-                                <input type="color" onChange={e => this.setColor(e.target.value)} />
+                                <Image onClick={this.openInputColor} src={more} style={{height: '3em'}} />
+                                <input type="color" onChange={e => this.setColor(e.target.value)} style={{display: 'none'}} />
                             </Grid>
                         </Item>
                         <Item>

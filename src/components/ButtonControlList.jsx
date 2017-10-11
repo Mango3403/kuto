@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Menu, Icon, Button } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 import GalleryBar from './GalleryBar';
 import FontBar from './FontBar';
 import Remove from './Remove';
@@ -10,10 +10,19 @@ import FilterBar from './FilterBar';
 import ObjectControlBar from './ObjectControlBar';
 
 const styles = {
-	viewToggle: {
+	show: {
 		position: 'absolute',
-		top: '460px',
-		right: '5px'
+		top: '465px',
+		right: '3px',
+		transform: 'rotate(135deg)',
+		fontSize: '3em'		
+	},
+	hide: {
+		position: 'absolute',
+		top: '465px',
+		right: '3px',
+		transform: 'rotate(-45deg)',
+		fontSize: '3em'
 	},
 	menu1: {
 		position: 'absolute',
@@ -37,6 +46,7 @@ class ButtonControlList extends Component {
 		super();
 
 		this.state = {
+			view: true,
 			activeItem: '',
 			canvas: null
 		}
@@ -51,16 +61,26 @@ class ButtonControlList extends Component {
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
 	handleViewToggle = () => {
-		const 
+		const
 			menu1 = ReactDOM.findDOMNode(this.refs.menu1),
-			menu2 = ReactDOM.findDOMNode(this.refs.menu2);
-			
-		menu1.style.display = menu1.style.display === 'none' ? 'flex' : 'none';
-		menu2.style.display = menu2.style.display === 'none' ? 'flex' : 'none';
+			menu2 = ReactDOM.findDOMNode(this.refs.menu2),
+			{ view } = this.state;
+
+		if (view) {
+			menu1.style.display = 'none';
+			menu2.style.display = 'none';
+		} else {
+			menu1.style.display = 'flex';
+			menu2.style.display = 'flex';
+		}
+
+		this.setState({
+			view: !this.state.view
+		});
 	}
 
 	render() {
-		const { activeItem, canvas, menu1 } = this.state;
+		const { activeItem, canvas, view } = this.state;
 
 		return (
 			<div>
@@ -89,7 +109,13 @@ class ButtonControlList extends Component {
 						<Remove canvas={canvas} />
 					</Menu.Item>
 				</Menu>
-				<Button style={styles.viewToggle} size='big' circular color='google plus' icon='ellipsis vertical' onClick={this.handleViewToggle} />
+
+				{
+					view ?
+						<Icon style={styles.show} link size='big' onClick={this.handleViewToggle} rotated='clockwise' name='long arrow up' /> :
+						<Icon style={styles.hide} link size='big' onClick={this.handleViewToggle} rotated='clockwise' name='long arrow up' />
+				}
+
 				<Menu icon style={styles.menu2} ref='menu2'>
 					<Menu.Item style={styles.menuItem} name="object" active={activeItem === 'object'} onClick={this.handleItemClick}>
 						<ObjectControlBar canvas={canvas} />

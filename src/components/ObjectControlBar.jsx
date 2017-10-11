@@ -1,11 +1,16 @@
 import React from 'react';
-import { Icon, Sidebar, Message, Popup, Button } from 'semantic-ui-react';
+import { Icon, Sidebar, Message, Popup, Button, Image, Menu } from 'semantic-ui-react';
+import order from '../images/control/order.png';
 
 const styles = {
     sideBar: {
         padding: '5px',
         paddingRight: '25px',
-        fontSize: '0.5em'
+        fontSize: '0.5em',
+        width: '1000px'
+    },
+    menu: {
+        overflowX: 'scroll'
     }
 };
 
@@ -87,9 +92,7 @@ class ObjectControlBar extends React.Component {
             <div>
                 <Popup
                     trigger={
-                        <Icon
-                            name="signup"
-                        />
+                        <Icon as={Image} style={{ width: '1.3em' }} src={order} />
                     }
                     on="click"
                     open={isOpen}
@@ -98,23 +101,17 @@ class ObjectControlBar extends React.Component {
                     content="请选中一个对象"
                 />
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible} onDismiss={this.toggleVisibility}>
-                    <div>
-                        <Button basic onClick={this.bringToFront}>
-                            置顶
-                        </Button>
-                        <Button basic onClick={this.sendToBack}>
-                            置底
-                        </Button>
-                        <Button basic onClick={this.bringForward}>
-                            向上一层
-                        </Button>
-                        <Button basic onClick={this.sendBackwards}>
-                            向下一层
-                        </Button>
-                        <Button basic onClick={this.center}>
-                            中心对齐
-                        </Button>
-                    </div>
+                    <Menu style={styles.menu}>
+                        <Menu.Item name='置顶' onClick={this.bringToFront} />
+
+                        <Menu.Item name='置底' onClick={this.sendToBack} />
+
+                        <Menu.Item name='向上一层' onClick={this.bringForward} />
+
+                        <Menu.Item name='向下一层' onClick={this.sendBackwards} />
+
+                        <Menu.Item name='中心对齐' onClick={this.center} />
+                    </Menu>
                 </Sidebar>
             </div>
         );
