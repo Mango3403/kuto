@@ -78,11 +78,13 @@ class Save extends Component {
                     <Modal.Content image>
                         <Image wrapped size='small' bordered src={saveImages.src} />
                         <Modal.Description>
+                            微信用户, 按住图片3秒, 可保存到本地
+                            <br />
                             <Checkbox label='保存图片到本地?' onChange={this.toggle} checked={this.state.checked} />
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button positive content="下一步" onClick={this.close} />
+                        <Button href='/form' positive content="下一步" onClick={this.close} />
                     </Modal.Actions>
                 </Modal>
             </div>

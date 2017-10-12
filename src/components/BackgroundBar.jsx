@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Grid, Message, Image, Sidebar, Icon, Item } from 'semantic-ui-react';
-import more from '../images/control/more.png';
+import { Button, Grid, Message, Image, Sidebar, Icon, Item, Menu } from 'semantic-ui-react';
 import bg1 from '../images/material/a.jpg';
 
 const styles = {
     img: {
-        width: '50px',
-        height: '50px'
+        width: '20px',
+        height: '20px'
     },
     sideBar: {
         padding: '5px',
@@ -72,7 +71,7 @@ class BackgroundBar extends Component {
     openInputColor() {
         const inputColor = document.querySelector('input[type="color"]');
 
-        inputColor.click();        
+        inputColor.click();
     }
 
     removeBackgroundImage() {
@@ -99,36 +98,43 @@ class BackgroundBar extends Component {
                 <Icon onClick={this.toggleVisibility} name='delicious' />
                 <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
                     <Icon onClick={this.toggleVisibility} name='close' />
-                    <Item.Group>
-                        <Item>
-                            <Grid columns={8}>
-                                {
-                                    colors.map(c => (
-                                        <Button key={c.name} value={c.value} color={c.color} onClick={this.handleClick}>{c.name}</Button>
-                                    ))
-                                }
-                                <Image onClick={this.openInputColor} src={more} style={{height: '3em'}} />
-                                <input type="color" onChange={e => this.setColor(e.target.value)} style={{display: 'none'}} />
-                            </Grid>
-                        </Item>
-                        <Item>
-                            <Image.Group size='tiny'>
-                                {
-                                    background.map((i, index) => (
-                                        <Image
-                                            key={index}
-                                            src={i.src}
-                                            style={styles.img}
-                                            floated='left'
-                                            onClick={e => this.setImage(e.target.src)}
-                                        />
-                                    ))
-                                }
-                                <Image src={null} style={styles.img} floated='left' onClick={this.removeBackgroundImage} />
-                                <Button onClick={this.clear} size='big'>恢复默认</Button>
-                            </Image.Group>
-                        </Item>
-                    </Item.Group>
+                    <Menu compact inverted color={colors}>
+                        {
+                            colors.map(c => (
+                                <Menu.Item key={c.name} active={active === c.color} value={c.value} color={c.color} onClick={this.handleClick}>
+                                    {c.name}
+                                </Menu.Item>
+                            ))
+                        }
+                        <Menu.Item onClick={this.openInputColor}>
+                            ...
+                        </Menu.Item>
+                        <input type="color" onChange={e => this.setColor(e.target.value)} style={{ display: 'none' }} />
+                    </Menu>
+                    <Menu compact inverted>
+                        {
+                            background.map((i, index) => (
+                                <Menu.Item fitted style={{paddingLeft: '10px'}}>
+                                    <Image
+                                        key={index}
+                                        src={i.src}
+                                        style={styles.img}
+                                        floated='left'
+                                        onClick={e => this.setImage(e.target.src)}
+                                    />
+                                </Menu.Item>
+                            ))
+                        }
+                        <Menu.Item fitted style={{paddingLeft: '10px'}}>
+                            <Image
+                                src={null}
+                                style={styles.img}
+                                floated='left'
+                                onClick={this.removeBackgroundImage}
+                            />
+                        </Menu.Item>
+                        <Menu.Item fitted name='恢复默认' onClick={this.clear} />
+                    </Menu>
                 </Sidebar>
             </div>
         )

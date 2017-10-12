@@ -6,11 +6,13 @@ import { Button, Sidebar, Icon, Message, Popup, List, Label, Menu } from 'semant
 const styles = {
     sideBar: {
         fontSize: '0.5em',
-        padding: '5px',
-        paddingRight: '25px',
+        fontFamily: '黑体',
+        padding: '0 25px 5px 0'
     },
-    input: {
-        margin: '5px auto'
+    range: {
+        position: 'relative',
+        top: '5px',
+        right: '5px'
     }
 }
 
@@ -133,21 +135,21 @@ class FilterBar extends Component {
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible} onDismiss={this.toggleVisibility}>
                     <List>
                         <List.Item>
-                            <span style={{ fontFamily: '黑体', fontSize: '1.2em' }}>过滤梯度: </span>
-                            <input type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
-                            <Menu size='small' compact>
-                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
-                                <Menu.Item style={{height: '25px', padding: '0'}} name={imgObj.distance}/>
-                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance}/>
+                            <span>过滤梯度: </span>
+                            <input style={styles.range} type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
+                            <Menu size='mini' compact>
+                                <Menu.Item disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
+                                <Menu.Item name={imgObj.distance} />
+                                <Menu.Item disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
                             </Menu>
                         </List.Item>
                         <List.Item>
-                            <span style={{ fontFamily: '黑体', fontSize: '1.2em' }}>过滤像素: </span>
-                            <input type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
-                            <Menu size='small' compact>
-                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
-                                <Menu.Item style={{height: '25px', padding: '0'}} name={imgObj.threshold}/>
-                                <Menu.Item as='Button' style={{height: '25px', padding: '5px'}} disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
+                            <span>过滤像素: </span>
+                            <input style={styles.range} type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
+                            <Menu size='mini' compact>
+                                <Menu.Item disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
+                                <Menu.Item name={imgObj.threshold} />
+                                <Menu.Item disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
                             </Menu>
                         </List.Item>
                     </List>

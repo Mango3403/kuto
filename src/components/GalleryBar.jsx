@@ -33,7 +33,7 @@ const styles = {
         backgroundPosition: '5px 15px',
     },
     fileInput: {
-        height: '100px',
+        height: '80px',
         fontSize: '1px',
         position: 'relative',
         left: 0,
