@@ -36,8 +36,8 @@ class Remove extends React.Component {
         const { open } = this.state;
 
         return (
-            <div>
-                <Icon as={Image} style={{width: '1.1em'}} src={clear} onClick={this.show} />
+            <div style={{padding: '0 4px', width: '33px'}}>
+                <Icon as={Image} style={{width: '24px', height: '28px'}} src={clear} onClick={this.show} />
                 <Confirm
                     open={open}
                     content='确定要清空画布吗?'
