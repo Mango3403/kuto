@@ -21,13 +21,13 @@ const styles = {
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
 		left: (window.innerWidth - 10 - 300) / 2,
-		top: '460px'
+		top: '475px'
 	},
 	menu2: {
 		position: 'absolute',
 		right: '5px',
 		// 56.53 224.63
-		top: '400px'
+		top: '420px'
 	},
 	menu3: {
 		position: 'absolute',
@@ -35,7 +35,7 @@ const styles = {
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
 		right: (window.innerWidth - 10 - 300) / 2,
-		top: '450px'
+		top: '460px'
 	},
 	menuItem: { padding: '4px', fontSize: '2em' }
 };

@@ -139,7 +139,7 @@ class FilterBar extends Component {
                             <input style={styles.range} type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
                             <Menu size='mini' compact>
                                 <Menu.Item disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
-                                <Menu.Item name={imgObj.distance} />
+                                <Menu.Item name={imgObj.distance.toString()} />
                                 <Menu.Item disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
                             </Menu>
                         </List.Item>
@@ -148,7 +148,7 @@ class FilterBar extends Component {
                             <input style={styles.range} type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
                             <Menu size='mini' compact>
                                 <Menu.Item disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
-                                <Menu.Item name={imgObj.threshold} />
+                                <Menu.Item name={imgObj.threshold.toString()} />
                                 <Menu.Item disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
                             </Menu>
                         </List.Item>
