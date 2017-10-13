@@ -11,24 +11,37 @@ const styles = {
         padding: '5px',
         paddingRight: '25px',
         fontSize: '0.5em'
+    },
+    backgroundColors: {
+        black: '#000000',
+        white: '#cecece',
+        blue: '#2185d0',
+        green: '#21ba45',
+        teal: '#00b5ad',
+        violet: '#6435c9'
     }
 };
 
-const colors = [
-    { name: '黑', color: 'black', value: 'rgba(30, 30, 30, 0.8)' },
-    { name: '白', value: '' },
-    { name: '蓝', color: 'blue', value: 'rgba(34, 58, 120, 0.8)' },
-    { name: '绿', color: 'green', value: 'rgba(40, 158, 19, 0.8)' },
-    { name: '青', color: 'teal', value: 'rgba(187, 217, 233, 0.8)' }
-];
+const
+    colors = [
+        'black', '', 'blue', 'green', 'teal'
+    ],
+    colorNames = [
+        '黑', '白', '蓝', '绿', '青'
+    ],
+    colorValues = [
+        'rgba(30, 30, 30, 0.8)',
+        'rgba(255, 255, 255, 0)',
+        'rgba(34, 58, 120, 0.8)',
+        'rgba(40, 158, 19, 0.8)',
+        'rgba(187, 217, 233, 0.8)'
+    ];
 
 class BackgroundBar extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            active: colors[0],
-            canvasvisible: false,
             canvas: props.canvas,
             background: [
                 { id: 0, src: bg1 }
@@ -46,13 +59,13 @@ class BackgroundBar extends Component {
         this.setState({ canvas: nextProps.canvas })
     }
 
-    handleClick(e, { color, value }) {
+    handleClick(e, { value }) {
         this.setColor(value);
-        this.setState({ active: color });
     }
 
     setColor(color) {
         const { canvas } = this.state;
+        console.log(color);
 
         canvas.setBackgroundColor(color);
         canvas.renderAll();
@@ -98,23 +111,23 @@ class BackgroundBar extends Component {
                 <Icon onClick={this.toggleVisibility} name='delicious' />
                 <Sidebar style={styles.sideBar} as={Message} animation='overlay' direction='bottom' visible={visible}>
                     <Icon onClick={this.toggleVisibility} name='close' />
-                    <Menu compact inverted color={colors}>
+                    <Menu compact>
                         {
-                            colors.map(c => (
-                                <Menu.Item key={c.name} active={active === c.color} value={c.value} color={c.color} onClick={this.handleClick}>
-                                    {c.name}
+                            colors.map((color, index) => (
+                                <Menu.Item key={index} name={color} style={{ backgroundColor: colorValues[index] }} value={colorValues[index]} onClick={this.handleClick}>
+                                    {colorNames[index]}
                                 </Menu.Item>
                             ))
                         }
-                        <Menu.Item onClick={this.openInputColor}>
+                        <Menu.Item onClick={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
                             ...
+                            <input type="color" onChange={e => this.setColor(e.target.value)} style={{ display: 'none' }} />
                         </Menu.Item>
-                        <input type="color" onChange={e => this.setColor(e.target.value)} style={{ display: 'none' }} />
                     </Menu>
-                    <Menu compact inverted>
+                    <Menu compact>
                         {
                             background.map((i, index) => (
-                                <Menu.Item fitted style={{paddingLeft: '10px'}}>
+                                <Menu.Item fitted style={{ paddingLeft: '10px' }}>
                                     <Image
                                         key={index}
                                         src={i.src}
@@ -125,7 +138,7 @@ class BackgroundBar extends Component {
                                 </Menu.Item>
                             ))
                         }
-                        <Menu.Item fitted style={{paddingLeft: '10px'}}>
+                        <Menu.Item fitted style={{ paddingLeft: '10px' }}>
                             <Image
                                 src={null}
                                 style={styles.img}
@@ -137,7 +150,7 @@ class BackgroundBar extends Component {
                     </Menu>
                 </Sidebar>
             </div>
-        )
+        );
     }
 }
 

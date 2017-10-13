@@ -21,8 +21,8 @@ class Remove extends React.Component {
     }
 
     show = () => this.setState({ open: true })
-    handleConfirm = () => { this.clear(); this.setState({ open: false }); }
-    handleCancel = () => this.setState({ open: false })
+    handleConfirm = () => this.setState({ open: false });
+    handleCancel = () => { this.clear(); this.setState({ open: false }) }
 
     close = () => this.setState({ open: false })
 
@@ -36,11 +36,13 @@ class Remove extends React.Component {
         const { open } = this.state;
 
         return (
-            <div style={{padding: '0 4px', width: '33px'}}>
-                <Icon as={Image} style={{width: '24px', height: '28px'}} src={clear} onClick={this.show} />
+            <div style={{ padding: '0 4px', width: '33px' }}>
+                <Icon as={Image} style={{ width: '24px', height: '28px' }} src={clear} onClick={this.show} />
                 <Confirm
                     open={open}
-                    content='确定要清空画布吗?'
+                    content={<div className='content'><h2>确定要清空画布吗?</h2></div>}
+                    cancelButton='确定'
+                    confirmButton='取消'
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
                 />

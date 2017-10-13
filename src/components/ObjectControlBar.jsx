@@ -10,7 +10,7 @@ const styles = {
         width: '1000px'
     },
     menu: {
-        overflowX: 'scroll'
+        // overflowX: 'scroll'
     }
 };
 
@@ -101,16 +101,16 @@ class ObjectControlBar extends React.Component {
                     content="请选中一个对象"
                 />
                 <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction="bottom" visible={visible} onDismiss={this.toggleVisibility}>
-                    <Menu style={styles.menu}>
-                        <Menu.Item name='置顶' onClick={this.bringToFront} />
+                    <Menu compact style={styles.menu}>
+                        <Menu.Item style={{paddingRight: '5px', paddingLeft: '5px'}} fitted='horizontally' name='置顶' onClick={this.bringToFront} />
 
-                        <Menu.Item name='置底' onClick={this.sendToBack} />
+                        <Menu.Item style={{paddingRight: '5px', paddingLeft: '5px'}} fitted='horizontally' name='向上一层' onClick={this.bringForward} />
 
-                        <Menu.Item name='向上一层' onClick={this.bringForward} />
+                        <Menu.Item style={{paddingRight: '5px', paddingLeft: '5px'}} fitted='horizontally' name='向下一层' onClick={this.sendBackwards} />
 
-                        <Menu.Item name='向下一层' onClick={this.sendBackwards} />
+                        <Menu.Item style={{paddingRight: '5px', paddingLeft: '5px'}} fitted='horizontally' name='置底' onClick={this.sendToBack} />
 
-                        <Menu.Item name='中心对齐' onClick={this.center} />
+                        <Menu.Item style={{paddingRight: '5px', paddingLeft: '5px'}} fitted='horizontally' name='中心对齐' onClick={this.center} />
                     </Menu>
                 </Sidebar>
             </div>
