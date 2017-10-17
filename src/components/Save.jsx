@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from 'react-router-dom';
 import { fabric } from 'fabric';
 import { Checkbox, Modal, Icon, Button, Header, Image } from 'semantic-ui-react';
 
@@ -42,7 +47,7 @@ class Save extends Component {
         if (checked) {
             this.download();
             localStorage.removeItem('myCanvas');
-            window.onbeforeunload = null;       
+            window.onbeforeunload = null;
         }
 
         this.setState({ open: false })
@@ -84,7 +89,9 @@ class Save extends Component {
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button href='/form' positive content="下一步" onClick={this.close} />
+                        <Link to='/form'>
+                            <Button positive content="下一步" onClick={this.close} />
+                        </Link>
                     </Modal.Actions>
                 </Modal>
             </div>
