@@ -18,6 +18,7 @@
 10. ...
 
 ## 安装
+* git clone https://Mango3403@bitbucket.org/Mango3403/custom.git
 * cd custom
 * npm install
 
