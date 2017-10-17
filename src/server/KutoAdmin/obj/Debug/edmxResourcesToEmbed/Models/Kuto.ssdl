@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KutoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CustomerPics">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pic" Type="varchar" MaxLength="19" Nullable="false" />
+    <Property Name="createdTime" Type="datetime" Nullable="false" />
+    <Property Name="lastEditTime" Type="datetime" />
+    <Property Name="CustomerID" Type="int" Nullable="false" />
+    <Property Name="BusinessUserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Business_Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="pwd" Type="varchar" MaxLength="18" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="LONG." Type="decimal" Precision="20" Scale="17" Nullable="false" />
+    <Property Name="lat." Type="decimal" Precision="20" Scale="17" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__CustomerP__Busin__1A14E395">
+    <End Role="Business_Users" Type="Self.Business_Users" Multiplicity="1" />
+    <End Role="CustomerPics" Type="Self.CustomerPics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Business_Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CustomerPics">
+        <PropertyRef Name="BusinessUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerP__Custo__1920BF5C">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="CustomerPics" Type="Self.CustomerPics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CustomerPics">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="spAddImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+    <Parameter Name="image" Type="varchar" Mode="In" />
+    <Parameter Name="CustomerID" Type="int" Mode="In" />
+    <Parameter Name="BusinessUserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spEditImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+    <Parameter Name="image" Type="varchar" Mode="In" />
+    <Parameter Name="msg" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="spImgListforBusinessUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+    <Parameter Name="BusinessUserID" Type="int" Mode="In" />
+    <Parameter Name="pageIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="pageCount" Type="int" Mode="InOut" />
+    <Parameter Name="totalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="spSignin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
+    <Parameter Name="username" Type="nvarchar" Mode="In" />
+    <Parameter Name="pwd" Type="varchar" Mode="In" />
+    <Parameter Name="returnvalue" Type="int" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="KutoModelStoreContainer">
+    <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" Schema="god" store:Type="Tables" />
+    <EntitySet Name="Business_Users" EntityType="Self.Business_Users" Schema="users" store:Type="Tables" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="users" store:Type="Tables" />
+    <AssociationSet Name="FK__CustomerP__Busin__1A14E395" Association="Self.FK__CustomerP__Busin__1A14E395">
+      <End Role="Business_Users" EntitySet="Business_Users" />
+      <End Role="CustomerPics" EntitySet="CustomerPics" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerP__Custo__1920BF5C" Association="Self.FK__CustomerP__Custo__1920BF5C">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="CustomerPics" EntitySet="CustomerPics" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
