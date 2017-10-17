@@ -5,19 +5,13 @@ import {
 } from 'react-router-dom';
 import './style.css';
 import Custom from './components/Custom';
-
-const Form = () => (
-    <div>
-        <h1>填写信息</h1>
-        <a href="/custom">返回</a>        
-    </div>
-);
+import CustomForm from './components/CustomForm';
 
 const App = () => (
     <Router>
         <div>
             <Route exact path='/custom' component={Custom}></Route>
-            <Route path='/form' component={Form} />
+            <Route path='/form' component={CustomForm} />
         </div>
     </Router>
 );
