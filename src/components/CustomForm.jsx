@@ -23,7 +23,7 @@ export default class CustomForm extends Component {
 				address: ${address}
 			}`);
 		} else {
-			alert(`请输入正确的电话号码`);
+			alert(`请输入正确的手机号码`);
 		}
 	}
 
