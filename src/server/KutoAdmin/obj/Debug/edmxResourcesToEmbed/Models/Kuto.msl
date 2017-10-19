@@ -4,6 +4,7 @@
     <EntitySetMapping Name="CustomerPics">
       <EntityTypeMapping TypeName="KutoModel.CustomerPics">
         <MappingFragment StoreEntitySet="CustomerPics">
+          <ScalarProperty Name="Draft" ColumnName="Draft" />
           <ScalarProperty Name="BusinessUserID" ColumnName="BusinessUserID" />
           <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           <ScalarProperty Name="id" ColumnName="id" />

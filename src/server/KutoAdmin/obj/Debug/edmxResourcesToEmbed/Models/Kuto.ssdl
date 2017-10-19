@@ -10,6 +10,7 @@
     <Property Name="lastEditTime" Type="datetime" />
     <Property Name="CustomerID" Type="int" Nullable="false" />
     <Property Name="BusinessUserID" Type="int" Nullable="false" />
+    <Property Name="Draft" Type="ntext" />
   </EntityType>
   <EntityType Name="Business_Users">
     <Key>
@@ -55,11 +56,13 @@
   </Association>
   <Function Name="spAddImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
     <Parameter Name="image" Type="varchar" Mode="In" />
+    <Parameter Name="draft" Type="ntext" Mode="In" />
     <Parameter Name="CustomerID" Type="int" Mode="In" />
     <Parameter Name="BusinessUserID" Type="int" Mode="In" />
   </Function>
   <Function Name="spEditImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
     <Parameter Name="image" Type="varchar" Mode="In" />
+    <Parameter Name="draft" Type="ntext" Mode="In" />
     <Parameter Name="msg" Type="varchar" Mode="InOut" />
   </Function>
   <Function Name="spImgListforBusinessUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">

@@ -15,6 +15,7 @@
           <Property Name="lastEditTime" Type="datetime" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="BusinessUserID" Type="int" Nullable="false" />
+          <Property Name="Draft" Type="ntext" />
         </EntityType>
         <EntityType Name="Business_Users">
           <Key>
@@ -31,8 +32,9 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="LONG." Type="decimal" Precision="20" Scale="17" Nullable="false" />
-          <Property Name="lat." Type="decimal" Precision="20" Scale="17" Nullable="false" />
+          <Property Name="LONG." Type="float" Nullable="false" />
+          <Property Name="lat." Type="float" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__CustomerP__Busin__1A14E395">
           <End Role="Business_Users" Type="Self.Business_Users" Multiplicity="1" />
@@ -46,7 +48,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerP__Custo__1920BF5C">
+        <Association Name="FK__CustomerP__Custo__29572725">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="CustomerPics" Type="Self.CustomerPics" Multiplicity="*" />
           <ReferentialConstraint>
@@ -60,12 +62,17 @@
         </Association>
         <Function Name="spAddImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
           <Parameter Name="image" Type="varchar" Mode="In" />
+          <Parameter Name="draft" Type="ntext" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
           <Parameter Name="BusinessUserID" Type="int" Mode="In" />
         </Function>
         <Function Name="spEditImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
           <Parameter Name="image" Type="varchar" Mode="In" />
+          <Parameter Name="draft" Type="ntext" Mode="In" />
           <Parameter Name="msg" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="spGetDraftByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="spImgListforBusinessUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
           <Parameter Name="BusinessUserID" Type="int" Mode="In" />
@@ -73,6 +80,13 @@
           <Parameter Name="pageSize" Type="int" Mode="In" />
           <Parameter Name="pageCount" Type="int" Mode="InOut" />
           <Parameter Name="totalCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="spInsertCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobile" Type="varchar" Mode="In" />
+          <Parameter Name="LONG" Type="float" Mode="In" />
+          <Parameter Name="lat" Type="float" Mode="In" />
+          <Parameter Name="address" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="spSignin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
           <Parameter Name="username" Type="nvarchar" Mode="In" />
@@ -87,7 +101,7 @@
             <End Role="Business_Users" EntitySet="Business_Users" />
             <End Role="CustomerPics" EntitySet="CustomerPics" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerP__Custo__1920BF5C" Association="Self.FK__CustomerP__Custo__1920BF5C">
+          <AssociationSet Name="FK__CustomerP__Custo__29572725" Association="Self.FK__CustomerP__Custo__29572725">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="CustomerPics" EntitySet="CustomerPics" />
           </AssociationSet>
@@ -108,6 +122,7 @@
           <Property Name="BusinessUserID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Business_Users" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="CustomerPics" ToRole="Business_Users" />
           <NavigationProperty Name="Customers" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="CustomerPics" ToRole="Customers" />
+          <Property Name="Draft" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Business_Users">
           <Key>
@@ -125,9 +140,10 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LONG_" Type="Decimal" Precision="20" Scale="17" Nullable="false" />
-          <Property Name="lat_" Type="Decimal" Precision="20" Scale="17" Nullable="false" />
+          <Property Name="LONG_" Type="Double" Nullable="false" />
+          <Property Name="lat_" Type="Double" Nullable="false" />
           <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="Customers" ToRole="CustomerPics" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="KutoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" />
@@ -135,11 +151,13 @@
           <EntitySet Name="Customers" EntityType="Self.Customers" />
           <FunctionImport Name="spAddImg">
             <Parameter Name="image" Mode="In" Type="String" />
+            <Parameter Name="draft" Mode="In" Type="String" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spEditImg">
             <Parameter Name="image" Mode="In" Type="String" />
+            <Parameter Name="draft" Mode="In" Type="String" />
             <Parameter Name="msg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spSignin" ReturnType="Collection(Int32)">
@@ -161,6 +179,16 @@
             <Parameter Name="pageSize" Mode="In" Type="Int32" />
             <Parameter Name="pageCount" Mode="InOut" Type="Int32" />
             <Parameter Name="totalCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetDraftByID" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertCustomer">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+            <Parameter Name="LONG" Mode="In" Type="Double" />
+            <Parameter Name="lat" Mode="In" Type="Double" />
+            <Parameter Name="address" Mode="In" Type="String" />
           </FunctionImport>
           
         </EntityContainer>
@@ -226,6 +254,7 @@
           <EntitySetMapping Name="CustomerPics">
             <EntityTypeMapping TypeName="KutoModel.CustomerPics">
               <MappingFragment StoreEntitySet="CustomerPics">
+                <ScalarProperty Name="Draft" ColumnName="Draft" />
                 <ScalarProperty Name="BusinessUserID" ColumnName="BusinessUserID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -247,6 +276,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="KutoModel.Customers">
               <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
@@ -269,6 +299,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetDraftByID" FunctionName="KutoModel.Store.spGetDraftByID" />
+          <FunctionImportMapping FunctionImportName="spInsertCustomer" FunctionName="KutoModel.Store.spInsertCustomer" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

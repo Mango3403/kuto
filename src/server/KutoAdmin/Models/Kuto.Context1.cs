@@ -31,11 +31,15 @@ namespace KutoAdmin.Models
         public virtual DbSet<Business_Users> Business_Users { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
     
-        public virtual int spAddImg(string image, Nullable<int> customerID, Nullable<int> businessUserID)
+        public virtual int spAddImg(string image, string draft, Nullable<int> customerID, Nullable<int> businessUserID)
         {
             var imageParameter = image != null ?
                 new ObjectParameter("image", image) :
                 new ObjectParameter("image", typeof(string));
+    
+            var draftParameter = draft != null ?
+                new ObjectParameter("draft", draft) :
+                new ObjectParameter("draft", typeof(string));
     
             var customerIDParameter = customerID.HasValue ?
                 new ObjectParameter("CustomerID", customerID) :
@@ -45,16 +49,20 @@ namespace KutoAdmin.Models
                 new ObjectParameter("BusinessUserID", businessUserID) :
                 new ObjectParameter("BusinessUserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddImg", imageParameter, customerIDParameter, businessUserIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddImg", imageParameter, draftParameter, customerIDParameter, businessUserIDParameter);
         }
     
-        public virtual int spEditImg(string image, ObjectParameter msg)
+        public virtual int spEditImg(string image, string draft, ObjectParameter msg)
         {
             var imageParameter = image != null ?
                 new ObjectParameter("image", image) :
                 new ObjectParameter("image", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEditImg", imageParameter, msg);
+            var draftParameter = draft != null ?
+                new ObjectParameter("draft", draft) :
+                new ObjectParameter("draft", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEditImg", imageParameter, draftParameter, msg);
         }
     
         public virtual ObjectResult<Nullable<int>> spSignin(string username, string pwd, ObjectParameter returnvalue)
@@ -85,6 +93,40 @@ namespace KutoAdmin.Models
                 new ObjectParameter("pageSize", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spImgListforBusinessUser_Result1>("spImgListforBusinessUser", businessUserIDParameter, pageIndexParameter, pageSizeParameter, pageCount, totalCount);
+        }
+    
+        public virtual ObjectResult<string> spGetDraftByID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spGetDraftByID", idParameter);
+        }
+    
+        public virtual int spInsertCustomer(string name, string mobile, Nullable<double> lONG, Nullable<double> lat, string address)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var mobileParameter = mobile != null ?
+                new ObjectParameter("mobile", mobile) :
+                new ObjectParameter("mobile", typeof(string));
+    
+            var lONGParameter = lONG.HasValue ?
+                new ObjectParameter("LONG", lONG) :
+                new ObjectParameter("LONG", typeof(double));
+    
+            var latParameter = lat.HasValue ?
+                new ObjectParameter("lat", lat) :
+                new ObjectParameter("lat", typeof(double));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("address", address) :
+                new ObjectParameter("address", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCustomer", nameParameter, mobileParameter, lONGParameter, latParameter, addressParameter);
         }
     }
 }

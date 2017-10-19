@@ -12,6 +12,7 @@
     <Property Name="BusinessUserID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Business_Users" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="CustomerPics" ToRole="Business_Users" />
     <NavigationProperty Name="Customers" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="CustomerPics" ToRole="Customers" />
+    <Property Name="Draft" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Business_Users">
     <Key>
@@ -39,11 +40,13 @@
     <EntitySet Name="Customers" EntityType="Self.Customers" />
     <FunctionImport Name="spAddImg">
       <Parameter Name="image" Mode="In" Type="String" />
+      <Parameter Name="draft" Mode="In" Type="String" />
       <Parameter Name="CustomerID" Mode="In" Type="Int32" />
       <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="spEditImg">
       <Parameter Name="image" Mode="In" Type="String" />
+      <Parameter Name="draft" Mode="In" Type="String" />
       <Parameter Name="msg" Mode="InOut" Type="String" />
     </FunctionImport>
     <FunctionImport Name="spSignin" ReturnType="Collection(Int32)">

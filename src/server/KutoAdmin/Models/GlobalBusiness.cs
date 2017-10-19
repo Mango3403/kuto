@@ -10,7 +10,7 @@ namespace KutoAdmin.Models
 {
     public class KTFileSystem
     {
-        protected string strErrorMessage = "";
+        public string strErrorMessage = "";
 
         public static string Left(string sSource, int iLength)
         {

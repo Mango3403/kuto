@@ -15,7 +15,34 @@ namespace KutoAdmin.Controllers
         public string ErrorMessage = "";
 
         public string path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "save";
-        public string EditImg(HttpPostedFileBase image)
+
+        [HttpPost]
+        public string GetDraftByID(int id)
+        {
+             
+            using (KutoEntities db = new KutoEntities())
+            {
+               return db.spGetDraftByID(id).ToString();
+            }
+        }
+
+        [HttpPost]
+        public string InsertCustomer(string name, string mobile, double LONG, double lat, string address)
+        {
+            string result = "";
+            using (KutoEntities db = new KutoEntities())
+            {
+                if (db.spInsertCustomer(name, mobile, LONG, lat, address) > 0) {
+                    result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\"}]";
+                }
+                else
+                    result = "[{\"{result\":\"false\",\"msg\":\"保存失败！\"}]";
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public string EditImg(HttpPostedFileBase image, string draft)
         {
             string result = "";
             ObjectParameter msg = new ObjectParameter("msg", typeof(string));
@@ -25,31 +52,37 @@ namespace KutoAdmin.Controllers
             {
                 using (KutoEntities db = new KutoEntities())
                 {
-                    if (db.spEditImg(image.FileName, msg) == 0)
+                    if (db.spEditImg(image.FileName, draft, msg) == 0)
                     {
-                        result = "{result:true,msg:’" + Convert.ToString(msg.Value) + "'}";
+                        result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\"}]";
+                         
                     }
                     else
                     {
-                        result = "{result:false,msg:’" + Convert.ToString(msg.Value) + "'}";
+                        result = "[{\"{result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
                     }
                 }
+            }
+            else
+            {
+                result = "[{\"{result\":\"false\",\"msg\":\"" + swfFileSystem.strErrorMessage + "\"}]";
             }
 
             return result;
 
         }
 
-        //文件上传示例
-        public ActionResult FileUpload()
-        {
-            return View();
-        }
+        ////文件上传示例
+        //public ActionResult SaveFile()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
-        public ActionResult FileUpload(HttpPostedFileBase file, int CustomerID, int BusinessUserID)
+        public string SaveFile(HttpPostedFileBase image, string draft, int CustomerID, int BusinessUserID)
         {
-            string filename = file.FileName;
+            string result = "";
+            string filename = image.FileName;
             string extname = filename.Substring(filename.LastIndexOf(".") + 1, (filename.Length - filename.LastIndexOf(".") - 1)); //扩展名
 
             DateTime dt = DateTime.Now;
@@ -60,14 +93,29 @@ namespace KutoAdmin.Controllers
             using (KutoEntities db = new KutoEntities())
             {
                 //ObjectParameter re = new ObjectParameter("msg", typeof(string));
-
-                db.spAddImg(newfilename, CustomerID, BusinessUserID);
+                var swfFileSystem = new KTFileSystem();
+                if (swfFileSystem.SaveFile(ref image, path, newname))
+                {
+                    
+                    if(db.spAddImg(newfilename, draft, CustomerID, BusinessUserID) == 0)
+                    {
+                        result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\"}]";
+                    }
+                    else
+                    {
+                        result = "[{\"{result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
+                    }
+                    
+                }
+                else
+                {
+                    result = "[{\"{result\":\"false\",\"msg\":\"" + swfFileSystem.strErrorMessage + "\"}]";
+                }
             }
 
-            var swfFileSystem = new KTFileSystem();
-            swfFileSystem.SaveFile(ref file, path, newname);
+            
 
-            return View();
+            return result;
         }
 
 
