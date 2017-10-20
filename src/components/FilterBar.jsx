@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { fabric } from 'fabric';
 import { Button, Sidebar, Icon, Message, Popup, List, Label, Menu } from 'semantic-ui-react';
+import eventProxy from '../eventProxy';
 
 const styles = {
     sideBar: {
@@ -38,6 +39,12 @@ class FilterBar extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             canvas: nextProps.canvas
+        });
+    }
+
+    componentDidMount() {
+        eventProxy.on('openFilter', () => {
+            this.handleOpen();
         });
     }
 

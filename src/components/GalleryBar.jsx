@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Message, Sidebar, Icon, Image, Popup } from 'semantic-ui-react';
 import { fabric } from 'fabric';
+import eventProxy from '../eventProxy';
 import upload from '../images/upload.png';
 import img0 from '../images/0.jpeg';
 import img1 from '../images/1.jpeg';
@@ -73,7 +74,7 @@ class Gallery extends Component {
             canvas: nextProps.canvas
         });
     }
-    
+
     uploadImage() {
         const
             files = ReactDOM.findDOMNode(this.refs.file).files,
@@ -98,6 +99,11 @@ class Gallery extends Component {
 
     addImage(e) {
         const { canvas } = this.state;
+
+        setTimeout(() => {
+            // 发布 openFilter 事件，由 FilterBar 组件接收
+            eventProxy.trigger('openFilter');
+        }, 300);
 
         fabric.Image.fromURL(e.target.src, img => {
 

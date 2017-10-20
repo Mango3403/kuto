@@ -90,7 +90,7 @@ class Save extends Component {
                     </Modal.Content>
                     <Modal.Actions>
                         <Link to='/form'>
-                            <Button positive content="下一步" onClick={this.close} />
+                            <Button positive content="下一步" onClick={this.close} style={{ marginBottom: '10px' }} />
                         </Link>
                     </Modal.Actions>
                 </Modal>
