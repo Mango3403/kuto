@@ -47,7 +47,6 @@ export default class CustomForm extends Component {
 						<label>地址</label>
 						<Form.Input placeholder='' name='address' required onChange={this.handleChange} />
 					</Form.Field>
-					<Button href='/custom'>返回</Button>
 					<Form.Button content='提交' />
 				</Form>
 			</Container>

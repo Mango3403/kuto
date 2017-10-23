@@ -49,6 +49,7 @@ class BackgroundBar extends Component {
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this.openInputColor = this.openInputColor.bind(this);
         this.setImage = this.setImage.bind(this);
         this.removeBackgroundImage = this.removeBackgroundImage.bind(this);
         this.clear = this.clear.bind(this);
@@ -82,9 +83,7 @@ class BackgroundBar extends Component {
     }
 
     openInputColor() {
-        const inputColor = document.querySelector('input[type="color"]');
-
-        inputColor.click();
+        document.getElementById('color').click();
     }
 
     removeBackgroundImage() {
@@ -114,22 +113,21 @@ class BackgroundBar extends Component {
                     <Menu compact>
                         {
                             colors.map((color, index) => (
-                                <Menu.Item key={index} name={color} style={{ backgroundColor: colorValues[index] }} value={colorValues[index]} onClick={this.handleClick}>
+                                <Menu.Item key={color} name={color} style={{ backgroundColor: colorValues[index] }} value={colorValues[index]} onClick={this.handleClick}>
                                     {colorNames[index]}
                                 </Menu.Item>
                             ))
                         }
                         <Menu.Item onClick={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
                             ...
-                            <input type="color" onChange={e => this.setColor(e.target.value)} style={{ display: 'none' }} />
+                            <input id="color" type="color" onChange={e => this.setColor(e.target.value)} style={{ position: 'absolute', bottom: '3000px' }} />
                         </Menu.Item>
                     </Menu>
                     <Menu compact>
                         {
                             background.map((i, index) => (
-                                <Menu.Item fitted style={{ paddingLeft: '10px' }}>
+                                <Menu.Item key={index} fitted style={{ paddingLeft: '10px' }}>
                                     <Image
-                                        key={index}
                                         src={i.src}
                                         style={styles.img}
                                         floated='left'
