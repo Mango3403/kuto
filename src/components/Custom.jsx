@@ -113,7 +113,41 @@ class Custom extends React.Component {
     saveLocalStorage() {
         const { canvas } = this.state;
 
+        this.setCookie('myCanvas', JSON.stringify(canvas.toJSON()));
         localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));
+    }
+
+    setCookie(name, value, expiredays) {
+        var exdate = new Date();
+
+        exdate.setDate(exdate.getDate() + expiredays);
+
+        document.cookie =
+            name +
+            '=' +
+            window.escape(value) +
+            ((expiredays == null) ? '' : ';expires=' + exdate.toGMTString());
+    }
+
+    getCookie(name) {
+        if (document.cookie.length > 0) {
+
+            var start = document.cookie.indexOf(name + '=');
+
+            if (start != -1) {
+                start = start + name.length + 1;
+
+                var end = document.cookie.indexOf(';', start);
+
+                if (end == -1) {
+                    end = document.cookie.length;
+                }
+
+                return window.unescape(document.cookie.substring(start, end));
+            }
+        }
+
+        return null;
     }
 
     componentDidMount() {
@@ -168,9 +202,9 @@ class Custom extends React.Component {
         });
 
         // 当 localStorage 中存在缓存并且缓存对象不为空时，提示是否读取缓存 
-        const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null;
+        const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || JSON.parse(this.getCookie('myCanvas')) || null;
 
-        if (localStorage.getItem('myCanvas') && myCanvas.objects.length > 0) {
+        if ((localStorage.getItem('myCanvas') || this.getCookie('myCanvas')) && myCanvas.objects.length > 0) {
             if (confirm("继续编辑未完成的内容？")) {
                 canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas), (o, object) => {
                     object.lockRotation = false;
@@ -211,6 +245,10 @@ class Custom extends React.Component {
             canvas: canvas
         });
     }
+
+    alertCookie() { alert(document.cookie) }
+
+    alertLocalStorage() { alert(JSON.stringify(window.localStorage)) }
 
     render() {
         const { canvas } = this.state;
