@@ -17,7 +17,10 @@
           %SYSTEMDRIVE% - The drive letter of %IIS_BIN%
 
 -->
- 
+<<<<<<< HEAD
+
+=======
+>>>>>>> d2c487bcada85711710255458edec9cd361a39c0
 <configuration>
 
     <!--
@@ -118,7 +121,11 @@
                 <section name="rewriteMaps" overrideModeDefault="Allow" />
             </sectionGroup>
             <section name="webSocket" overrideModeDefault="Deny" />
- 
+<<<<<<< HEAD
+        </sectionGroup>
+=======
+        <section name="aspNetCore" overrideModeDefault="Allow" /></sectionGroup>
+>>>>>>> d2c487bcada85711710255458edec9cd361a39c0
     </configSections>
 
     <configProtectedData>
@@ -163,7 +170,11 @@
             </site>
             <site name="KutoAdmin" id="2">
                 <application path="/" applicationPool="Clr4IntegratedAppPool">
- 
+<<<<<<< HEAD
+                    <virtualDirectory path="/" physicalPath="C:\KutoAdmin\Kuto\src\server\KutoAdmin" />
+=======
+                    <virtualDirectory path="/" physicalPath="C:\custom\src\server\KutoAdmin" />
+>>>>>>> d2c487bcada85711710255458edec9cd361a39c0
                 </application>
                 <bindings>
                     <binding protocol="http" bindingInformation="*:58286:localhost" />
@@ -259,7 +270,10 @@
             <add name="ManagedEngineV4.0_32bit" image="%windir%\Microsoft.NET\Framework\v4.0.30319\webengine4.dll" preCondition="integratedMode,runtimeVersionv4.0,bitness32" />
             <add name="ManagedEngineV4.0_64bit" image="%windir%\Microsoft.NET\Framework64\v4.0.30319\webengine4.dll" preCondition="integratedMode,runtimeVersionv4.0,bitness64" />
             <add name="ApplicationInitializationModule" image="%IIS_BIN%\warmup.dll" />
- 
+<<<<<<< HEAD
+=======
+            <add name="AspNetCoreModule" image="%IIS_BIN%\aspnetcore.dll" />
+>>>>>>> d2c487bcada85711710255458edec9cd361a39c0
         </globalModules>
 
         <httpCompression directory="%TEMP%\iisexpress\IIS Temporary Compressed Files">
@@ -939,7 +953,10 @@
                 <add name="ScriptModule-4.0" type="System.Web.Handlers.ScriptModule, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" preCondition="managedHandler,runtimeVersionv4.0" />
                 <add name="ServiceModel" type="System.ServiceModel.Activation.HttpModule, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" preCondition="managedHandler,runtimeVersionv2.0" />
                 <add name="ApplicationInitializationModule" lockItem="true" />
- 
+<<<<<<< HEAD
+=======
+                <add name="AspNetCoreModule" lockItem="true" />
+>>>>>>> d2c487bcada85711710255458edec9cd361a39c0
             </modules>
             <handlers accessPolicy="Read, Script">
                 <!--                <add name="WebDAV" path="*" verb="PROPFIND,PROPPATCH,MKCOL,PUT,COPY,DELETE,MOVE,LOCK,UNLOCK" modules="WebDAVModule" resourceType="Unspecified" requireAccess="None" /> -->

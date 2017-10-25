@@ -27,8 +27,9 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
-    <Property Name="LONG." Type="decimal" Precision="20" Scale="17" Nullable="false" />
-    <Property Name="lat." Type="decimal" Precision="20" Scale="17" Nullable="false" />
+    <Property Name="LONG." Type="float" Nullable="false" />
+    <Property Name="lat." Type="float" Nullable="false" />
+    <Property Name="address" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK__CustomerP__Busin__1A14E395">
     <End Role="Business_Users" Type="Self.Business_Users" Multiplicity="1" />
@@ -42,7 +43,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CustomerP__Custo__1920BF5C">
+  <Association Name="FK__CustomerP__Custo__29572725">
     <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
     <End Role="CustomerPics" Type="Self.CustomerPics" Multiplicity="*" />
     <ReferentialConstraint>
@@ -65,12 +66,22 @@
     <Parameter Name="draft" Type="ntext" Mode="In" />
     <Parameter Name="msg" Type="varchar" Mode="InOut" />
   </Function>
+  <Function Name="spGetDraftByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
   <Function Name="spImgListforBusinessUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
     <Parameter Name="BusinessUserID" Type="int" Mode="In" />
     <Parameter Name="pageIndex" Type="int" Mode="In" />
     <Parameter Name="pageSize" Type="int" Mode="In" />
     <Parameter Name="pageCount" Type="int" Mode="InOut" />
     <Parameter Name="totalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="spInsertCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
+    <Parameter Name="name" Type="nvarchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="LONG" Type="float" Mode="In" />
+    <Parameter Name="lat" Type="float" Mode="In" />
+    <Parameter Name="address" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="spSignin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
     <Parameter Name="username" Type="nvarchar" Mode="In" />
@@ -85,7 +96,7 @@
       <End Role="Business_Users" EntitySet="Business_Users" />
       <End Role="CustomerPics" EntitySet="CustomerPics" />
     </AssociationSet>
-    <AssociationSet Name="FK__CustomerP__Custo__1920BF5C" Association="Self.FK__CustomerP__Custo__1920BF5C">
+    <AssociationSet Name="FK__CustomerP__Custo__29572725" Association="Self.FK__CustomerP__Custo__29572725">
       <End Role="Customers" EntitySet="Customers" />
       <End Role="CustomerPics" EntitySet="CustomerPics" />
     </AssociationSet>

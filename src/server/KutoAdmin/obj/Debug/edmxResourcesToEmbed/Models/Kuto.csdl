@@ -30,9 +30,10 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="LONG_" Type="Decimal" Precision="20" Scale="17" Nullable="false" />
-    <Property Name="lat_" Type="Decimal" Precision="20" Scale="17" Nullable="false" />
+    <Property Name="LONG_" Type="Double" Nullable="false" />
+    <Property Name="lat_" Type="Double" Nullable="false" />
     <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="Customers" ToRole="CustomerPics" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityContainer Name="KutoEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" />
@@ -68,6 +69,16 @@
       <Parameter Name="pageSize" Mode="In" Type="Int32" />
       <Parameter Name="pageCount" Mode="InOut" Type="Int32" />
       <Parameter Name="totalCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spGetDraftByID" ReturnType="Collection(String)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spInsertCustomer">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="mobile" Mode="In" Type="String" />
+      <Parameter Name="LONG" Mode="In" Type="Double" />
+      <Parameter Name="lat" Mode="In" Type="Double" />
+      <Parameter Name="address" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <Association Name="FK__CustomerP__Busin__1A14E395">

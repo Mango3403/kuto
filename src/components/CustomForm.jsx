@@ -15,7 +15,7 @@ export default class CustomForm extends Component {
 		const { id, phone, username, address } = this.state;
 
 		if (/\b(\d{2})?[1][3456789][0-9]{9}\b/g.test(phone)) {
-			console.log(`
+			alert(`
 			{
 				id: ${id},
 				phone: ${phone},

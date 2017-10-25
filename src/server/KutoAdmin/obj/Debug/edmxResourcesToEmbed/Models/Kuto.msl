@@ -26,6 +26,7 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="KutoModel.Customers">
         <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="mobile" ColumnName="mobile" />
@@ -48,5 +49,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetDraftByID" FunctionName="KutoModel.Store.spGetDraftByID" />
+    <FunctionImportMapping FunctionImportName="spInsertCustomer" FunctionName="KutoModel.Store.spInsertCustomer" />
   </EntityContainerMapping>
 </Mapping>
