@@ -9,22 +9,22 @@ import {
 export default class CustomForm extends Component {
 	state = {
 		id: '123***456',
-		phone: '',
-		username: '',
+		mobile: '',
+		name: '',
 		address: ''
 	}
 
 	handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
 	handleSubmit = () => {
-		const { id, phone, username, address } = this.state;
+		const { id, mobile, name, address } = this.state;
 
-		if (/\b(\d{2})?[1][3456789][0-9]{9}\b/g.test(phone)) {
+		if (/\b(\d{2})?[1][3456789][0-9]{9}\b/g.test(mobile)) {
 			alert(`
 			{
 				id: ${id},
-				phone: ${phone},
-				username: ${username},
+				mobile: ${mobile},
+				name: ${name},
 				address: ${address}
 			}`);
 		} else {
@@ -42,11 +42,11 @@ export default class CustomForm extends Component {
 					</Form.Field>
 					<Form.Field>
 						<label>手机号</label>
-						<Form.Input placeholder='' name='phone' required onChange={this.handleChange} />
+						<Form.Input placeholder='' name='mobile' required onChange={this.handleChange} />
 					</Form.Field>
 					<Form.Field>
 						<label>姓名</label>
-						<Form.Input placeholder='' name='username' required onChange={this.handleChange} />
+						<Form.Input placeholder='' name='name' required onChange={this.handleChange} />
 					</Form.Field>
 					<Form.Field>
 						<label>地址</label>

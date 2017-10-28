@@ -6,7 +6,7 @@ import {
 import './style.css';
 import Custom from './components/Custom';
 import CustomForm from './components/CustomForm';
-import CustomHelp from "./components/CustomHelp";
+import CustomHelp from './components/CustomHelp';
 
 const App = () => (
     <Router>
