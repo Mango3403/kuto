@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { Header, Container, Button, Checkbox, Form } from 'semantic-ui-react';
+import {
+	BrowserRouter as Router,
+	Route,
+	Link
+} from 'react-router-dom';
 
 export default class CustomForm extends Component {
 	state = {
@@ -31,7 +36,7 @@ export default class CustomForm extends Component {
 		return (
 			<Container text>
 				<Header as='h2'>表单信息</Header>
-				<Form onSubmit={this.handleSubmit}>
+				<Form action="/help" onSubmit={this.handleSubmit}>
 					<Form.Field>
 						<Form.Input label='打印部 ID' name='id' value='123***456' disabled />
 					</Form.Field>
