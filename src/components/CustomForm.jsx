@@ -17,26 +17,29 @@ export default class CustomForm extends Component {
 	handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
 	handleSubmit = () => {
-		const { id, mobile, name, address } = this.state;
+		const { mobile, name, address } = this.state;
 
 		if (/\b(\d{2})?[1][3456789][0-9]{9}\b/g.test(mobile)) {
-			alert(`
-			{
-				id: ${id},
-				mobile: ${mobile},
-				name: ${name},
-				address: ${address}
-			}`);
+			this.insertCustomer();
 		} else {
 			alert(`请输入正确的手机号码`);
 		}
+	}
+
+	insertCustom() {
+		const xhr = new XMLHttpRequest();
+
+		xhr.open("post", "/KutoAdmin/InsertCustomer", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		xhr.send('name=RHM&mobile=13661279108&LONG=0.00&lat=0.00&address=aka');
 	}
 
 	render() {
 		return (
 			<Container text>
 				<Header as='h2'>表单信息</Header>
-				<Form action="/help" onSubmit={this.handleSubmit}>
+				<Form action="/Kuto/Index/help" onSubmit={this.handleSubmit}>
 					<Form.Field>
 						<Form.Input label='打印部 ID' name='id' value='123***456' disabled />
 					</Form.Field>

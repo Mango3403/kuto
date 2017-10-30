@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -198,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\KutoAdminController.cs" />
+    <Compile Include="Controllers\KutoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -244,12 +246,29 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ruler.min.css" />
+    <Content Include="Scripts\main-c5ef977.js" />
+    <Content Include="Scripts\ruler.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\main.c1215285413f6483d42f9aae01fc3e97.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="imagessrc\images\0.jpeg" />
+    <Content Include="imagessrc\images\1.jpeg" />
+    <Content Include="imagessrc\images\2.jpeg" />
+    <Content Include="imagessrc\images\3.jpeg" />
+    <Content Include="imagessrc\images\control\clear.png" />
+    <Content Include="imagessrc\images\control\handle_change.png" />
+    <Content Include="imagessrc\images\control\handle_del.png" />
+    <Content Include="imagessrc\images\control\handle_rotate.png" />
+    <Content Include="imagessrc\images\control\handle_zoom.png" />
+    <Content Include="imagessrc\images\control\order.png" />
+    <Content Include="imagessrc\images\material\a.jpg" />
+    <Content Include="imagessrc\images\upload.png" />
+    <Content Include="index.html" />
     <Content Include="Models\Kuto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Kuto.Context1.cs</LastGenOutput>
@@ -368,6 +387,7 @@
     <Content Include="Views\KutoAdmin\FileUpload.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
+    <Content Include="Views\Kuto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
