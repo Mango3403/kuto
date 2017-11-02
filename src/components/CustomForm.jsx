@@ -12,6 +12,10 @@ export default class CustomForm extends Component {
 		address: ''
 	}
 
+	componentWillUnmount() {
+		this.saveFile();
+	}
+
 	handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
 	handleSubmit = () => {
@@ -32,34 +36,6 @@ export default class CustomForm extends Component {
 
 		xhr.send(`name=${name}&mobile=${mobile}&LONG=0.00&lat=0.00&address=${address}`);
 	}
-
-	/**
-	 * 
-	 * 	const formData = new FormData();
-        formData.append('image',file.files[0]);
-	 * 
-	 * function saveFile(image, CustomerID, BusinessUserID) {
-		const xhr = new XMLHttpRequest();
-
-		xhr.open("post", "/KutoAdmin/SaveFile", true);
-
-		let formData = new FormData();
-		formData.append('image', image);
-		formData.append('draft', 'test');
-		formData.append('CustomerID', CustomerID);
-		formData.append('BusinessUserID', BusinessUserID);
-
-		xhr.onload = function () {
-			if (xhr.status == 200) {
-				console.log('OK!');
-			} else {
-				console.log('Error: ' + xhr.status);
-			}
-		}
-
-		xhr.send(formData);
-	}
-	 */
 
 	render() {
 		return (

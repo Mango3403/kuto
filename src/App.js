@@ -11,9 +11,9 @@ import CustomHelp from './components/CustomHelp';
 const App = () => (
     <Router>
         <div>
-            <Route exact path={`/custom`} component={Custom} />
-            <Route exact path={`/form`} component={CustomForm} />
-            <Route exact path={`/help`} component={CustomHelp} />
+            <Route exact path={`/Kuto/Index/custom`} component={Custom} />
+            <Route exact path={`/Kuto/Index/form`} component={CustomForm} />
+            <Route exact path={`/Kuto/Index/help`} component={CustomHelp} />
         </div>
     </Router>
 );

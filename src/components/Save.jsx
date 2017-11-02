@@ -41,6 +41,19 @@ class Save extends Component {
         });
     }
 
+    dataURLtoBlob(dataurl) {
+        let 
+            arr = dataurl.split(','), 
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), 
+            n = bstr.length, 
+            u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    }
+
     close() {
         const { checked, canvas } = this.state;
 
@@ -50,15 +63,42 @@ class Save extends Component {
             window.onbeforeunload = null;
         }
 
-        this.setState({ open: false })
+        const dataurl = canvas.toDataURL('image/png');
+        const blob = this.dataURLtoBlob(dataurl);
+
+        this.saveFile(blob, 1, 1);
+
+        this.setState({ open: false });
     }
+
+	saveFile(image, CustomerID, BusinessUserID) {
+		const xhr = new XMLHttpRequest();
+
+		xhr.open("post", "/KutoAdmin/SaveFile", true);
+
+		let formData = new FormData();
+		formData.append("image", image, "custom.png");
+		formData.append('draft', 'test');
+		formData.append('CustomerID', CustomerID);
+		formData.append('BusinessUserID', BusinessUserID);
+
+		xhr.onload = function () {
+			if (xhr.status == 200) {
+				console.log('OK!');
+			} else {
+				console.log('Error: ' + xhr.status);
+			}
+		}
+
+		xhr.send(formData);
+	}
 
     saveImage() {
         const { canvas } = this.state;
 
         this.setState({
             saveImages: {
-                src: canvas.toDataURL()
+                src: canvas.toDataURL('image/png')
             }
         });
     }
@@ -78,7 +118,7 @@ class Save extends Component {
         return (
             <div>
                 <Icon name="save" onClick={this.show(true)} />
-                <Modal dimmer={dimmer} open={open} onClose={this.close}>
+                <Modal closeOnDimmerClick={false} dimmer={dimmer} open={open} onClose={this.close}>
                     <Modal.Header>保存完毕</Modal.Header>
                     <Modal.Content image>
                         <Image wrapped size='small' bordered src={saveImages.src} />

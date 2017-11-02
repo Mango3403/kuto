@@ -248,8 +248,7 @@
   <ItemGroup>
     <Content Include="Content\ruler.min.css" />
     <Content Include="Scripts\main-6ce0d83.js" />
-    <Content Include="Scripts\main-c3a10dd.js" />
-    <Content Include="Scripts\main-c5ef977.js" />
+    <Content Include="Scripts\main-e9e630c.js" />
     <Content Include="Scripts\ruler.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
