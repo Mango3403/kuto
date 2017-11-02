@@ -23,8 +23,9 @@ namespace KutoAdmin.Models
         public int id { get; set; }
         public string name { get; set; }
         public string mobile { get; set; }
-        public decimal LONG_ { get; set; }
-        public decimal lat_ { get; set; }
+        public double LONG_ { get; set; }
+        public double lat_ { get; set; }
+        public string address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerPics> CustomerPics { get; set; }

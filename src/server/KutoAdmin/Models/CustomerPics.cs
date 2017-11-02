@@ -20,6 +20,7 @@ namespace KutoAdmin.Models
         public Nullable<System.DateTime> lastEditTime { get; set; }
         public int CustomerID { get; set; }
         public int BusinessUserID { get; set; }
+        public string Draft { get; set; }
     
         public virtual Business_Users Business_Users { get; set; }
         public virtual Customers Customers { get; set; }
