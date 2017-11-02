@@ -247,6 +247,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ruler.min.css" />
+    <Content Include="Scripts\main-6ce0d83.js" />
+    <Content Include="Scripts\main-c3a10dd.js" />
     <Content Include="Scripts\main-c5ef977.js" />
     <Content Include="Scripts\ruler.min.js" />
     <Content Include="Content\bootstrap.css" />
@@ -256,18 +258,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="imagessrc\images\0.jpeg" />
-    <Content Include="imagessrc\images\1.jpeg" />
-    <Content Include="imagessrc\images\2.jpeg" />
-    <Content Include="imagessrc\images\3.jpeg" />
-    <Content Include="imagessrc\images\control\clear.png" />
-    <Content Include="imagessrc\images\control\handle_change.png" />
-    <Content Include="imagessrc\images\control\handle_del.png" />
-    <Content Include="imagessrc\images\control\handle_rotate.png" />
-    <Content Include="imagessrc\images\control\handle_zoom.png" />
-    <Content Include="imagessrc\images\control\order.png" />
-    <Content Include="imagessrc\images\material\a.jpg" />
-    <Content Include="imagessrc\images\upload.png" />
     <Content Include="index.html" />
     <Content Include="Models\Kuto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

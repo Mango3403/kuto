@@ -1,8 +1,7 @@
 import React from 'react';
 import {
     BrowserRouter as Router,
-    Route,
-    HashRouter
+    Route
 } from 'react-router-dom';
 import './style.css';
 import Custom from './components/Custom';
@@ -12,9 +11,9 @@ import CustomHelp from './components/CustomHelp';
 const App = () => (
     <Router>
         <div>
-            <Route path='/Kuto/Index/custom' component={Custom} />
-            <Route path='/Kuto/Index/form' component={CustomForm} />
-            <Route path='/Kuto/Index/help' component={CustomHelp} />
+            <Route exact path={`/custom`} component={Custom} />
+            <Route exact path={`/form`} component={CustomForm} />
+            <Route exact path={`/help`} component={CustomHelp} />
         </div>
     </Router>
 );
