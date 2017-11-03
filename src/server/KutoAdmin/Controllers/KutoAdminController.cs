@@ -32,8 +32,10 @@ namespace KutoAdmin.Controllers
             string result = "";
             using (KutoEntities db = new KutoEntities())
             {
-                if (db.spInsertCustomer(name, mobile, LONG, lat, address) > 0) {
-                    result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\"}]";
+                int customerId = db.spInsertCustomer(name, mobile, LONG, lat, address);
+                if (customerId > 0)
+                {
+                    result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\", \"customerId\":" + customerId.ToString() + "}]";
                 }
                 else
                     result = "[{\"{result\":\"false\",\"msg\":\"保存失败！\"}]";
