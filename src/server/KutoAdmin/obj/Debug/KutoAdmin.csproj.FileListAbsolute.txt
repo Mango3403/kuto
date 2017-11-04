@@ -98,3 +98,4 @@ C:\KutoAdmin\Kuto\src\server\KutoAdmin\bin\zh-Hans\Microsoft.Owin.Security.Twitt
 C:\KutoAdmin\Kuto\src\server\KutoAdmin\bin\zh-Hans\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 C:\KutoAdmin\Kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.dll
 C:\KutoAdmin\Kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.pdb
+C:\KutoAdmin\Kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.csprojResolveAssemblyReference.cache
