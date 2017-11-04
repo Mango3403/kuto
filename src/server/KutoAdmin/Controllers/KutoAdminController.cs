@@ -34,16 +34,10 @@ namespace KutoAdmin.Controllers
             ObjectParameter CustomerID = new ObjectParameter("CustomerID", typeof(int));
             using (KutoEntities db = new KutoEntities())
             {
-<<<<<<< HEAD
-                var customerId = db.spInsertCustomer(name, mobile, LONG, lat, address);
-                if (customerId > 0)
-                {
-                    result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\", \"customerId\":" + customerId.ToString() + "}]";
-=======
                 db.spInsertCustomer(name, mobile, LONG, lat, address, CustomerID);
-                if ( int.Parse(CustomerID.Value.ToString())  > 0) {
-                    result = "[{\"result\":\"true\",\"CustomerID\":\"" + CustomerID.ToString() + "\",\"msg\":\"保存成功！\"}]";
->>>>>>> fd26109a60b56770c24cc00bc2cc632344ba7c90
+                string cid = CustomerID.Value.ToString();
+                if ( int.Parse(cid)  > 0) {
+                    result = "[{\"result\":\"true\",\"CustomerID\":\"" + cid + "\",\"msg\":\"保存成功！\"}]";
                 }
                 else
                     result = "[{\"result\":\"false\",\"msg\":\"保存失败！\"}]";
@@ -103,12 +97,13 @@ namespace KutoAdmin.Controllers
 
             using (KutoEntities db = new KutoEntities())
             {
-                int returnvalue = -1;
+                ObjectParameter returnvalue = new ObjectParameter("returnvalue", typeof(int));
+
                 var swfFileSystem = new KTFileSystem();
                 if (swfFileSystem.SaveFile(ref image, path, newname))
                 {
-                    
-                    if(db.spAddImg(newfilename, draft, CustomerID, BusinessUserID, returnvalue) == 0)
+                    db.spAddImg(newfilename, draft, CustomerID, BusinessUserID, returnvalue);
+                    if ((int)returnvalue.Value== 0)
                     {
                         result = "[{\"result\":\"true\",\"msg\":\"保存成功！\"}]";
                     }

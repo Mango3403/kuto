@@ -70,12 +70,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KutoAdmin\KutoAdmin.csproj">
-      <Project>{700DB322-37C5-4A5A-B57C-BDBCDDEEC06A}</Project>
+      <Project>{700db322-37c5-4a5a-b57c-bdbcddeec06a}</Project>
       <Name>KutoAdmin</Name>
     </ProjectReference>
   </ItemGroup>

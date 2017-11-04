@@ -31,7 +31,7 @@ namespace KutoAdmin.Models
         public virtual DbSet<Business_Users> Business_Users { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
     
-        public virtual int spAddImg(string image, string draft, Nullable<int> customerID, Nullable<int> businessUserID, Nullable<int> returnvalue)
+        public virtual int spAddImg(string image, string draft, Nullable<int> customerID, Nullable<int> businessUserID, ObjectParameter returnvalue)
         {
             var imageParameter = image != null ?
                 new ObjectParameter("image", image) :
@@ -49,11 +49,7 @@ namespace KutoAdmin.Models
                 new ObjectParameter("BusinessUserID", businessUserID) :
                 new ObjectParameter("BusinessUserID", typeof(int));
     
-            var returnvalueParameter = returnvalue.HasValue ?
-                new ObjectParameter("returnvalue", returnvalue) :
-                new ObjectParameter("returnvalue", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddImg", imageParameter, draftParameter, customerIDParameter, businessUserIDParameter, returnvalueParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddImg", imageParameter, draftParameter, customerIDParameter, businessUserIDParameter, returnvalue);
         }
     
         public virtual int spEditImg(string image, string draft, ObjectParameter msg)

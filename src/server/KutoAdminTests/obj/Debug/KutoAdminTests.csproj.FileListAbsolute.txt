@@ -62,3 +62,6 @@ C:\kuto\src\server\KutoAdminTests\bin\Debug\KutoAdminTests.dll.config
 C:\kuto\src\server\KutoAdminTests\bin\Debug\EntityFramework.SqlServer.dll
 C:\kuto\src\server\KutoAdminTests\bin\Debug\EntityFramework.SqlServer.xml
 C:\kuto\src\server\KutoAdminTests\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
+C:\kuto\src\server\KutoAdminTests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+C:\kuto\src\server\KutoAdminTests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\kuto\src\server\KutoAdminTests\bin\Debug\zh-Hans\Microsoft.Owin.Host.SystemWeb.resources.dll
