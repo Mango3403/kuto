@@ -25,7 +25,6 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -198,8 +197,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\KutoAdminController.cs" />
-    <Compile Include="Controllers\KutoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -246,18 +245,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\ruler.min.css" />
-    <Content Include="Scripts\main-6ce0d83.js" />
-    <Content Include="Scripts\main-e9e630c.js" />
-    <Content Include="Scripts\ruler.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\main.c1215285413f6483d42f9aae01fc3e97.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="index.html" />
     <Content Include="Models\Kuto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Kuto.Context1.cs</LastGenOutput>
@@ -359,7 +352,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -376,7 +371,7 @@
     <Content Include="Views\KutoAdmin\FileUpload.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
-    <Content Include="Views\Kuto\Index.cshtml" />
+    <Content Include="Views\KutoAdmin\InsertCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -437,7 +432,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56847</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

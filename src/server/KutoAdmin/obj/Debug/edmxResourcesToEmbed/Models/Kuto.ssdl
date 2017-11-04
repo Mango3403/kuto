@@ -60,6 +60,7 @@
     <Parameter Name="draft" Type="ntext" Mode="In" />
     <Parameter Name="CustomerID" Type="int" Mode="In" />
     <Parameter Name="BusinessUserID" Type="int" Mode="In" />
+    <Parameter Name="returnvalue" Type="int" Mode="In" />
   </Function>
   <Function Name="spEditImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
     <Parameter Name="image" Type="varchar" Mode="In" />
@@ -82,6 +83,7 @@
     <Parameter Name="LONG" Type="float" Mode="In" />
     <Parameter Name="lat" Type="float" Mode="In" />
     <Parameter Name="address" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerID" Type="int" Mode="InOut" />
   </Function>
   <Function Name="spSignin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
     <Parameter Name="username" Type="nvarchar" Mode="In" />
