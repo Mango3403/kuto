@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Container, Button, Checkbox, Form } from 'semantic-ui-react';
+import { Header, Container, Button, Checkbox, Form, Message } from 'semantic-ui-react';
 import {
 	Link
 } from 'react-router-dom';
@@ -50,14 +50,20 @@ export default class CustomForm extends Component {
 		return (
 			<Container text>
 				<Header as='h2'>表单信息</Header>
-				<Form onSubmit={this.handleSubmit}>
+				<Form warning onSubmit={this.handleSubmit}>
 					<Form.Field>
 						<Form.Input label='打印部 ID' name='id' value='123***456' disabled />
 					</Form.Field>
-					<Form.Field>
+					<Form.Field required>
 						<label>手机号</label>
 						<Form.Input placeholder='' name='mobile' required onChange={this.handleChange} />
 					</Form.Field>
+					<Message
+						warning
+						list={[
+							'如果以前填写过此表单，只需输入手机号'
+						]}
+					/>
 					<Form.Field>
 						<label>姓名</label>
 						<Form.Input placeholder='' name='name' required onChange={this.handleChange} />
@@ -67,7 +73,7 @@ export default class CustomForm extends Component {
 						<Form.Input placeholder='' name='address' required onChange={this.handleChange} />
 					</Form.Field>
 					<Form.Button content='提交' />
-					<Link id='link' to='/Kuto/Index/help' />
+					<Link id='link' to='/help' />
 				</Form>
 			</Container>
 		);

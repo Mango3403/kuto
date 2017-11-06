@@ -89,7 +89,7 @@ class Save extends Component {
                 if (xhr.status === 200) {
                     console.log(xhr.responseText);
                 } else {
-                    alert('request error ' + xhr.status);
+                    alert('请求失败 ' + xhr.status);
                 }
             }
         };
@@ -131,7 +131,7 @@ class Save extends Component {
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Link to='/Kuto/Index/form'>
+                        <Link to='/form'>
                             <Button positive content="下一步" onClick={this.close} style={{ marginBottom: '10px' }} />
                         </Link>
                     </Modal.Actions>

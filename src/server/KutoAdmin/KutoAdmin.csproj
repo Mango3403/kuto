@@ -246,19 +246,30 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+    <Content Include="Content\main.cd50b606d3965f2761691f4fa1ebc86b.css" />
     <Content Include="Content\ruler.min.css" />
-    <Content Include="Scripts\main-4105686.js" />
+    <Content Include="KutoAdmin\imagessrc\images\0.jpeg" />
+    <Content Include="KutoAdmin\imagessrc\images\1.jpeg" />
+    <Content Include="KutoAdmin\imagessrc\images\2.jpeg" />
+    <Content Include="KutoAdmin\imagessrc\images\3.jpeg" />
+    <Content Include="KutoAdmin\imagessrc\images\control\clear.png" />
+    <Content Include="KutoAdmin\imagessrc\images\control\handle_change.png" />
+    <Content Include="KutoAdmin\imagessrc\images\control\handle_del.png" />
+    <Content Include="KutoAdmin\imagessrc\images\control\handle_rotate.png" />
+    <Content Include="KutoAdmin\imagessrc\images\control\handle_zoom.png" />
+    <Content Include="KutoAdmin\imagessrc\images\control\order.png" />
+    <Content Include="KutoAdmin\imagessrc\images\material\a.jpg" />
+    <Content Include="KutoAdmin\imagessrc\images\upload.png" />
+    <Content Include="Scripts\main-217d5e5.js" />
+    <Content Include="Scripts\main-336a96b.js" />
+    <Content Include="Scripts\main-75fec82.js" />
     <Content Include="Scripts\ruler.min.js" />
-=======
->>>>>>> 1d23311da28c2e62e6eff7f92723f08e4179a966
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="index.html" />
     <Content Include="Models\Kuto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Kuto.Context1.cs</LastGenOutput>
@@ -360,14 +371,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-<<<<<<< HEAD
-    <Content Include="Views\Kuto\Index.cshtml" />
-    <Content Include="Web.config" />
-=======
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
->>>>>>> 1d23311da28c2e62e6eff7f92723f08e4179a966
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -384,10 +390,8 @@
     <Content Include="Views\KutoAdmin\FileUpload.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
-<<<<<<< HEAD
-=======
     <Content Include="Views\KutoAdmin\InsertCustomer.cshtml" />
->>>>>>> 1d23311da28c2e62e6eff7f92723f08e4179a966
+    <Content Include="Views\KutoAdmin\Custom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -397,7 +401,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>

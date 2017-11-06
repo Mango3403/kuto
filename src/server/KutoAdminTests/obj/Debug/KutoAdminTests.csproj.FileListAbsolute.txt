@@ -65,3 +65,5 @@ C:\kuto\src\server\KutoAdminTests\bin\Debug\zh-Hans\EntityFramework.SqlServer.re
 C:\kuto\src\server\KutoAdminTests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
 C:\kuto\src\server\KutoAdminTests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 C:\kuto\src\server\KutoAdminTests\bin\Debug\zh-Hans\Microsoft.Owin.Host.SystemWeb.resources.dll
+C:\custom\src\server\KutoAdminTests\obj\Debug\KutoAdminTests.csprojResolveAssemblyReference.cache
+C:\custom\src\server\KutoAdminTests\obj\Debug\KutoAdminTests.csproj.CoreCompileInputs.cache
