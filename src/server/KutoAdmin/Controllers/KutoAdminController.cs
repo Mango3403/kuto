@@ -30,15 +30,17 @@ namespace KutoAdmin.Controllers
         public string InsertCustomer(string name, string mobile, double LONG, double lat, string address)
         {
             string result = "";
+             
+            ObjectParameter CustomerID = new ObjectParameter("CustomerID", typeof(int));
             using (KutoEntities db = new KutoEntities())
             {
-                int customerId = db.spInsertCustomer(name, mobile, LONG, lat, address);
-                if (customerId > 0)
-                {
-                    result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\", \"customerId\":" + customerId.ToString() + "}]";
+                db.spInsertCustomer(name, mobile, LONG, lat, address, CustomerID);
+                string cid = CustomerID.Value.ToString();
+                if ( int.Parse(cid)  > 0) {
+                    result = "[{\"result\":\"true\",\"CustomerID\":\"" + cid + "\",\"msg\":\"保存成功！\"}]";
                 }
                 else
-                    result = "[{\"{result\":\"false\",\"msg\":\"保存失败！\"}]";
+                    result = "[{\"result\":\"false\",\"msg\":\"保存失败！\"}]";
             }
             return result;
         }
@@ -54,20 +56,21 @@ namespace KutoAdmin.Controllers
             {
                 using (KutoEntities db = new KutoEntities())
                 {
-                    if (db.spEditImg(image.FileName, draft, msg) == 0)
+                    db.spEditImg(image.FileName, draft, msg);
+                    if (msg.Value.ToString() == "ok")
                     {
-                        result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\"}]";
+                        result = "[{\"result\":\"true\",\"msg\":\"保存成功！\"}]";
                          
                     }
                     else
                     {
-                        result = "[{\"{result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
+                        result = "[{\"result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
                     }
                 }
             }
             else
             {
-                result = "[{\"{result\":\"false\",\"msg\":\"" + swfFileSystem.strErrorMessage + "\"}]";
+                result = "[{\"result\":\"false\",\"msg\":\"" + swfFileSystem.strErrorMessage + "\"}]";
             }
 
             return result;
@@ -94,24 +97,25 @@ namespace KutoAdmin.Controllers
 
             using (KutoEntities db = new KutoEntities())
             {
-                //ObjectParameter re = new ObjectParameter("msg", typeof(string));
+                ObjectParameter returnvalue = new ObjectParameter("returnvalue", typeof(int));
+
                 var swfFileSystem = new KTFileSystem();
                 if (swfFileSystem.SaveFile(ref image, path, newname))
                 {
-                    
-                    if(db.spAddImg(newfilename, draft, CustomerID, BusinessUserID) == 0)
+                    db.spAddImg(newfilename, draft, CustomerID, BusinessUserID, returnvalue);
+                    if ((int)returnvalue.Value== 0)
                     {
-                        result = "[{\"{result\":\"true\",\"msg\":\"保存成功！\"}]";
+                        result = "[{\"result\":\"true\",\"msg\":\"保存成功！\"}]";
                     }
                     else
                     {
-                        result = "[{\"{result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
+                        result = "[{\"result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
                     }
                     
                 }
                 else
                 {
-                    result = "[{\"{result\":\"false\",\"msg\":\"" + swfFileSystem.strErrorMessage + "\"}]";
+                    result = "[{\"result\":\"false\",\"msg\":\"" + swfFileSystem.strErrorMessage + "\"}]";
                 }
             }
 
@@ -158,7 +162,10 @@ namespace KutoAdmin.Controllers
 
         }
 
-
+        public ActionResult InsertCustomer()
+        {
+            return View();
+        }
         public ActionResult Login()
         {
             return View();

@@ -65,6 +65,7 @@
           <Parameter Name="draft" Type="ntext" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
           <Parameter Name="BusinessUserID" Type="int" Mode="In" />
+          <Parameter Name="returnvalue" Type="int" Mode="InOut" />
         </Function>
         <Function Name="spEditImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
           <Parameter Name="image" Type="varchar" Mode="In" />
@@ -87,6 +88,7 @@
           <Parameter Name="LONG" Type="float" Mode="In" />
           <Parameter Name="lat" Type="float" Mode="In" />
           <Parameter Name="address" Type="nvarchar" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="InOut" />
         </Function>
         <Function Name="spSignin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
           <Parameter Name="username" Type="nvarchar" Mode="In" />
@@ -154,6 +156,7 @@
             <Parameter Name="draft" Mode="In" Type="String" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
+            <Parameter Name="returnvalue" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spEditImg">
             <Parameter Name="image" Mode="In" Type="String" />
@@ -189,6 +192,7 @@
             <Parameter Name="LONG" Mode="In" Type="Double" />
             <Parameter Name="lat" Mode="In" Type="Double" />
             <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="InOut" Type="Int32" />
           </FunctionImport>
           
         </EntityContainer>

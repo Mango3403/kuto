@@ -31,7 +31,7 @@ namespace KutoAdmin.Models
         public virtual DbSet<Business_Users> Business_Users { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
     
-        public virtual int spAddImg(string image, string draft, Nullable<int> customerID, Nullable<int> businessUserID)
+        public virtual int spAddImg(string image, string draft, Nullable<int> customerID, Nullable<int> businessUserID, ObjectParameter returnvalue)
         {
             var imageParameter = image != null ?
                 new ObjectParameter("image", image) :
@@ -49,7 +49,7 @@ namespace KutoAdmin.Models
                 new ObjectParameter("BusinessUserID", businessUserID) :
                 new ObjectParameter("BusinessUserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddImg", imageParameter, draftParameter, customerIDParameter, businessUserIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddImg", imageParameter, draftParameter, customerIDParameter, businessUserIDParameter, returnvalue);
         }
     
         public virtual int spEditImg(string image, string draft, ObjectParameter msg)
@@ -104,7 +104,7 @@ namespace KutoAdmin.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spGetDraftByID", idParameter);
         }
     
-        public virtual int spInsertCustomer(string name, string mobile, Nullable<double> lONG, Nullable<double> lat, string address)
+        public virtual int spInsertCustomer(string name, string mobile, Nullable<double> lONG, Nullable<double> lat, string address, ObjectParameter customerID)
         {
             var nameParameter = name != null ?
                 new ObjectParameter("name", name) :
@@ -126,7 +126,7 @@ namespace KutoAdmin.Models
                 new ObjectParameter("address", address) :
                 new ObjectParameter("address", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCustomer", nameParameter, mobileParameter, lONGParameter, latParameter, addressParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCustomer", nameParameter, mobileParameter, lONGParameter, latParameter, addressParameter, customerID);
         }
     }
 }
