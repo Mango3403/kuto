@@ -82,15 +82,17 @@ class Save extends Component {
 		formData.append('CustomerID', CustomerID);
 		formData.append('BusinessUserID', BusinessUserID);
 
-		xhr.onload = function () {
-			if (xhr.status == 200) {
-				console.log('OK!');
-			} else {
-				console.log('Error: ' + xhr.status);
-			}
-		}
-
-		xhr.send(formData);
+        xhr.send(formData);
+        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    alert('request error ' + xhr.status);
+                }
+            }
+        };
 	}
 
     saveImage() {
@@ -129,7 +131,7 @@ class Save extends Component {
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Link to='/form'>
+                        <Link to='/Kuto/Index/form'>
                             <Button positive content="下一步" onClick={this.close} style={{ marginBottom: '10px' }} />
                         </Link>
                     </Modal.Actions>
