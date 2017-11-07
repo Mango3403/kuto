@@ -1,26 +1,13 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { fabric } from 'fabric';
-import { Button, Sidebar, Icon, Message, Popup, List, Label, Menu } from 'semantic-ui-react';
-import eventProxy from '../eventProxy';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import { fabric } from 'fabric'
+import { Button, Sidebar, Icon, Message, Popup, List, Label, Menu } from 'semantic-ui-react'
+import eventProxy from '../eventProxy'
 
-const styles = {
-    sideBar: {
-        fontSize: '0.5em',
-        fontFamily: '黑体',
-        padding: '0 25px 5px 0'
-    },
-    range: {
-        position: 'relative',
-        top: '5px',
-        right: '5px'
-    }
-}
-
-class FilterBar extends Component {
+class PictureFilterPane extends Component {
 
     constructor() {
-        super();
+        super()
 
         this.state = {
             isOpen: false,
@@ -32,34 +19,34 @@ class FilterBar extends Component {
             canvas: null
         }
 
-        this.changeThreshold = this.changeThreshold.bind(this);
-        this.changeDistance = this.changeDistance.bind(this);
+        this.changeThreshold = this.changeThreshold.bind(this)
+        this.changeDistance = this.changeDistance.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
             canvas: nextProps.canvas
-        });
+        })
     }
 
     componentDidMount() {
         eventProxy.on('openFilter', () => {
-            this.handleOpen();
-        });
+            this.handleOpen()
+        })
     }
 
     handleOpen = () => {
-        const { canvas } = this.state;
+        const { canvas } = this.state
 
         if (!(canvas.getActiveObject() && canvas.getActiveObject().isType('image'))) {
-            this.setState({ isOpen: true });
+            this.setState({ isOpen: true })
         } else {
-            this.toggleVisibility();
+            this.toggleVisibility()
         }
     }
 
     handleClose = () => {
-        this.setState({ isOpen: false });
+        this.setState({ isOpen: false })
     }
 
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
@@ -79,21 +66,21 @@ class FilterBar extends Component {
             { canvas, imgObj } = this.state,
             obj = canvas.getActiveObject(),
             distance = obj.filters[1].distance,
-            val = imgObj.threshold;
+            val = imgObj.threshold
 
         obj.clone(obj => {
-            obj.filters[1].threshold = val;
-            obj.lockRotation = false;
-            obj.hasBorders = true;
-            obj.lockUniScaling = true;
-            obj.centeredScaling = true;
+            obj.filters[1].threshold = val
+            obj.lockRotation = false
+            obj.hasBorders = true
+            obj.lockUniScaling = true
+            obj.centeredScaling = true
 
             obj.setControlsVisibility({
                 mtr: false
-            });
+            })
 
-            canvas.remove(canvas.getActiveObject()).add(obj).setActiveObject(obj);
-        });
+            canvas.remove(canvas.getActiveObject()).add(obj).setActiveObject(obj)
+        })
 
     }
 
@@ -102,28 +89,28 @@ class FilterBar extends Component {
             { canvas, imgObj } = this.state,
             obj = canvas.getActiveObject(),
             threshold = obj.filters[1].threshold,
-            val = imgObj.distance;
+            val = imgObj.distance
 
         obj.clone(obj => {
-            obj.filters[1].distance = val;
-            obj.lockRotation = false;
-            obj.hasBorders = true;
-            obj.lockUniScaling = true;
-            obj.centeredScaling = true;
+            obj.filters[1].distance = val
+            obj.lockRotation = false
+            obj.hasBorders = true
+            obj.lockUniScaling = true
+            obj.centeredScaling = true
 
             obj.setControlsVisibility({
                 mtr: false
-            });
+            })
 
-            canvas.remove(canvas.getActiveObject());
-            canvas.add(obj);
-            canvas.setActiveObject(obj);
-        });
+            canvas.remove(canvas.getActiveObject())
+            canvas.add(obj)
+            canvas.setActiveObject(obj)
+        })
 
     }
 
     render() {
-        const { isOpen, visible, canvas, imgObj } = this.state;
+        const { imgObj } = this.state
 
         return (
             <div>
@@ -134,16 +121,16 @@ class FilterBar extends Component {
                         />
                     }
                     on='click'
-                    open={isOpen}
+                    open={this.state.isOpen}
                     onOpen={this.handleOpen}
                     onClose={this.handleClose}
                     content='请选中一张图片'
                 />
-                <Sidebar style={styles.sideBar} as={Message} animation="overlay" direction='bottom' visible={visible} onDismiss={this.toggleVisibility}>
+                <Sidebar style={{ fontSize: '0.5em', fontFamily: '黑体', padding: '0 25px 5px 0' }} as={Message} animation="overlay" direction='bottom' visible={this.state.visible} onDismiss={this.toggleVisibility}>
                     <List>
                         <List.Item>
                             <span>过滤梯度: </span>
-                            <input style={styles.range} type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
+                            <input style={{ position: 'relative', top: '5px', right: '5px' }} type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
                             <Menu size='mini' compact>
                                 <Menu.Item disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
                                 <Menu.Item name={imgObj.distance.toString()} />
@@ -152,7 +139,7 @@ class FilterBar extends Component {
                         </List.Item>
                         <List.Item>
                             <span>过滤像素: </span>
-                            <input style={styles.range} type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
+                            <input style={{ position: 'relative', top: '5px', right: '5px' }} type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
                             <Menu size='mini' compact>
                                 <Menu.Item disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
                                 <Menu.Item name={imgObj.threshold.toString()} />
@@ -162,8 +149,8 @@ class FilterBar extends Component {
                     </List>
                 </Sidebar>
             </div>
-        );
+        )
     }
 }
 
-export default FilterBar;
+export default PictureFilterPane

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Button, Grid, Message, Image, Sidebar, Icon, Item, Menu } from 'semantic-ui-react';
-import bg1 from '../images/material/a.jpg';
+import React, { Component } from 'react'
+import { Button, Grid, Message, Image, Sidebar, Icon, Item, Menu } from 'semantic-ui-react'
+import bg1 from '../assets/images/material/a.jpg'
 
 const styles = {
     img: {
@@ -20,7 +20,7 @@ const styles = {
         teal: '#00b5ad',
         violet: '#6435c9'
     }
-};
+}
 
 const
     colors = [
@@ -35,11 +35,11 @@ const
         'rgba(34, 58, 120, 0.8)',
         'rgba(40, 158, 19, 0.8)',
         'rgba(187, 217, 233, 0.8)'
-    ];
+    ]
 
-class BackgroundBar extends Component {
+class BackgroundPane extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             canvas: props.canvas,
@@ -48,12 +48,12 @@ class BackgroundBar extends Component {
             ]
         }
 
-        this.handleClick = this.handleClick.bind(this);
-        this.openInputColor = this.openInputColor.bind(this);
-        this.setImage = this.setImage.bind(this);
-        this.removeBackgroundImage = this.removeBackgroundImage.bind(this);
-        this.clear = this.clear.bind(this);
-        this.setColor = this.setColor.bind(this);
+        this.handleClick = this.handleClick.bind(this)
+        this.openInputColor = this.openInputColor.bind(this)
+        this.setImage = this.setImage.bind(this)
+        this.removeBackgroundImage = this.removeBackgroundImage.bind(this)
+        this.clear = this.clear.bind(this)
+        this.setColor = this.setColor.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -61,49 +61,49 @@ class BackgroundBar extends Component {
     }
 
     handleClick(e, { value }) {
-        this.setColor(value);
+        this.setColor(value)
     }
 
     setColor(color) {
-        const { canvas } = this.state;
-        console.log(color);
+        const { canvas } = this.state
+        console.log(color)
 
-        canvas.setBackgroundColor(color);
-        canvas.renderAll();
+        canvas.setBackgroundColor(color)
+        canvas.renderAll()
     }
 
     setImage(src) {
-        const { canvas } = this.state;
+        const { canvas } = this.state
 
         canvas.setBackgroundImage(src, canvas.renderAll.bind(canvas), {
             opacity: 0.5,
             originX: 'left',
             originY: 'top'
-        });
+        })
     }
 
     openInputColor() {
-        document.getElementById('color').click();
+        document.getElementById('color').click()
     }
 
     removeBackgroundImage() {
-        const { canvas } = this.state;
+        const { canvas } = this.state
 
-        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
+        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas))
     }
 
     clear() {
-        const { canvas } = this.state;
+        const { canvas } = this.state
 
-        canvas.setBackgroundColor(null);
-        canvas.setBackgroundImage(null);
-        canvas.renderAll();
+        canvas.setBackgroundColor(null)
+        canvas.setBackgroundImage(null)
+        canvas.renderAll()
     }
 
-    toggleVisibility = () => this.setState({ visible: !this.state.visible });
+    toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     render() {
-        const { visible, background, active } = this.state;
+        const { visible, background, active } = this.state
 
         return (
             <div>
@@ -148,8 +148,8 @@ class BackgroundBar extends Component {
                     </Menu>
                 </Sidebar>
             </div>
-        );
+        )
     }
 }
 
-export default BackgroundBar;
+export default BackgroundPane

@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
     BrowserRouter as Router,
     Route,
     Link
-} from 'react-router-dom';
-import { fabric } from 'fabric';
-import { Checkbox, Modal, Icon, Button, Header, Image } from 'semantic-ui-react';
+} from 'react-router-dom'
+import { Checkbox, Modal, Icon, Button, Header, Image } from 'semantic-ui-react'
 
 class Save extends Component {
     constructor() {
-        super();
+        super()
 
         this.state = {
             checked: false,
@@ -21,8 +20,8 @@ class Save extends Component {
             canvas: null
         }
 
-        this.download = this.download.bind(this);
-        this.close = this.close.bind(this);
+        this.download = this.download.bind(this)
+        this.close = this.close.bind(this)
     }
 
     toggle = () => this.setState({ checked: !this.state.checked })
@@ -34,96 +33,90 @@ class Save extends Component {
     }
 
     show = dimmer => () => {
-        this.saveImage();
+        this.saveImage()
         this.setState({
             dimmer,
             open: true
-        });
+        })
     }
 
     dataURLtoBlob(dataurl) {
         let 
             arr = dataurl.split(','), 
-            mime = arr[0].match(/:(.*?);/)[1],
+            mime = arr[0].match(/:(.*?)/)[1],
             bstr = atob(arr[1]), 
             n = bstr.length, 
-            u8arr = new Uint8Array(n);
+            u8arr = new Uint8Array(n)
         while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
+            u8arr[n] = bstr.charCodeAt(n)
         }
-        return new Blob([u8arr], { type: mime });
+        return new Blob([u8arr], { type: mime })
     }
 
     close() {
-        const { checked, canvas } = this.state;
-
-        if (checked) {
-            this.download();
-            localStorage.removeItem('myCanvas');
-            window.onbeforeunload = null;
+        if (this.state.checked) {
+            this.download()
+            localStorage.removeItem('myCanvas')
+            window.onbeforeunload = null
         }
 
-        const dataurl = canvas.toDataURL('image/png');
-        const blob = this.dataURLtoBlob(dataurl);
+        const dataurl = this.state.canvas.toDataURL('image/png')
+        const blob = this.dataURLtoBlob(dataurl)
 
-        this.saveFile(blob, 1, 1);
+        this.saveFile(blob, 1, 1)
 
-        this.setState({ open: false });
+        this.setState({ open: false })
     }
 
 	saveFile(image, CustomerID, BusinessUserID) {
-		const xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest()
 
-		xhr.open("post", "/KutoAdmin/SaveFile", true);
+		xhr.open("post", "/KutoAdmin/SaveFile", true)
 
-		let formData = new FormData();
-		formData.append("image", image, "custom.png");
-		formData.append('draft', 'test');
-		formData.append('CustomerID', CustomerID);
-		formData.append('BusinessUserID', BusinessUserID);
+		let formData = new FormData()
+		formData.append("image", image, "custom.png")
+		formData.append('draft', 'test')
+		formData.append('CustomerID', CustomerID)
+		formData.append('BusinessUserID', BusinessUserID)
 
-        xhr.send(formData);
+        xhr.send(formData)
         
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    console.log(xhr.responseText);
+                    console.log(xhr.responseText)
                 } else {
-                    alert('请求失败 ' + xhr.status);
+                    alert('请求失败 ' + xhr.status)
                 }
             }
-        };
+        }
 	}
 
     saveImage() {
-        const { canvas } = this.state;
+        const { canvas } = this.state
 
         this.setState({
             saveImages: {
                 src: canvas.toDataURL('image/png')
             }
-        });
+        })
     }
 
     download() {
-        const { saveImages } = this.state;
-
-        const a = document.createElement('a');
-        a.setAttribute('href', saveImages.src);
-        a.setAttribute('download', saveImages.name);
-        a.click();
+        const a = document.createElement('a')
+        a.setAttribute('href', this.state.saveImages.src)
+        a.setAttribute('download', this.state.saveImages.name)
+        a.click()
     }
 
     render() {
-        const { saveImages, open, dimmer } = this.state;
-
         return (
             <div>
                 <Icon name="save" onClick={this.show(true)} />
-                <Modal closeOnDimmerClick={false} dimmer={dimmer} open={open} onClose={this.close}>
+                <Modal closeOnDimmerClick={false} dimmer={this.state.dimmer} open={this.state.open} onClose={this.close}>
                     <Modal.Header>保存完毕</Modal.Header>
                     <Modal.Content image>
-                        <Image wrapped size='small' bordered src={saveImages.src} />
+                        <Image wrapped size='small' bordered src={this.state.saveImages.src} />
                         <Modal.Description>
                             微信用户, 按住图片3秒, 可保存到本地
                             <br />
@@ -137,8 +130,8 @@ class Save extends Component {
                     </Modal.Actions>
                 </Modal>
             </div>
-        );
+        )
     }
 }
 
-export default Save;
+export default Save

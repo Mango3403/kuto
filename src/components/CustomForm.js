@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Header, Container, Button, Checkbox, Form, Message } from 'semantic-ui-react';
+import React, { Component } from 'react'
+import { Header, Container, Button, Checkbox, Form, Message } from 'semantic-ui-react'
 import {
 	Link
-} from 'react-router-dom';
+} from 'react-router-dom'
 
 export default class CustomForm extends Component {
 	state = {
@@ -15,32 +15,32 @@ export default class CustomForm extends Component {
 	handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
 	handleSubmit = () => {
-		const { mobile, name, address } = this.state;
+		const { mobile, name, address } = this.state
 
 		if (/\b(\d{2})?[1][3456789][0-9]{9}\b/g.test(mobile)) {
-			this.insertCustomer(name, mobile, address);
+			this.insertCustomer(name, mobile, address)
 
-			const link = document.getElementById('link');
-			link.click();
+			const link = document.getElementById('link')
+			link.click()
 		} else {
-			alert(`请输入正确的手机号码`);
+			alert(`请输入正确的手机号码`)
 		}
 	}
 
 	insertCustomer(name, mobile, address) {
-		const xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest()
 
-		xhr.open("post", "/KutoAdmin/InsertCustomer", true);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.open("post", "/KutoAdmin/InsertCustomer", true)
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 
-		xhr.send(`name=${name.toString()}&mobile=${mobile.toString()}&LONG=1&lat=1&address=${address.toString()}`);
+		xhr.send(`name=${name.toString()}&mobile=${mobile.toString()}&LONG=1&lat=1&address=${address.toString()}`)
 
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
-					alert(xhr.responseText);
+					alert(xhr.responseText)
 				} else {
-					alert('请求失败 ' + xhr.status);
+					alert('请求失败 ' + xhr.status)
 				}
 			}
 		}
@@ -76,6 +76,6 @@ export default class CustomForm extends Component {
 					<Link id='link' to='/help' />
 				</Form>
 			</Container>
-		);
+		)
 	}
 }
