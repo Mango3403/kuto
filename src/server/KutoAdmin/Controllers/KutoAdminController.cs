@@ -166,11 +166,11 @@ namespace KutoAdmin.Controllers
         {
             return View();
         }
+
         public ActionResult Login()
         {
             return View();
         }
-
 
         [HttpPost]
         public string GetCustomerPicList(int BusinessUserID)
@@ -227,6 +227,9 @@ namespace KutoAdmin.Controllers
             return View();
         }
 
-  
+        public ActionResult Custom()
+        {
+            return View();
+        }
     }
 }
