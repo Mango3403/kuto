@@ -246,23 +246,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\main.cd50b606d3965f2761691f4fa1ebc86b.css" />
-    <Content Include="Content\ruler.min.css" />
-    <Content Include="KutoAdmin\imagessrc\images\0.jpeg" />
-    <Content Include="KutoAdmin\imagessrc\images\1.jpeg" />
-    <Content Include="KutoAdmin\imagessrc\images\2.jpeg" />
-    <Content Include="KutoAdmin\imagessrc\images\3.jpeg" />
-    <Content Include="KutoAdmin\imagessrc\images\control\clear.png" />
-    <Content Include="KutoAdmin\imagessrc\images\control\handle_change.png" />
-    <Content Include="KutoAdmin\imagessrc\images\control\handle_del.png" />
-    <Content Include="KutoAdmin\imagessrc\images\control\handle_rotate.png" />
-    <Content Include="KutoAdmin\imagessrc\images\control\handle_zoom.png" />
-    <Content Include="KutoAdmin\imagessrc\images\control\order.png" />
-    <Content Include="KutoAdmin\imagessrc\images\material\a.jpg" />
-    <Content Include="KutoAdmin\imagessrc\images\upload.png" />
-    <Content Include="Scripts\main-217d5e5.js" />
-    <Content Include="Scripts\main-336a96b.js" />
-    <Content Include="Scripts\main-75fec82.js" />
     <Content Include="Scripts\ruler.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -288,6 +271,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -391,7 +378,6 @@
     <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
     <Content Include="Views\KutoAdmin\InsertCustomer.cshtml" />
-    <Content Include="Views\KutoAdmin\Custom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
