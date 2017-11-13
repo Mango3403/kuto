@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KutoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CustomerPics">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pic" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createdTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="lastEditTime" Type="DateTime" Precision="3" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="BusinessUserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Business_Users" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="CustomerPics" ToRole="Business_Users" />
+    <NavigationProperty Name="Customers" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="CustomerPics" ToRole="Customers" />
+    <Property Name="Draft" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Business_Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pwd" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="Business_Users" ToRole="CustomerPics" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LONG_" Type="Double" Nullable="false" />
+    <Property Name="lat_" Type="Double" Nullable="false" />
+    <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="Customers" ToRole="CustomerPics" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="KutoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" />
+    <EntitySet Name="Business_Users" EntityType="Self.Business_Users" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" />
+    <FunctionImport Name="spAddImg">
+      <Parameter Name="image" Mode="In" Type="String" />
+      <Parameter Name="draft" Mode="In" Type="String" />
+      <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+      <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
+      <Parameter Name="returnvalue" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spEditImg">
+      <Parameter Name="image" Mode="In" Type="String" />
+      <Parameter Name="draft" Mode="In" Type="String" />
+      <Parameter Name="msg" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spSignin" ReturnType="Collection(Int32)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="pwd" Mode="In" Type="String" />
+      <Parameter Name="returnvalue" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <AssociationSet Name="FK__CustomerP__Busin__1A14E395" Association="KutoModel.FK__CustomerP__Busin__1A14E395">
+      <End Role="Business_Users" EntitySet="Business_Users" />
+      <End Role="CustomerPics" EntitySet="CustomerPics" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerP__Custo__1920BF5C" Association="KutoModel.FK__CustomerP__Custo__1920BF5C">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="CustomerPics" EntitySet="CustomerPics" />
+    </AssociationSet>
+    <FunctionImport Name="spImgListforBusinessUser" ReturnType="Collection(KutoModel.spImgListforBusinessUser_Result1)">
+      <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="pageCount" Mode="InOut" Type="Int32" />
+      <Parameter Name="totalCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spGetDraftByID" ReturnType="Collection(String)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spInsertCustomer">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="mobile" Mode="In" Type="String" />
+      <Parameter Name="LONG" Mode="In" Type="Double" />
+      <Parameter Name="lat" Mode="In" Type="Double" />
+      <Parameter Name="address" Mode="In" Type="String" />
+      <Parameter Name="CustomerID" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <Association Name="FK__CustomerP__Busin__1A14E395">
+    <End Type="KutoModel.Business_Users" Role="Business_Users" Multiplicity="1" />
+    <End Type="KutoModel.CustomerPics" Role="CustomerPics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Business_Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CustomerPics">
+        <PropertyRef Name="BusinessUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerP__Custo__1920BF5C">
+    <End Type="KutoModel.Customers" Role="Customers" Multiplicity="1" />
+    <End Type="KutoModel.CustomerPics" Role="CustomerPics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CustomerPics">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="spImgListforBusinessUser_Result">
+    <Property Type="String" Name="pic" Nullable="false" MaxLength="19" />
+    <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+    <Property Type="Int32" Name="cID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spImgListforBusinessUser1_Result">
+    <Property Type="String" Name="pic" Nullable="false" MaxLength="55" />
+    <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+    <Property Type="Int32" Name="cID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spImgListforBusinessUser2_Result">
+    <Property Type="String" Name="pic" Nullable="false" MaxLength="55" />
+    <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+    <Property Type="Int32" Name="cID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spImgListforBusinessUser_Result1">
+    <Property Type="String" Name="pic" Nullable="false" MaxLength="55" />
+    <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+    <Property Type="Int32" Name="cID" Nullable="false" />
+  </ComplexType>
+</Schema>

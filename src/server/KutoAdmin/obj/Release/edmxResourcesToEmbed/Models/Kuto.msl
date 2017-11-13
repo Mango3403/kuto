@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KutoModelStoreContainer" CdmEntityContainer="KutoEntities">
+    <EntitySetMapping Name="CustomerPics">
+      <EntityTypeMapping TypeName="KutoModel.CustomerPics">
+        <MappingFragment StoreEntitySet="CustomerPics">
+          <ScalarProperty Name="Draft" ColumnName="Draft" />
+          <ScalarProperty Name="BusinessUserID" ColumnName="BusinessUserID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pic" ColumnName="pic" />
+          <ScalarProperty Name="createdTime" ColumnName="createdTime" />
+          <ScalarProperty Name="lastEditTime" ColumnName="lastEditTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Business_Users">
+      <EntityTypeMapping TypeName="KutoModel.Business_Users">
+        <MappingFragment StoreEntitySet="Business_Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="KutoModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="LONG_" ColumnName="LONG." />
+          <ScalarProperty Name="lat_" ColumnName="lat." />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spAddImg" FunctionName="KutoModel.Store.spAddImg" />
+    <FunctionImportMapping FunctionImportName="spEditImg" FunctionName="KutoModel.Store.spEditImg" />
+    <FunctionImportMapping FunctionImportName="spSignin" FunctionName="KutoModel.Store.spSignin" />
+    <FunctionImportMapping FunctionImportName="spImgListforBusinessUser" FunctionName="KutoModel.Store.spImgListforBusinessUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KutoModel.spImgListforBusinessUser_Result1">
+          <ScalarProperty Name="pic" ColumnName="pic" />
+          <ScalarProperty Name="lastEditTime" ColumnName="lastEditTime" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="cID" ColumnName="cID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetDraftByID" FunctionName="KutoModel.Store.spGetDraftByID" />
+    <FunctionImportMapping FunctionImportName="spInsertCustomer" FunctionName="KutoModel.Store.spInsertCustomer" />
+  </EntityContainerMapping>
+</Mapping>

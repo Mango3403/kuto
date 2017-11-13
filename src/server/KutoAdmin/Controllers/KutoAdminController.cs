@@ -226,10 +226,5 @@ namespace KutoAdmin.Controllers
         {
             return View();
         }
-
-        public ActionResult Custom()
-        {
-            return View();
-        }
     }
 }
