@@ -13,10 +13,10 @@ import CustomQRCode from './components/CustomQRCode';
 const App = () => (
     <Router basename="/custom">
         <div>
-            <Route exact path="/" component={Custom} />
+            <Route exact path="/main" component={Custom} />
             <Route exact path="/form" component={CustomForm} />
             <Route exact path="/help" component={CustomHelp} />
-            <Route exact path="/qrcode" component={CustomQRCode} />
+            <Route exact path="/" component={CustomQRCode} />
         </div>
     </Router>
 );
