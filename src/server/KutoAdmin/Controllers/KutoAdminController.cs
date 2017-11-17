@@ -119,12 +119,8 @@ namespace KutoAdmin.Controllers
                 }
             }
 
-            
-
             return result;
         }
-
-
 
 
         [AcceptVerbs(HttpVerbs.Post)]

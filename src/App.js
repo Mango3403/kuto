@@ -8,7 +8,6 @@ import './App.css';
 import Custom from './components/Custom';
 import CustomForm from './components/CustomForm';
 import CustomHelp from './components/CustomHelp';
-import CustomQRCode from './components/CustomQRCode';
 
 const App = () => (
     <Router basename="/custom">
@@ -16,7 +15,6 @@ const App = () => (
             <Route exact path="/" component={Custom} />
             <Route exact path="/form" component={CustomForm} />
             <Route exact path="/help" component={CustomHelp} />
-            <Route exact path="/qrcode" component={CustomQRCode} />
         </div>
     </Router>
 );

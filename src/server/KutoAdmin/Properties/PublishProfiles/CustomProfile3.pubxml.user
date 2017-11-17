@@ -6,7 +6,8 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\WebSite</_PublishTargetUrl>
+    <_PublishTargetUrl>ftp://kuto.gotoftp1.com/wwwroot</_PublishTargetUrl>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA1YT01mzfy0y38uxtqr6wPAAAAAACAAAAAAAQZgAAAAEAACAAAAAMoWsFVFUD/Pdogh2kqT4cD8KIijIVKXtxCP+IypV5TAAAAAAOgAAAAAIAACAAAADLgKFkIe+WgtCNPKykhiZX8S2Wl5KnJqNJSLWIhy/X0CAAAADAvGPRoFexHOoLdQ62tu7kdFhCg0ZxF/LOzThonDWUY0AAAABgaKtVe+H9kIsvPRTe/3ReOcqpUxPme3UkBFCjiERJioQ8ZH43HjjghXd8Cr/BOU9zSJHxQC9/vF/G+2aemRYw</EncryptedPassword>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -34,10 +35,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 21:57:27</publishTime>
     </File>
     <File Include="bin/KutoAdmin.dll">
-      <publishTime>11/11/2017 13:01:38</publishTime>
+      <publishTime>11/13/2017 13:35:22</publishTime>
     </File>
     <File Include="bin/KutoAdmin.pdb">
-      <publishTime>11/11/2017 13:01:38</publishTime>
+      <publishTime>11/13/2017 13:35:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>10/17/2017 21:57:27</publishTime>
@@ -249,11 +250,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="fonts/glyphicons-halflings-regular.woff">
       <publishTime>10/27/2017 10:46:49</publishTime>
     </File>
+    <File Include="Global.asax">
+      <publishTime>10/17/2017 21:57:25</publishTime>
+    </File>
     <File Include="Models/Kuto.edmx.diagram">
       <publishTime>10/17/2017 21:57:25</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>10/27/2017 10:46:49</publishTime>
+      <publishTime>11/13/2017 11:12:31</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
       <publishTime>11/11/2017 13:03:30</publishTime>
@@ -514,7 +518,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/27/2017 10:46:49</publishTime>
     </File>
     <File Include="Views/KutoAdmin/BusinessUserHome.cshtml">
-      <publishTime>11/08/2017 22:55:23</publishTime>
+      <publishTime>11/13/2017 18:23:12</publishTime>
     </File>
     <File Include="Views/KutoAdmin/BusinessUserHome2.cshtml">
       <publishTime>10/17/2017 21:57:26</publishTime>
@@ -526,7 +530,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/06/2017 12:24:35</publishTime>
     </File>
     <File Include="Views/KutoAdmin/Login.cshtml">
-      <publishTime>10/17/2017 21:57:26</publishTime>
+      <publishTime>11/12/2017 21:55:47</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>10/17/2017 21:57:26</publishTime>
@@ -547,7 +551,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 21:57:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/11/2017 13:01:39</publishTime>
+      <publishTime>11/13/2017 18:42:12</publishTime>
     </File>
   </ItemGroup>
 </Project>
