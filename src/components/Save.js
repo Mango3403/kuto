@@ -17,7 +17,8 @@ class Save extends Component {
                 src: '',
                 name: 'custom.png'
             },
-            canvas: null
+            canvas: null,
+            putImage: null
         }
 
         this.download = this.download.bind(this)
@@ -40,65 +41,27 @@ class Save extends Component {
         })
     }
 
-    dataURLtoBlob(dataurl) {
-        let 
-            arr = dataurl.split(','), 
-            mime = arr[0].match(/:(.*?)/)[1],
-            bstr = atob(arr[1]), 
-            n = bstr.length, 
-            u8arr = new Uint8Array(n)
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n)
-        }
-        return new Blob([u8arr], { type: mime })
-    }
-
     close() {
-        if (this.state.checked) {
+        const { checked, canvas } = this.state;
+
+        if (checked) {
             this.download()
             localStorage.removeItem('myCanvas')
             window.onbeforeunload = null
         }
 
-        const dataurl = this.state.canvas.toDataURL('image/png')
-        const blob = this.dataURLtoBlob(dataurl)
-
-        this.saveFile(blob, 1, 1)
-
         this.setState({ open: false })
     }
-
-	saveFile(image, CustomerID, BusinessUserID) {
-		const xhr = new XMLHttpRequest()
-
-		xhr.open("post", "/KutoAdmin/SaveFile", true)
-
-		let formData = new FormData()
-		formData.append("image", image, "custom.png")
-		formData.append('draft', 'test')
-		formData.append('CustomerID', CustomerID)
-		formData.append('BusinessUserID', BusinessUserID)
-
-        xhr.send(formData)
-        
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText)
-                } else {
-                    alert('请求失败 ' + xhr.status)
-                }
-            }
-        }
-	}
 
     saveImage() {
         const { canvas } = this.state
 
+        const dataurl = canvas.toDataURL('image/png');
+
         this.setState({
             saveImages: {
-                src: canvas.toDataURL('image/png')
-            }
+                src: dataurl
+            },
         })
     }
 
@@ -110,6 +73,12 @@ class Save extends Component {
     }
 
     render() {
+        let data = { dataurl: this.state.saveImages.src };
+        let path = {
+            pathname: '/form',
+            state: data
+        };
+
         return (
             <div>
                 <Icon name="save" onClick={this.show(true)} />
@@ -124,7 +93,7 @@ class Save extends Component {
                         </Modal.Description>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Link to='/form'>
+                        <Link to={path}>
                             <Button positive content="下一步" onClick={this.close} style={{ marginBottom: '10px' }} />
                         </Link>
                     </Modal.Actions>
