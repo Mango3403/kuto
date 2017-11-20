@@ -2,7 +2,8 @@ import React from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom';
 import './App.css';
 import Custom from './components/Custom';
@@ -12,9 +13,10 @@ import CustomHelp from './components/CustomHelp';
 const App = () => (
     <Router basename="/custom">
         <div>
-            <Route exact path="/" component={Custom} />
-            <Route exact path="/form" component={CustomForm} />
-            <Route exact path="/help" component={CustomHelp} />
+            <Route path="/" exact component={Custom} />
+            <Route path="/form" component={CustomForm} />
+            <Route path="/help" component={CustomHelp} />
+            {/* <Redirect to="/" /> */}
         </div>
     </Router>
 );

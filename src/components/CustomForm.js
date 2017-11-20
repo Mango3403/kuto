@@ -5,11 +5,22 @@ import {
 } from 'react-router-dom'
 
 export default class CustomForm extends Component {
-	state = {
-		id: '123***456',
-		mobile: '',
-		name: '',
-		address: ''
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			id: '123***456',
+			mobile: '',
+			name: '',
+			address: '',
+			dataurl: null
+		}
+	}
+
+	componentDidMount() {
+		let dataurl = window.history.state.state.dataurl;
+
+		this.setState({ dataurl })
 	}
 
 	handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -27,44 +38,69 @@ export default class CustomForm extends Component {
 		}
 	}
 
+	// 调用asp.net端的SaveFile方法
 	saveFile(image, CustomerID, BusinessUserID) {
 		const xhr = new XMLHttpRequest()
 
 		xhr.open("post", "/KutoAdmin/SaveFile", true)
 
 		let formData = new FormData()
-		formData.append("image", image, "custom.png")
-		formData.append('draft', 'test')
+		formData.append("image", image)
+		formData.append('draft', null)
 		formData.append('CustomerID', CustomerID)
 		formData.append('BusinessUserID', BusinessUserID)
 
-				xhr.send(formData)
-				
-				xhr.onreadystatechange = function () {
-						if (xhr.readyState === 4) {
-								if (xhr.status === 200) {
-										console.log(xhr.responseText)
-								} else {
-										alert('请求失败 ' + xhr.status)
-								}
-						}
-				}
-	}
-
-	insertCustomer(name, mobile, address) {
-		const 
-			xhr = new XMLHttpRequest(),
-			saveFile = this.saveFile;
-
-		xhr.open("post", "/KutoAdmin/InsertCustomer", true)
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-
-		xhr.send(`name=${name.toString()}&mobile=${mobile.toString()}&LONG=1&lat=1&address=${address.toString()}`)
+		xhr.send(formData)
 
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
-					alert(xhr.responseText);
+					console.log(xhr.responseText)
+				} else {
+					alert('请求失败 ' + xhr.status)
+				}
+			}
+		}
+	}
+
+	// 将dataURL转化为blob类型
+	dataURLtoBlob(dataurl) {
+		let
+			arr = dataurl.split(','),
+			mime = arr[0].match(/:(.*?)/)[1],
+			bstr = atob(arr[1]),
+			n = bstr.length,
+			u8arr = new Uint8Array(n)
+		while (n--) {
+			u8arr[n] = bstr.charCodeAt(n)
+		}
+		return new Blob([u8arr], { type: mime })
+	}
+
+	insertCustomer(name, mobile, address) {
+		const
+			xhr = new XMLHttpRequest(),
+			saveFile = this.saveFile;
+
+		let blob = this.dataURLtoBlob(this.state.dataurl);
+
+		xhr.open("post", "/KutoAdmin/InsertCustomer", true)
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+
+		let formData = new FormData()
+		formData.append('name', name)
+		formData.append('mobile', mobile)
+		formData.append('address', address)
+
+		xhr.send(formData)
+
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					console.log(xhr.response);
+					let res = JSON.parse(xhr.responseText);
+					let CustomerID = res[0].CustomerID;
+					saveFile(blob, CustomerID, 1);
 				} else {
 					alert('请求失败 ' + xhr.status)
 				}

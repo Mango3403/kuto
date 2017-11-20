@@ -96,7 +96,7 @@ class Picture extends Component {
         return (
             <div>
                 <div style={{ float: 'left', margin: '5px', height: '80px', width: '50px', boxShadow: '0 0 10px #3195e0', background: 'url(' + upload + ') no-repeat', backgroundSize: '40px 40px', backgroundPosition: '5px 15px' }}>
-                    <input style={{ height: '80px', fontSize: '1px', position: 'relative', left: 0, top: 0, opacity: 0 }} type="file" ref="file" onChange={this.uploadImage} />
+                    <input style={{ height: '80px', fontSize: '1px', position: 'relative', left: 0, top: 0, opacity: 0 }} type="file" ref="file" accept="image/*" onChange={this.uploadImage} />
                 </div>
                 <Image.Group style={{ display: 'flex', overflowX: 'scroll' }}>
                     {

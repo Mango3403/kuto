@@ -35,10 +35,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 21:57:27</publishTime>
     </File>
     <File Include="bin/KutoAdmin.dll">
-      <publishTime>11/13/2017 13:35:22</publishTime>
+      <publishTime>11/15/2017 22:09:40</publishTime>
     </File>
     <File Include="bin/KutoAdmin.pdb">
-      <publishTime>11/13/2017 13:35:22</publishTime>
+      <publishTime>11/15/2017 22:09:40</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>10/17/2017 21:57:27</publishTime>
@@ -253,6 +253,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>10/17/2017 21:57:25</publishTime>
     </File>
+    <File Include="index.html">
+      <publishTime>11/15/2017 21:59:14</publishTime>
+    </File>
     <File Include="Models/Kuto.edmx.diagram">
       <publishTime>10/17/2017 21:57:25</publishTime>
     </File>
@@ -261,6 +264,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="PrecompiledApp.config">
       <publishTime>11/11/2017 13:03:30</publishTime>
+    </File>
+    <File Include="qrcode.html">
+      <publishTime>11/15/2017 18:19:03</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>10/27/2017 10:46:49</publishTime>
@@ -518,7 +524,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/27/2017 10:46:49</publishTime>
     </File>
     <File Include="Views/KutoAdmin/BusinessUserHome.cshtml">
-      <publishTime>11/13/2017 18:23:12</publishTime>
+      <publishTime>11/14/2017 18:58:53</publishTime>
     </File>
     <File Include="Views/KutoAdmin/BusinessUserHome2.cshtml">
       <publishTime>10/17/2017 21:57:26</publishTime>
@@ -551,7 +557,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 21:57:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/13/2017 18:42:12</publishTime>
+      <publishTime>11/15/2017 22:09:41</publishTime>
     </File>
   </ItemGroup>
 </Project>

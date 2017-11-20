@@ -60,7 +60,6 @@ namespace KutoAdmin.Controllers
                     if (msg.Value.ToString() == "ok")
                     {
                         result = "[{\"result\":\"true\",\"msg\":\"保存成功！\"}]";
-                         
                     }
                     else
                     {
@@ -74,7 +73,6 @@ namespace KutoAdmin.Controllers
             }
 
             return result;
-
         }
 
         ////文件上传示例
@@ -110,8 +108,7 @@ namespace KutoAdmin.Controllers
                     else
                     {
                         result = "[{\"result\":\"false\",\"msg\":\"数据库保存失败！\"}]";
-                    }
-                    
+                    }      
                 }
                 else
                 {
