@@ -23,7 +23,6 @@ class Custom extends React.Component {
     canvas: null
   }
 
-
   componentWillUpdate() {
     window.onbeforeunload = this.saveLocalStorage.bind(this);
   }
@@ -140,7 +139,7 @@ class Custom extends React.Component {
     const rul1 = new ruler({
       container: rul
     })
-    rul1.api.setScale(0.5)
+    rul1.api.setScale(0.02)
     rul1.api.setPos({
       x: canvas.width / 2 - 16,
       y: canvas.height / 2 - 16

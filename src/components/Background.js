@@ -1,0 +1,142 @@
+import React, { Component } from 'react'
+import { Button, Grid, Segment, Image, Sidebar, Icon, Item, Menu } from 'semantic-ui-react'
+import bg1 from '../assets/images/material/a.jpg'
+
+const styles = {
+    img: {
+        width: '20px',
+        height: '20px'
+    },
+    backgroundColors: {
+        black: '#000000',
+        white: '#cecece',
+        blue: '#2185d0',
+        green: '#21ba45',
+        teal: '#00b5ad',
+        violet: '#6435c9'
+    }
+}
+
+const
+    colors = [
+        'black', '', 'blue', 'green', 'teal'
+    ],
+    colorNames = [
+        '黑', '白', '蓝', '绿', '青'
+    ],
+    colorValues = [
+        'rgba(30, 30, 30, 0.8)',
+        'rgba(255, 255, 255, 0)',
+        'rgba(34, 58, 120, 0.8)',
+        'rgba(40, 158, 19, 0.8)',
+        'rgba(187, 217, 233, 0.8)'
+    ]
+
+class Background extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            background: [
+                { id: 0, src: bg1 }
+            ]
+        }
+    }
+
+    handleClick = (e, { value }) => {
+        this.setColor(value)
+    }
+
+    setColor = color => {
+        const { canvas } = this.props
+        console.log(color)
+
+        canvas.setBackgroundColor(color).renderAll()
+    }
+
+    setImage = src => {
+        const { canvas } = this.props
+
+        canvas.setBackgroundImage(src, canvas.renderAll.bind(canvas), {
+            opacity: 0.5,
+            originX: 'left',
+            originY: 'top'
+        })
+    }
+
+    openInputColor = () => {
+        document.getElementById('color').click()
+    }
+
+    removeBackgroundImage = () => {
+        const { canvas } = this.props
+
+        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas))
+    }
+
+    clear = () => {
+        const { canvas } = this.props
+
+        canvas.setBackgroundColor(null).setBackgroundImage(null).renderAll()
+    }
+
+    toggleVisibility = () => this.setState({ visible: !this.state.visible })
+
+    render() {
+        const { visible, background, active } = this.state
+
+        return (
+            <div>
+                <Icon onClick={this.toggleVisibility} name='delicious' />
+                <Sidebar as={Segment} animation='push' direction='bottom' visible={visible}>
+                    <Menu pointing secondary>
+                        <Menu.Item header>
+                            <h3>背景</h3>
+                        </Menu.Item>
+                        <Menu.Item position="right">
+                            <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
+                        </Menu.Item>
+                    </Menu>
+                    <Menu compact>
+                        {
+                            colors.map((color, index) => (
+                                <Menu.Item key={color} name={color} style={{ backgroundColor: colorValues[index] }} value={colorValues[index]} onClick={this.handleClick}>
+                                    {colorNames[index]}
+                                </Menu.Item>
+                            ))
+                        }
+                        <Menu.Item onClick={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
+                            ...
+                            <input id="color" type="color" onChange={e => this.setColor(e.target.value)} style={{ position: 'absolute', bottom: '3000px' }} />
+                        </Menu.Item>
+                    </Menu>
+                    <Menu compact>
+                        {
+                            background.map((i, index) => (
+                                <Menu.Item key={index} fitted style={{ paddingLeft: '10px' }}>
+                                    <Image
+                                        src={i.src}
+                                        style={styles.img}
+                                        floated='left'
+                                        onClick={e => this.setImage(e.target.src)}
+                                    />
+                                </Menu.Item>
+                            ))
+                        }
+                        <Menu.Item fitted style={{ paddingLeft: '10px' }}>
+                            <Image
+                                src={null}
+                                style={styles.img}
+                                floated='left'
+                                onClick={this.removeBackgroundImage}
+                            />
+                        </Menu.Item>
+                        <Menu.Item fitted name='恢复默认' onClick={this.clear} />
+                    </Menu>
+                </Sidebar>
+            </div>
+        )
+    }
+}
+
+export default Background

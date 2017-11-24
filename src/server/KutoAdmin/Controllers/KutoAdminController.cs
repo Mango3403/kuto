@@ -155,10 +155,10 @@ namespace KutoAdmin.Controllers
 
         }
 
-        public ActionResult InsertCustomer()
-        {
-            return View();
-        }
+        //public ActionResult InsertCustomer()
+        //{
+        //    return View();
+        //}
 
         public ActionResult Login()
         {

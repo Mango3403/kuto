@@ -45,7 +45,7 @@ export default class CustomForm extends Component {
 		xhr.open("post", "/KutoAdmin/SaveFile", true)
 
 		let formData = new FormData()
-		formData.append("image", image)
+		formData.append("image", image, 'custom.png')
 		formData.append('draft', null)
 		formData.append('CustomerID', CustomerID)
 		formData.append('BusinessUserID', BusinessUserID)
@@ -87,12 +87,7 @@ export default class CustomForm extends Component {
 		xhr.open("post", "/KutoAdmin/InsertCustomer", true)
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 
-		let formData = new FormData()
-		formData.append('name', name)
-		formData.append('mobile', mobile)
-		formData.append('address', address)
-
-		xhr.send(formData)
+		xhr.send(`name=${name}&mobile=${mobile}&LONG=1&lat=1&address=${address}`)
 
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4) {

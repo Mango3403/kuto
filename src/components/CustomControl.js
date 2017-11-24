@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Menu, Icon } from 'semantic-ui-react'
-import PicturePane from './PicturePane'
-import TextPane from './TextPane'
+import Picture from './Picture'
+import Text from './Text'
 import Clear from './Clear'
-import BackgroundPane from './BackgroundPane'
+import Background from './Background'
 import Save from './Save'
-import PictureFilterPane from './PictureFilterPane'
-import LayerPane from './LayerPane'
+import EditPicture from './EditPicture'
+import EditLayer from './EditLayer'
+import GrayPicture from './GrayPicture'
 
 const styles = {
 	menu1: {
@@ -21,14 +22,14 @@ const styles = {
 		position: 'absolute',
 		right: '5px',
 		// 56.53 224.63
-		top: '420px'
+		top: '380px'
 	},
 	menu3: {
 		position: 'absolute',
 		display: 'none',
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
-		right: (window.innerWidth - 10 - 300) / 2,
+		right: (window.innerWidth - 10 - 200) / 2,
 		top: '460px'
 	},
 	menuItem: { padding: '4px', fontSize: '2em' }
@@ -78,19 +79,15 @@ class CustomControl extends Component {
 			<div>
 				<Menu icon style={styles.menu1} ref='menu1'>
 					<Menu.Item style={styles.menuItem} name='font' active={activeItem === 'font'} onClick={this.handleItemClick}>
-						<TextPane canvas={canvas} />
+						<Text canvas={canvas} />
 					</Menu.Item>
 
 					<Menu.Item style={styles.menuItem} name='picture' active={activeItem === 'picture'} onClick={this.handleItemClick}>
-						<PicturePane canvas={canvas} />
-					</Menu.Item>
-
-					<Menu.Item style={styles.menuItem} name='paint brush' active={activeItem === 'paint brush'} onClick={this.handleItemClick}>
-						<PictureFilterPane canvas={canvas} />
+						<Picture canvas={canvas} />
 					</Menu.Item>
 
 					<Menu.Item style={styles.menuItem} name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
-						<BackgroundPane canvas={canvas} />
+						<Background canvas={canvas} />
 					</Menu.Item>
 
 					<Menu.Item style={styles.menuItem} name='save' active={activeItem === 'save'} onClick={this.handleItemClick}>
@@ -106,9 +103,15 @@ class CustomControl extends Component {
 					</Menu.Item>
 				</Menu>
 
-				<Menu icon style={styles.menu2} ref='menu2'>
+				<Menu icon vertical style={styles.menu2} ref="menu2">
+					<Menu.Item style={styles.menuItem} name="edit" active={activeItem === 'edit'} onClick={this.handleItemClick}>
+						<GrayPicture canvas={canvas} grayPicture={() => console.log(this.state.canvas)} />
+					</Menu.Item>
+					<Menu.Item style={styles.menuItem} name="paint brush" active={activeItem === 'paint brush'} onClick={this.handleItemClick}>
+						<EditPicture canvas={canvas} />
+					</Menu.Item>
 					<Menu.Item style={styles.menuItem} name="object" active={activeItem === 'object'} onClick={this.handleItemClick}>
-						<LayerPane canvas={canvas} />
+						<EditLayer canvas={canvas} />
 					</Menu.Item>
 				</Menu>
 
