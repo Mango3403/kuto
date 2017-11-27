@@ -12,6 +12,7 @@ class GrayPicture extends Component {
         if (!(canvas.getActiveObject() && canvas.getActiveObject().isType('image'))) {
             this.setState({ isOpen: true })
         } else {
+            this.setGray();
             this.toggleVisibility()
         }
     }
@@ -42,7 +43,7 @@ class GrayPicture extends Component {
             <div>
                 <Popup
                     trigger={
-                        <Icon name="edit" onClick={this.setGray} />
+                        <Icon name="edit" />
                     }
                     on='click'
                     open={this.state.isOpen}

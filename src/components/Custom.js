@@ -9,10 +9,10 @@ import change from '../assets/images/control/handle_change.png'
 
 const Sign = () => (
   <div style={{ position: 'absolute', width: 'calc(100% - 10px)', height: '500px' }}>
-    <div style={{ borderTop: '0.1px solid red', borderLeft: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
+    {/* <div style={{ borderTop: '0.1px solid red', borderLeft: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
     <div style={{ borderTop: '0.1px solid red', borderRight: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', right: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
     <div style={{ borderLeft: '0.1px solid red', borderBottom: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '340px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
-    <div style={{ borderRight: '0.1px solid red', borderBottom: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '340px', right: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
+    <div style={{ borderRight: '0.1px solid red', borderBottom: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '340px', right: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div> */}
     <div style={{ borderTop: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '250px', left: 'calc(100% / 2 - 5px)', zIndex: '1' }}></div>
     <div style={{ borderRight: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '245px', left: 'calc(100% / 2 - 10px)', zIndex: '1' }}></div>
   </div>

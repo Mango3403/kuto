@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Sidebar, Icon, Image, Popup, Table, Checkbox, Button, Segment, Menu } from 'semantic-ui-react'
+import { Sidebar, Icon, Image, Popup, Table, Checkbox, Button, Segment, Menu, Dropdown, Grid } from 'semantic-ui-react'
 import { fabric } from 'fabric'
 // import eventProxy from '../eventProxy'
 import upload from '../assets/images/upload.png'
@@ -8,11 +8,7 @@ import img0 from '../assets/images/picture/0.jpeg'
 import img1 from '../assets/images/picture/1.jpeg'
 import img2 from '../assets/images/picture/2.jpeg'
 import img3 from '../assets/images/picture/3.jpeg'
-
-const color = {
-    // 银色
-    silver: '#9698AA'
-}
+import img4 from '../assets/images/picture/4.jpg'
 
 class Panel extends Component {
 
@@ -27,10 +23,10 @@ class Panel extends Component {
             file = files[0],
             reader = new FileReader(),
             { picture } = this.props,
-            img = { id: picture.length, src: null }
+            obj = { key: picture.length, options: 'image cartoon', src: null }
 
         reader.readAsDataURL(file)
-        reader.onload = (event) => {
+        reader.onload = event => {
             img.src = reader.result
 
             picture.unshift(img)
@@ -102,53 +98,213 @@ class Panel extends Component {
     }
 }
 
-const PanelO = () => (
-    <Table compact celled definition>
-        <Table.Header>
-            <Table.Row>
-                <Table.HeaderCell />
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Registration Date</Table.HeaderCell>
-                <Table.HeaderCell>E-mail address</Table.HeaderCell>
-                <Table.HeaderCell>Premium Plan</Table.HeaderCell>
-            </Table.Row>
-        </Table.Header>
+// 大类
+const options1 = [
+    {
+        key: 'all',
+        text: '全部',
+        value: 'all',
+        content: '全部',
+    },
+    {
+        key: 'image',
+        text: '图片',
+        value: 'image',
+        content: '图片',
+    },
+    {
+        key: 'icon',
+        text: '剪切画',
+        value: 'icon',
+        content: '剪切画',
+    },
+]
 
-        <Table.Body>
-            <Table.Row>
-                <Table.Cell collapsing>
-                    <Checkbox slider />
-                </Table.Cell>
-                <Table.Cell>John Lilki</Table.Cell>
-                <Table.Cell>September 14, 2013</Table.Cell>
-                <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
-                <Table.Cell>No</Table.Cell>
-            </Table.Row>
-        </Table.Body>
+// 小类
+const options2 = [
+    {
+        key: 'all',
+        text: '全部',
+        value: 'all',
+        content: '全部',
+    },
+    {
+        key: 'cartoon',
+        text: '卡通',
+        value: 'cartoon',
+        content: '卡通',
+    },
+    {
+        key: 'flower',
+        text: '鲜花',
+        value: 'flower',
+        content: '鲜花',
+    },
+]
 
-        <Table.Footer fullWidth>
-            <Table.Row>
-                <Table.HeaderCell />
-                <Table.HeaderCell colSpan='4'>
-                    <Button floated='right' icon labelPosition='left' primary size='small'>
-                        <Icon name='user' /> Add User
-                    </Button>
-                    <Button size='small'>Approve</Button>
-                    <Button disabled size='small'>Approve All</Button>
-                </Table.HeaderCell>
-            </Table.Row>
-        </Table.Footer>
-    </Table>
-)
+class PanelO extends Component {
+    state = {
+        currentPicture: [],
+        savePicture: []
+    }
+
+    componentDidMount() {
+        this.setCurrentPicture();
+    }
+
+    setCurrentPicture = () => {
+        const { picture } = this.props;
+        let currentPicture = [];
+
+        for (const p of picture) {
+            // 获取每张图片options的值进行分类
+            let narr = p.options.split(' ');
+
+            // 将系统默认图片加入数组
+            if (narr[narr.length - 1] === 'default') {
+                currentPicture.push(p);
+            }
+        }
+
+        this.setState({
+            currentPicture: currentPicture,
+            savePicture: currentPicture
+        })
+    }
+
+    clickFileInput = () => {
+        let fileInput = ReactDOM.findDOMNode(this.refs.file);
+        fileInput.click();
+    }
+
+    uploadImage = () => {
+        const
+            files = ReactDOM.findDOMNode(this.refs.file).files,
+            file = files[0],
+            reader = new FileReader(),
+            { picture } = this.props,
+            obj = { key: picture.length, options: 'image cartoon nodefault', src: null }
+
+        reader.readAsDataURL(file)
+        reader.onload = event => {
+            obj.src = reader.result
+
+            picture.unshift(obj)
+
+            this.setState({ picture })
+        }
+    }
+
+    addImage = e => {
+        const { canvas } = this.props
+        // 发布 openFilter 事件，由 EditPicture 组件接收
+        // setTimeout(() => eventProxy.trigger('openFilter'), 300)
+        fabric.Image.fromURL(e.target.src, img => {
+            img.scale(0.3)
+            img.lockRotation = false
+            img.hasBorders = true
+            img.lockUniScaling = true
+            img.centeredScaling = true
+            img.setControlsVisibility({
+                mtr: false
+            })
+
+            canvas.viewportCenterObject(img)
+            canvas.add(img).setActiveObject(img);
+        })
+    }
+
+    setOption1 = (e, { value }) => {
+        const { picture } = this.props;
+
+        let currentPicture = [];
+
+        if (value === 'all') {
+            this.setState({ currentPicture: picture })
+        } else {
+            for (const p of picture) {
+                // 获取每张图片options的值进行分类
+                let narr = p.options.split(' ');
+
+                // 将符合大类的图片加入数组
+                if (narr[0] === value) {
+                    currentPicture.push(p);
+                }
+            }
+
+            this.setState({
+                currentPicture: currentPicture,
+                savePicture: currentPicture
+            })
+        }
+    }
+
+    setOption2 = (e, { value }) => {
+        const { currentPicture, savePicture } = this.state;
+
+        let arr = [];
+
+        if (value === 'all') {
+            this.setState({ currentPicture: savePicture })
+        } else {
+            for (const p of savePicture) {
+                // 获取每张图片options的值进行分类
+                let narr = p.options.split(' ');
+
+                // 将符合小类的图片加入数组
+                if (narr[1] === value) {
+                    arr.push(p);
+                }
+            }
+
+            this.setState({ currentPicture: arr })
+        }
+    }
+
+    render() {
+        return (
+            <div style={{ overflow: 'hidden' }}>
+                <Menu pointing secondary>
+                    <Menu.Item>
+                        <Button primary size="tiny" onClick={this.clickFileInput}>上传</Button>
+                        <input style={{ position: 'absolute', left: 1000, top: 0, opacity: 0 }} type="file" ref="file" accept="image/*" onChange={this.uploadImage} />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Dropdown inline text="系统图片" labeled icon={null} onClick={this.setCurrentPicture} />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Dropdown inline options={options1} defaultValue={options1[0].value} onChange={this.setOption1} />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Dropdown inline options={options2} defaultValue={options2[0].value} onChange={this.setOption2} />
+                    </Menu.Item>
+                </Menu>
+
+                <Grid celled="internally" style={{ height: '250px', overflowY: 'auto' }}>
+                    <Grid.Row columns={3}>
+                        {
+                            this.state.currentPicture.map(p => (
+                                <Grid.Column key={p.key}>
+                                    <Image bordered height={80} src={p.src} onClick={this.addImage} />
+                                </Grid.Column>
+                            ))
+                        }
+                    </Grid.Row>
+                </Grid>
+            </div>
+        )
+    }
+}
 
 class Picture extends Component {
     state = {
         visible: false,
         picture: [
-            { src: img0 },
-            { src: img1 },
-            { src: img2 },
-            { src: img3 }
+            { key: 0, options: 'icon flower default', src: img4 },
+            { key: 1, options: 'icon cartoon default', src: img0 },
+            { key: 2, options: 'icon cartoon default', src: img1 },
+            { key: 3, options: 'image cartoon default', src: img2 },
+            { key: 4, options: 'image cartoon default', src: img3 },
         ]
     }
 
@@ -167,8 +323,8 @@ class Picture extends Component {
                             <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
-                    <Panel picture={this.state.picture} canvas={this.props.canvas} setClose={this.toggleVisibility} />
-                    {/* <PanelO /> */}
+                    {/* <Panel picture={this.state.picture} canvas={this.props.canvas} setClose={this.toggleVisibility} /> */}
+                    <PanelO canvas={this.props.canvas} picture={this.state.picture} />
                 </Sidebar>
             </div>
         )
@@ -176,3 +332,11 @@ class Picture extends Component {
 }
 
 export default Picture
+
+// var picture = [
+//     { key: 0, options: 'icon flower default', src: 'img4' },
+//     { key: 1, options: 'icon cartoon default', src: 'img0' },
+//     { key: 2, options: 'icon cartoon default', src: 'img1' },
+//     { key: 3, options: 'image cartoon default', src: 'img2' },
+//     { key: 4, options: 'image cartoon default', src: 'img3' },
+// ]
