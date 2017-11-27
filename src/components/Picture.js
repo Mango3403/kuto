@@ -54,17 +54,6 @@ class Panel extends Component {
                 mtr: false
             })
 
-            // img.filters.push(new fabric.Image.filters.Grayscale())
-            // img.filters.push(new fabric.Image.filters.RemoveWhite({
-            //     threshold: 90,
-            //     distance: 40
-            // }))
-            // img.filters.push(new fabric.Image.filters.Tint({
-            //     color: color.silver
-            // }))
-
-            // img.applyFilters(canvas.add(img).renderAll.bind(canvas))
-
             canvas.add(img).setActiveObject(img);
         })
 
@@ -104,20 +93,17 @@ const options1 = [
         key: 'all',
         text: '全部',
         value: 'all',
-        content: '全部',
     },
     {
         key: 'image',
         text: '图片',
         value: 'image',
-        content: '图片',
     },
     {
         key: 'icon',
         text: '剪切画',
         value: 'icon',
-        content: '剪切画',
-    },
+    }
 ]
 
 // 小类
@@ -126,19 +112,16 @@ const options2 = [
         key: 'all',
         text: '全部',
         value: 'all',
-        content: '全部',
     },
     {
         key: 'cartoon',
         text: '卡通',
         value: 'cartoon',
-        content: '卡通',
     },
     {
         key: 'flower',
         text: '鲜花',
         value: 'flower',
-        content: '鲜花',
     },
 ]
 
@@ -149,10 +132,6 @@ class PanelO extends Component {
     }
 
     componentDidMount() {
-        this.setCurrentPicture();
-    }
-
-    setCurrentPicture = () => {
         const { picture } = this.props;
         let currentPicture = [];
 
@@ -268,9 +247,6 @@ class PanelO extends Component {
                     <Menu.Item>
                         <Button primary size="tiny" onClick={this.clickFileInput}>上传</Button>
                         <input style={{ position: 'absolute', left: 1000, top: 0, opacity: 0 }} type="file" ref="file" accept="image/*" onChange={this.uploadImage} />
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Dropdown inline text="系统图片" labeled icon={null} onClick={this.setCurrentPicture} />
                     </Menu.Item>
                     <Menu.Item>
                         <Dropdown inline options={options1} defaultValue={options1[0].value} onChange={this.setOption1} />

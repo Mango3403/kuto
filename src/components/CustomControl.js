@@ -15,21 +15,21 @@ const styles = {
 		position: 'absolute',
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
-		left: (window.innerWidth - 10 - 300) / 2,
+		left: (window.innerWidth - 10 - 250) / 2,
 		top: '475px'
 	},
 	menu2: {
 		position: 'absolute',
 		right: '5px',
 		// 56.53 224.63
-		top: '380px'
+		top: '350px'
 	},
 	menu3: {
 		position: 'absolute',
 		display: 'none',
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
-		right: (window.innerWidth - 10 - 200) / 2,
+		right: (window.innerWidth - 10 - 250) / 2,
 		top: '460px'
 	},
 	menuItem: { padding: '4px', fontSize: '2em' }
@@ -38,14 +38,7 @@ const styles = {
 class CustomControl extends Component {
 	state = {
 		view: true,
-		activeItem: '',
-		canvas: null
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-			canvas: nextProps.canvas
-		})
+		activeItem: ''
 	}
 
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -73,7 +66,8 @@ class CustomControl extends Component {
 	}
 
 	render() {
-		const { activeItem, canvas } = this.state
+		const { activeItem } = this.state
+		const { canvas } = this.props;
 
 		return (
 			<div>

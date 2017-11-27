@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Icon, Input, Segment, Menu, Button, Select, Container } from 'semantic-ui-react'
+import { Sidebar, Icon, Input, Segment, Menu, Button, Dropdown, Container } from 'semantic-ui-react'
 import { fabric } from 'fabric'
 import 'fabric-customise-controls'
 
@@ -10,7 +10,9 @@ const color = {
 
 const fontFamily = [
     { key: 'SimSun', value: 'SimSun', text: '宋体' },
-    { key: 'SimHei', value: 'SimHei', text: '黑体' }
+    { key: 'SimHei', value: 'SimHei', text: '黑体' },
+    { key: 'Impact', value: 'Impact', text: '华文楷体' },
+    { key: 'STSong', value: 'STSong', text: '华文宋体' },
 ];
 
 class Text extends Component {
@@ -22,17 +24,10 @@ class Text extends Component {
     componentDidMount() {
         fabric.Canvas.prototype.customiseControls({
             bl: {
-                action: this.updateText,
+                action: this.toggleVisibility,
                 cursor: 'pointer'
             }
-        })
-    }
-
-    updateText = (e, target) => {
-        this.toggleVisibility()
-        this.setState({
-            text: target
-        })
+        });
     }
 
     openVisibility = () => this.setState({ visible: true })
@@ -40,6 +35,7 @@ class Text extends Component {
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     addText = () => {
+        const _this = this;
         const { canvas } = this.props
 
         const text = new fabric.Text('输入文字', {
@@ -55,37 +51,48 @@ class Text extends Component {
             mtr: false
         })
 
+        text.on('selected', function () {
+            _this.setState({ text })
+        })
+
+        console.log(text);
+
         canvas.viewportCenterObject(text).add(text).setActiveObject(text)
 
-        this.setState({ text })
         this.openVisibility()
     }
 
     setText = ({ target: { value } }) => {
         const { canvas } = this.props;
         const { text } = this.state;
-        text.text = value
-        this.setState({ text })
-        canvas.renderAll()
-    }
 
-    setColor = color => {
-        const { canvas } = this.props;
-        const text = canvas.getActiveObject();
-        console.log(color);
-        text.setColor(color);
+        this.setState({
+            text: text ? text.setText(value) : canvas.getActiveObject()
+        })
+
         canvas.renderAll();
     }
 
-    setFontFamily = (e, { name, value }) => {
+    setFill = ({ target: { value } }) => {
         const { canvas } = this.props;
-        const text = canvas.getActiveObject();
-        text.setFontFamily(value);
+        const { text } = this.state;
+        this.setState({
+            text: text.setFill(value)
+        })
+        canvas.renderAll();
+    }
+
+    setFontFamily = (e, { value }) => {
+        const { canvas } = this.props;
+        const { text } = this.state;
+        this.setState({
+            text: text.setFontFamily(value)
+        })
         canvas.renderAll();
     }
 
     render() {
-        const { text } = this.state
+        const { text } = this.state;
 
         return (
             <div>
@@ -102,15 +109,18 @@ class Text extends Component {
                     <Container>
                         <br />
                         <label>文本：</label>
-                        <Input
-                            placeholder={text ? text.text : '输入文字'}
-                            onChange={this.setText}
+                        <Input value={text ? text.getText() : '输入文字'} onChange={this.setText} onFocus={this.setText} />
+                        <br />
+                        <br />
+                        <Button onClick={() => document.getElementById('color').click()} style={{ backgroundColor: text ? text.getFill() : '' }}>颜色</Button>
+                        <input type="color" onChange={this.setFill} id="color" style={{ position: 'absolute', bottom: '3000px' }} />
+                        <Dropdown
+                            defaultValue={fontFamily[0].value}
+                            search
+                            selection
+                            options={fontFamily}
+                            onChange={this.setFontFamily}
                         />
-                        <br />
-                        <br />
-                        <Button onClick={() => document.getElementById('color').click()}>颜色</Button>
-                        <input type="color" onChange={e => this.setColor(e.target.value)} id="color" style={{ position: 'absolute', bottom: '3000px' }} />
-                        <Select placeholder="选择字体" search selection options={fontFamily} onChange={this.setFontFamily} />
                     </Container>
                 </Sidebar>
             </div>
