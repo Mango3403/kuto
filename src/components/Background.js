@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Grid, Segment, Image, Sidebar, Icon, Item, Menu, Container, Header } from 'semantic-ui-react'
+import { Button, Segment, Image, Sidebar, Icon, Menu, Container, Header, Input } from 'semantic-ui-react'
 import bg1 from '../assets/images/background/bg1.jpg'
 import ol1 from '../assets/images/overlay/ol1.png'
 import ol2 from '../assets/images/overlay/ol2.png'
@@ -50,15 +50,10 @@ class Background extends Component {
         this.state = {}
     }
 
-    handleClick = (e, { value }) => {
-        this.setColor(value)
-    }
-
-    setColor = color => {
+    setColor = (e, { value }) => {
         const { canvas } = this.props
-        console.log(color)
 
-        canvas.setBackgroundColor(color).renderAll()
+        canvas.setBackgroundColor(value).renderAll()
     }
 
     setBackgroundImage = e => {
@@ -74,13 +69,17 @@ class Background extends Component {
     }
 
     setOverlayImage = e => {
-        const {canvas} = this.props;
+        const { canvas } = this.props;
 
-        canvas.setOverlayImage(e.target.src, canvas.renderAll.bind(canvas), {
-            width: canvas.getWidth(),
-            height: canvas.getHeight(),
-            originX: 'left',
-            originY: 'top'
+        fabric.Image.fromURL(e.target.src, function (img) {
+            img.set({
+                width: canvas.getWidth(),
+                height: canvas.getHeight(),
+                left: canvas.getWidth() / 2,
+                top: canvas.getHeight() / 2,
+            });
+
+            canvas.setOverlayImage(img, canvas.renderAll.bind(canvas));
         });
     }
 
@@ -110,6 +109,7 @@ class Background extends Component {
 
     render() {
         const { visible, active } = this.state
+        const { canvas } = this.props
 
         return (
             <div>
@@ -128,15 +128,11 @@ class Background extends Component {
                         <Menu compact>
                             {
                                 colors.map((color, index) => (
-                                    <Menu.Item key={color} name={color} style={{ backgroundColor: colorValues[index] }} value={colorValues[index]} onClick={this.handleClick}>
+                                    <Menu.Item key={color} name={color} style={{ backgroundColor: colorValues[index] }} value={colorValues[index]} onClick={this.setColor}>
                                         {colorNames[index]}
                                     </Menu.Item>
                                 ))
                             }
-                            <Menu.Item onClick={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
-                                ...
-                            <input id="color" type="color" onChange={e => this.setColor(e.target.value)} style={{ position: 'absolute', bottom: '3000px' }} />
-                            </Menu.Item>
                         </Menu>
                     </Container>
                     <Header>背景图</Header>
@@ -168,3 +164,8 @@ class Background extends Component {
 }
 
 export default Background
+
+{/* <Menu.Item onClick={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
+...
+<input id="color" type="color" onChange={e => console.log(e.target.value)} style={{ position: 'absolute', bottom: '3000px' }} />
+</Menu.Item> */}

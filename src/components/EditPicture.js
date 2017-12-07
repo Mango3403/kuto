@@ -51,7 +51,7 @@ class EditPicture extends Component {
     handleDistanceMinus = e => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: this.state.imgObj.distance - 1 } })
 
     changeThreshold = () => {
-        const {canvas} = this.props;
+        const { canvas } = this.props;
         const
             { imgObj } = this.state,
             obj = canvas.getActiveObject(),
@@ -75,7 +75,7 @@ class EditPicture extends Component {
     }
 
     changeDistance = e => {
-        const {canvas} = this.props;
+        const { canvas } = this.props;
         const
             { imgObj } = this.state,
             obj = canvas.getActiveObject(),
@@ -105,9 +105,7 @@ class EditPicture extends Component {
             <div>
                 <Popup
                     trigger={
-                        <Icon
-                            name='pencil'
-                        />
+                        <Icon name='pencil' />
                     }
                     on='click'
                     open={this.state.isOpen}

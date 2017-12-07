@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
-import { Sidebar, Icon, Input, Segment, Menu, Button, Dropdown, Container } from 'semantic-ui-react'
+import { Sidebar, Icon, Input, Segment, Menu, Button, Dropdown, Form } from 'semantic-ui-react'
 import { fabric } from 'fabric'
 import 'fabric-customise-controls'
-
-const color = {
-    // 银色
-    silver: '#D6D8EA'
-}
+const FontFaceObserver = require('fontfaceobserver');
 
 const fontFamily = [
-    { key: 'SimSun', value: 'SimSun', text: '宋体' },
-    { key: 'SimHei', value: 'SimHei', text: '黑体' },
-    { key: 'Impact', value: 'Impact', text: '华文楷体' },
-    { key: 'STSong', value: 'STSong', text: '华文宋体' },
+    { key: 'simsun', value: 'simsun', text: '宋体' },
+    { key: 'simhei', value: 'simhei', text: '黑体' },
+    { key: 'STXINGKA', value: 'STXINGKA', text: '华文行楷' },
+    { key: 'STSONG', value: 'STSONG', text: '华文宋体' },
+    { key: 'STCAIYUN', value: 'STCAIYUN', text: '华文彩云' },
 ];
 
 class Text extends Component {
@@ -34,32 +31,42 @@ class Text extends Component {
     closeVisibility = () => this.setState({ visible: false })
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
+    loadAndUseFont = (text, font) => {
+        const { canvas } = this.props;
+        let myfont = new FontFaceObserver(font);
+
+        myfont.load()
+            .then(function (e) {
+                // when font is loaded, use it.
+                text.set('fontFamily', font);
+                console.log(e);
+                canvas.renderAll();
+            }).catch(function (e) {
+                console.log(e)
+                alert('字体加载失败' + font);
+            });
+    }
+
     addText = () => {
         const _this = this;
         const { canvas } = this.props
 
         const text = new fabric.Text('输入文字', {
             fontSize: 40,
-            fill: color.silver,
-            lockRotation: false,
-            hasBorders: true,
-            lockUniScaling: true,
-            centeredScaling: true
+            fill: '#D6D8EA', //银色
         })
 
-        text.setControlsVisibility({
-            mtr: false
-        })
+        // text.on('selected', function () {
+        //     _this.setState({ text })
+        // })
 
-        text.on('selected', function () {
-            _this.setState({ text })
-        })
-
-        console.log(text);
-
-        canvas.viewportCenterObject(text).add(text).setActiveObject(text)
+        canvas
+            .viewportCenterObject(text)
+            .add(text)
+            .setActiveObject(text)
 
         this.openVisibility()
+        this.setState({ text })
     }
 
     setText = ({ target: { value } }) => {
@@ -85,9 +92,10 @@ class Text extends Component {
     setFontFamily = (e, { value }) => {
         const { canvas } = this.props;
         const { text } = this.state;
-        this.setState({
-            text: text.setFontFamily(value)
-        })
+
+        this.loadAndUseFont(text, value);
+
+        this.setState({ text })
         canvas.renderAll();
     }
 
@@ -106,22 +114,14 @@ class Text extends Component {
                             <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
-                    <Container>
-                        <br />
-                        <label>文本：</label>
-                        <Input value={text ? text.getText() : '输入文字'} onChange={this.setText} onFocus={this.setText} />
-                        <br />
-                        <br />
-                        <Button onClick={() => document.getElementById('color').click()} style={{ backgroundColor: text ? text.getFill() : '' }}>颜色</Button>
-                        <input type="color" onChange={this.setFill} id="color" style={{ position: 'absolute', bottom: '3000px' }} />
-                        <Dropdown
-                            defaultValue={fontFamily[0].value}
-                            search
-                            selection
-                            options={fontFamily}
-                            onChange={this.setFontFamily}
-                        />
-                    </Container>
+                    <Form style={{ marginTop: '20px', marginLeft: '30px' }}>
+                        <Form.Field control={Input} placeholder='输入文字' value={text ? text.getText() : '输入文字'} onChange={this.setText} onFocus={this.setText} width={14} />
+                        <Form.Group>
+                            <Form.Field control={Button} onClick={() => document.getElementById('color').click()} content='颜色' style={{ backgroundColor: text ? text.getFill() : '' }} />
+                            <input type="color" onChange={this.setFill} id="color" style={{ position: 'absolute', bottom: '3000px' }} />
+                            <Form.Field control={Dropdown} selection options={fontFamily} pointing='bottom' defaultValue={fontFamily[0].value} onChange={this.setFontFamily} />
+                        </Form.Group>
+                    </Form>
                 </Sidebar>
             </div>
         )
@@ -129,3 +129,19 @@ class Text extends Component {
 }
 
 export default Text
+
+{/* <Container>
+<br />
+<label>文本：</label>
+<Input value={text ? text.getText() : '输入文字'} onChange={this.setText} onFocus={this.setText} />
+<br />
+<br />
+<Button onClick={() => document.getElementById('color').click()} style={{ backgroundColor: text ? text.getFill() : '' }}>颜色</Button>
+<Dropdown
+    defaultValue={fontFamily[0].value}
+    selection
+    pointing='bottom'
+    options={fontFamily}
+    onChange={this.setFontFamily}
+/>
+</Container> */}

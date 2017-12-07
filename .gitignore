@@ -21,3 +21,4 @@ yarn-error.log*
 src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide-shm
 src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide-wal
 src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide
+public/pro

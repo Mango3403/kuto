@@ -8,7 +8,7 @@ import zoom from '../assets/images/control/handle_zoom.png'
 import change from '../assets/images/control/handle_change.png'
 
 const Sign = () => (
-  <div style={{ position: 'absolute', width: 'calc(100% - 10px)', height: '500px' }}>
+  <div style={{ position: 'absolute', width: '400px', height: '500px' }}>
     {/* <div style={{ borderTop: '0.1px solid red', borderLeft: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
     <div style={{ borderTop: '0.1px solid red', borderRight: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', right: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
     <div style={{ borderLeft: '0.1px solid red', borderBottom: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '340px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
@@ -67,6 +67,21 @@ class Custom extends React.Component {
   }
 
   componentDidMount() {
+    fabric.Canvas.prototype.customiseControls({
+      tl: {
+        action: 'remove',
+        cursor: 'pointer'
+      },
+      tr: {
+        action: 'rotate',
+        cursor: 'pointer'
+      },
+      br: {
+        action: 'scale',
+        cursor: 'pointer'
+      }
+    })
+
     fabric.Object.prototype.customiseCornerIcons({
       settings: {
         borderColor: 'black',
@@ -88,20 +103,14 @@ class Custom extends React.Component {
       }
     })
 
-    fabric.Canvas.prototype.customiseControls({
-      tl: {
-        action: 'remove',
-        cursor: 'pointer'
-      },
-      tr: {
-        action: 'rotate',
-        cursor: 'pointer'
-      },
-      br: {
-        action: 'scale',
-        cursor: 'pointer'
-      }
+    fabric.Object.prototype.setControlsVisibility({
+      mtr: false
     })
+
+    fabric.Object.prototype.lockRotation = false;
+    fabric.Object.prototype.lockUniScaling = true;
+    fabric.Object.prototype.centeredScaling = true;
+    fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
     this.init()
   }
@@ -109,13 +118,15 @@ class Custom extends React.Component {
   init() {
     const rul = document.getElementById('ruler')
 
-    const canvas = new fabric.Canvas('c', {
+    const canvas = window._canvas = new fabric.Canvas('c', {
       preserveObjectStacking: true,
       selection: false,
       stopContextMenu: true,
-      width: window.innerWidth - 10,
+      width: window.innerWidth > 400 ? 400 : window.innerWidth - 10,
       height: 500
     })
+
+    document.getElementsByClassName('canvas-wrapper').item(0).setAttribute('clientWidth', canvas.getWidth());
 
     // 当 localStorage 中存在缓存并且缓存对象不为空时，提示是否读取缓存 
     const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null
@@ -124,18 +135,11 @@ class Custom extends React.Component {
     // if ((localStorage.getItem('myCanvas') || this.getCookie('myCanvas')) && myCanvas.objects.length > 0) {
     if (localStorage.getItem('myCanvas') && myCanvas.objects.length > 0) {
       if (window.confirm("继续编辑未完成的内容？")) {
-        canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas), (o, object) => {
-          object.lockRotation = false
-          object.hasBorders = true
-          object.lockUniScaling = true
-          object.centeredScaling = true
-          object.setControlsVisibility({
-            mtr: false
-          })
-        })
+        canvas.loadFromJSON(myCanvas, canvas.renderAll.bind(canvas))
       }
     }
 
+    // 标尺
     const rul1 = new ruler({
       container: rul
     })
@@ -150,9 +154,9 @@ class Custom extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: '15px 0', display: 'inline-block' }}>
+      <div className="canvas-wrapper" style={{ margin: '15px 0', display: 'inline-block' }}>
         <Sign />
-        <div id="ruler" style={{ position: 'absolute', width: 'calc(100% - 10px)', height: '500px' }}></div>
+        <div id="ruler" style={{ position: 'absolute', width: '400px', height: '500px' }}></div>
         <canvas id="c" style={{ userSelect: 'none', border: '0.1px dotted #ccc' }}>你的浏览器不支持画布功能，尝试更换浏览器</canvas>
         <CustomControl canvas={this.state.canvas} />
       </div>

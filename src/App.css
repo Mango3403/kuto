@@ -47,3 +47,28 @@ input[type="color"] {
     box-shadow: rgba(34, 36, 38, 0.15);
     border-radius: 5px;
 }
+
+@font-face {
+    font-family: simhei;
+    src: url(/assets/fonts/simhei.ttf);
+}
+
+@font-face {
+    font-family: simsun;
+    src: url(/assets/fonts/simsun.ttc);
+}
+
+@font-face {
+    font-family: STCAIYUN;
+    src: url(/assets/fonts/STCAIYUN.TTF);
+}
+
+@font-face {
+    font-family: STSONG;
+    src: url(/assets/fonts/STSONG.TTF);
+}
+
+@font-face {
+    font-family: STXINGKA;
+    src: url(/assets/fonts/STXINGKA.TTF);
+}

@@ -9,6 +9,7 @@ import Save from './Save'
 import EditPicture from './EditPicture'
 import EditLayer from './EditLayer'
 import GrayPicture from './GrayPicture'
+import OverlayImageControl from './OverlayImageControl'
 
 const styles = {
 	menu1: {
@@ -98,6 +99,9 @@ class CustomControl extends Component {
 				</Menu>
 
 				<Menu icon vertical style={styles.menu2} ref="menu2">
+					<Menu.Item style={styles.menuItem} name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
+						<OverlayImageControl canvas={canvas} />
+					</Menu.Item>
 					<Menu.Item style={styles.menuItem} name="edit" active={activeItem === 'edit'} onClick={this.handleItemClick}>
 						<GrayPicture canvas={canvas} grayPicture={() => console.log(this.state.canvas)} />
 					</Menu.Item>

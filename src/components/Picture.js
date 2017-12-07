@@ -161,16 +161,16 @@ class PanelO extends Component {
             files = ReactDOM.findDOMNode(this.refs.file).files,
             file = files[0],
             reader = new FileReader(),
-            { picture } = this.props,
-            obj = { key: picture.length, options: 'image cartoon nodefault', src: null }
+            { currentPicture } = this.state,
+            obj = { key: currentPicture.length, options: 'image cartoon nodefault', src: null }
 
         reader.readAsDataURL(file)
         reader.onload = event => {
             obj.src = reader.result
 
-            picture.unshift(obj)
+            currentPicture.unshift(obj)
 
-            this.setState({ picture })
+            this.setState({ currentPicture: currentPicture })
         }
     }
 
@@ -180,16 +180,15 @@ class PanelO extends Component {
         // setTimeout(() => eventProxy.trigger('openFilter'), 300)
         fabric.Image.fromURL(e.target.src, img => {
             img.scale(0.3)
-            img.lockRotation = false
-            img.hasBorders = true
-            img.lockUniScaling = true
-            img.centeredScaling = true
+
             img.setControlsVisibility({
-                mtr: false
+                bl: false
             })
 
-            canvas.viewportCenterObject(img)
-            canvas.add(img).setActiveObject(img);
+            canvas
+                .viewportCenterObject(img)
+                .add(img)
+                .setActiveObject(img);
         })
     }
 
@@ -256,17 +255,19 @@ class PanelO extends Component {
                     </Menu.Item>
                 </Menu>
 
-                <Grid celled="internally" style={{ height: '250px', overflowY: 'auto' }}>
-                    <Grid.Row columns={3}>
-                        {
-                            this.state.currentPicture.map(p => (
-                                <Grid.Column key={p.key}>
-                                    <Image bordered height={80} src={p.src} onClick={this.addImage} />
-                                </Grid.Column>
-                            ))
-                        }
-                    </Grid.Row>
-                </Grid>
+                <div style={{ height: '250px', overflowX: 'hidden' }}>
+                    <Grid>
+                        <Grid.Row columns={3}>
+                            {
+                                this.state.currentPicture.map(p => (
+                                    <Grid.Column key={p.key} style={{ marginTop: '10px' }}>
+                                        <Image bordered height={100} width={100} src={p.src} onClick={this.addImage} />
+                                    </Grid.Column>
+                                ))
+                            }
+                        </Grid.Row>
+                    </Grid>
+                </div>
             </div>
         )
     }

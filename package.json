@@ -48,9 +48,10 @@
   "dependencies": {
     "fabric": "^1.7.19",
     "fabric-customise-controls": "^0.3.5",
+    "fontfaceobserver": "^2.0.13",
     "lodash": "^4.17.4",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.73.1"
