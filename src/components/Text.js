@@ -15,7 +15,7 @@ const fontFamily = [
 class Text extends Component {
     state = {
         visible: false,
-        text: null
+        text: null,
     }
 
     componentDidMount() {
@@ -25,12 +25,15 @@ class Text extends Component {
                 cursor: 'pointer'
             }
         });
+
+        console.log(fabric.Text.prototype);
     }
 
     openVisibility = () => this.setState({ visible: true })
     closeVisibility = () => this.setState({ visible: false })
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
+    // 加载并使用字体
     loadAndUseFont = (text, font) => {
         const { canvas } = this.props;
         let myfont = new FontFaceObserver(font);
@@ -56,9 +59,9 @@ class Text extends Component {
             fill: '#D6D8EA', //银色
         })
 
-        // text.on('selected', function () {
-        //     _this.setState({ text })
-        // })
+        text.on('selected', function (e) {
+            _this.setState({ text });
+        });
 
         canvas
             .viewportCenterObject(text)
@@ -66,7 +69,7 @@ class Text extends Component {
             .setActiveObject(text)
 
         this.openVisibility()
-        this.setState({ text })
+        // this.setState({ text })
     }
 
     setText = ({ target: { value } }) => {
@@ -115,7 +118,7 @@ class Text extends Component {
                         </Menu.Item>
                     </Menu>
                     <Form style={{ marginTop: '20px', marginLeft: '30px' }}>
-                        <Form.Field control={Input} placeholder='输入文字' value={text ? text.getText() : '输入文字'} onChange={this.setText} onFocus={this.setText} width={14} />
+                        <Form.Field control={Input} value={text ? text.getText() : ''} onChange={this.setText} onFocus={this.setText} width={14} />
                         <Form.Group>
                             <Form.Field control={Button} onClick={() => document.getElementById('color').click()} content='颜色' style={{ backgroundColor: text ? text.getFill() : '' }} />
                             <input type="color" onChange={this.setFill} id="color" style={{ position: 'absolute', bottom: '3000px' }} />

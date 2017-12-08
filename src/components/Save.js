@@ -79,20 +79,30 @@ class Save extends Component {
         this.setState({ open: false })
     }
 
-    getDataURLValues = canvas => {
-
-    }
-
     saveImage = () => {
         const { canvas } = this.props
 
-        const dataurl = canvas.toDataURL({
-            format: 'png',
-            left: this.state.valLeft,
-            top: this.state.valTop,
-            height: this.state.valHeight,
-            width: this.state.valWidth,
-        });
+        let dataurl = null;
+
+        if (canvas.overlayImage !== null) {
+            dataurl = canvas.toDataURL({
+                format: 'png',
+                left: canvas.overlayImage.left - canvas.overlayImage.width / 2,
+                top: canvas.overlayImage.top - canvas.overlayImage.height / 2,
+                height: canvas.overlayImage.height,
+                width: canvas.overlayImage.width,
+            });
+        } else {
+            dataurl = canvas.toDataURL({
+                format: 'png',
+                left: this.state.valLeft,
+                top: this.state.valTop,
+                height: this.state.valHeight,
+                width: this.state.valWidth,
+            });
+        }
+
+        console.log(canvas);
 
         this.setState({
             saveImages: {

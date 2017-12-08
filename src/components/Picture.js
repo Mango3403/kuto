@@ -181,9 +181,7 @@ class PanelO extends Component {
         fabric.Image.fromURL(e.target.src, img => {
             img.scale(0.3)
 
-            img.setControlsVisibility({
-                bl: false
-            })
+            // img.setControlVisible('bl', false);
 
             canvas
                 .viewportCenterObject(img)
