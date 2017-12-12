@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+     
+}
+
+<h2>Login</h2>
+
+
+<form id="myForm" action="/KutoAdmin/Login" method="post">
+    <div>
+        <fieldset>
+            <p>
+                <label for="username">
+                    Username:
+                </label>
+                @Html.TextBox("username")
+                @Html.ValidationMessage("username")
+            </p>
+            <p>
+                <label for="password">
+                    Password:
+                </label>
+                @Html.Password("pwd")
+                @Html.ValidationMessage("password")
+            </p>
+            
+
+            <p>
+                <input type="submit" value="Log On" />
+            </p>
+
+        </fieldset>
+    </div>
+</form>
