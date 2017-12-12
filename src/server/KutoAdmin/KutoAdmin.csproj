@@ -378,7 +378,6 @@
     <Content Include="Views\KutoAdmin\FileUpload.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
-    <Content Include="Views\KutoAdmin\InsertCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

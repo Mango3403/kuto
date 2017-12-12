@@ -7,31 +7,57 @@ import {
 import { Checkbox, Modal, Icon, Button, Header, Image } from 'semantic-ui-react'
 
 class Save extends Component {
-    constructor() {
-        super()
 
-        this.state = {
-            checked: false,
-            open: false,
-            saveImages: {
-                src: '',
-                name: 'custom.png'
-            },
-            canvas: null,
-            putImage: null
+    state = {
+        checked: false,
+        open: false,
+        valLeft: '0.0',
+        valTop: '0.0',
+        valWidth: '0.0',
+        valHeight: '0.0',
+        saveImages: {
+            src: '',
+            name: 'custom.png'
         }
+    }
 
-        this.download = this.download.bind(this)
-        this.close = this.close.bind(this)
+    componentWillReceiveProps(nextProps) {
+        const
+            _this = this,
+            _canvas = nextProps.canvas;
+            
+        _canvas.on('after:render', function () {
+            let lefts = [],
+                tops = [],
+                bottoms = [],
+                rights = [];
+
+            _canvas.forEachObject(obj => {
+                let bound = obj.getBoundingRect();
+                bound.right = bound.left + bound.width;
+                bound.bottom = bound.top + bound.height;
+
+                lefts.push(bound.left);
+                tops.push(bound.top);
+                rights.push(bound.right);
+                bottoms.push(bound.bottom);
+            });
+
+            let bottomMax = Math.max.apply(null, bottoms);
+            let rightMax = Math.max.apply(null, rights);
+            let leftMin = Math.min.apply(null, lefts);
+            let topMin = Math.min.apply(null, tops);
+
+            _this.setState({
+                valHeight: (bottomMax - topMin).toFixed(1),
+                valWidth: (rightMax - leftMin).toFixed(1),
+                valLeft: leftMin,
+                valTop: topMin
+            });
+        })
     }
 
     toggle = () => this.setState({ checked: !this.state.checked })
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            canvas: nextProps.canvas
-        })
-    }
 
     show = dimmer => () => {
         this.saveImage()
@@ -41,8 +67,8 @@ class Save extends Component {
         })
     }
 
-    close() {
-        const { checked, canvas } = this.state;
+    close = () => {
+        const { checked } = this.state;
 
         if (checked) {
             this.download()
@@ -53,10 +79,30 @@ class Save extends Component {
         this.setState({ open: false })
     }
 
-    saveImage() {
-        const { canvas } = this.state
+    saveImage = () => {
+        const { canvas } = this.props
 
-        const dataurl = canvas.toDataURL('image/png');
+        let dataurl = null;
+
+        if (canvas.overlayImage !== null) {
+            dataurl = canvas.toDataURL({
+                format: 'png',
+                left: canvas.overlayImage.left - canvas.overlayImage.width / 2,
+                top: canvas.overlayImage.top - canvas.overlayImage.height / 2,
+                height: canvas.overlayImage.height,
+                width: canvas.overlayImage.width,
+            });
+        } else {
+            dataurl = canvas.toDataURL({
+                format: 'png',
+                left: this.state.valLeft,
+                top: this.state.valTop,
+                height: this.state.valHeight,
+                width: this.state.valWidth,
+            });
+        }
+
+        console.log(canvas);
 
         this.setState({
             saveImages: {
