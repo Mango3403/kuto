@@ -1,19 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "GenImgLibJson";
-    Layout = "~/Views/_ViewStart.cshtml";
 }
 
 <h2>更新图片库json配置</h2>
 
-<form id="myForm" action="/KutoAdmin/GenImgLibJson  3" method="post">
-    <div>
+<div>
+    @ViewBag.dirName
+</div>
 
-        <input type="submit" value="生成" />
-
-        <div>
-            @ViewBag.dirName
-        </div>
-    </div>
-</form>
 

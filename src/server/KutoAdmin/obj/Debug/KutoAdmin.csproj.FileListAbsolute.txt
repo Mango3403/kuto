@@ -99,3 +99,4 @@ C:\kuto\src\server\KutoAdmin\bin\zh-Hans\Microsoft.Owin.Security.MicrosoftAccoun
 C:\kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.csproj.CoreCompileInputs.cache
 C:\kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.dll
 C:\kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.pdb
+C:\kuto\src\server\KutoAdmin\obj\Debug\KutoAdmin.csprojResolveAssemblyReference.cache

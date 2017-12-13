@@ -222,24 +222,23 @@ namespace KutoAdmin.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult GenImgLibJson()
         {
             // 获取当前程序所在路径，并将要创建的文件命名为info.json 
-            const string imgPath = ".\\assets\\imglib\\";
-            string galleryCfg = Server.MapPath(imgPath + "\\gallery.json");
+            string galleryDir = Server.MapPath("..\\assets\\imglib\\");
+            string galleryCfg = galleryDir + "\\gallery.json";
 
             createFile(galleryCfg);
 
             List<Gallery> galleryList = new List<Gallery>();
-            enumDir(galleryList, null, new DirectoryInfo(imgPath));
+            enumDir(galleryList, null, new DirectoryInfo(galleryDir));
 
             //写入序列化的json
             System.IO.File.WriteAllText(galleryCfg, JsonConvert.SerializeObject(galleryList));
             return View();
         }
 
-       
+
         private void enumDir(List<Gallery> galleryList, Gallery supperGallery, DirectoryInfo directory)
         {
             DirectoryInfo[] directorys = directory.GetDirectories();
@@ -267,7 +266,8 @@ namespace KutoAdmin.Controllers
 
             foreach (FileInfo file in files)
             {
-                imgList.Add(file.Name);
+                if (file.Extension != ".json")
+                    imgList.Add(file.Name);
             }
 
             string listJson = directory.FullName + "\\list.json";
@@ -277,14 +277,14 @@ namespace KutoAdmin.Controllers
 
         private void createFile(string path)
         {
-            if (!System.IO.File.Exists(path))  // 判断是否已有相同文件 
+            if (System.IO.File.Exists(path))  // 判断是否已有相同文件 
             {
                 System.IO.File.Delete(path);
-
-                //创建文件
-                FileStream fs1 = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
-                fs1.Close();
             }
+
+            //创建文件
+            FileStream fs1 = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
+            fs1.Close();
         }
     }
 
@@ -293,7 +293,7 @@ namespace KutoAdmin.Controllers
         public string name;
         public List<Gallery> subDirs;
 
-       public Gallery()
+        public Gallery()
         {
             subDirs = new List<Gallery>();
         }
