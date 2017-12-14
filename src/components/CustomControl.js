@@ -22,7 +22,7 @@ const styles = {
 		position: 'absolute',
 		right: '5px',
 		// 56.53 224.63
-		top: '350px'
+		top: '320px'
 	},
 	menu3: {
 		position: 'absolute',

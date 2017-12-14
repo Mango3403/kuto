@@ -7,8 +7,10 @@ import rotate from '../assets/images/control/handle_rotate.png'
 import zoom from '../assets/images/control/handle_zoom.png'
 import change from '../assets/images/control/handle_change.png'
 
+const WINDOW_WIDTH = window.innerWidth > 400 ? 400 : window.innerWidth - 10;
+
 const Sign = () => (
-  <div style={{ position: 'absolute', width: '400px', height: '500px' }}>
+  <div style={{ position: 'absolute', width: WINDOW_WIDTH, height: '500px' }}>
     {/* <div style={{ borderTop: '0.1px solid red', borderLeft: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
     <div style={{ borderTop: '0.1px solid red', borderRight: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '150px', right: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
     <div style={{ borderLeft: '0.1px solid red', borderBottom: '0.1px solid red', position: 'absolute', width: '10px', height: '10px', top: '340px', left: 'calc((100% - 200px) / 2)', zIndex: '1' }}></div>
@@ -122,7 +124,7 @@ class Custom extends React.Component {
       preserveObjectStacking: true,
       selection: false,
       stopContextMenu: true,
-      width: window.innerWidth > 400 ? 400 : window.innerWidth - 10,
+      width: WINDOW_WIDTH,
       height: 500
     })
 
@@ -146,7 +148,7 @@ class Custom extends React.Component {
     rul1.api.setScale(0.02)
     rul1.api.setPos({
       x: canvas.width / 2 - 16,
-      y: canvas.height / 2 - 16
+      y: canvas.height / 2 - 16,
     })
 
     this.setState({ canvas })
@@ -156,7 +158,7 @@ class Custom extends React.Component {
     return (
       <div className="canvas-wrapper" style={{ margin: '15px 0', display: 'inline-block' }}>
         <Sign />
-        <div id="ruler" style={{ position: 'absolute', width: '400px', height: '500px' }}></div>
+        <div id="ruler" style={{ position: 'absolute', width: WINDOW_WIDTH, height: '500px' }}></div>
         <canvas id="c" style={{ userSelect: 'none', border: '0.1px dotted #ccc' }}>你的浏览器不支持画布功能，尝试更换浏览器</canvas>
         <CustomControl canvas={this.state.canvas} />
       </div>
