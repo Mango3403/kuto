@@ -246,6 +246,47 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\images\control\clear.png" />
+    <Content Include="assets\images\control\handle_change.png" />
+    <Content Include="assets\images\control\handle_del.png" />
+    <Content Include="assets\images\control\handle_rotate.png" />
+    <Content Include="assets\images\control\handle_zoom.png" />
+    <Content Include="assets\images\control\more.png" />
+    <Content Include="assets\images\control\order.png" />
+    <Content Include="assets\images\logo.jpeg" />
+    <Content Include="assets\images\material\a.jpg" />
+    <Content Include="assets\images\picture\0.jpeg" />
+    <Content Include="assets\images\picture\1.jpeg" />
+    <Content Include="assets\images\picture\2.jpeg" />
+    <Content Include="assets\images\picture\3.jpeg" />
+    <Content Include="assets\images\upload.png" />
+    <Content Include="assets\imgLib\测试类1\004.jpg" />
+    <Content Include="assets\imgLib\测试类1\005.jpg" />
+    <Content Include="assets\imgLib\测试类1\006.jpg" />
+    <Content Include="assets\imgLib\测试类1\吉祥\b_1243674194120.jpg" />
+    <Content Include="assets\imgLib\测试类1\舞动\dgrw_001.jpg" />
+    <Content Include="assets\imgLib\测试类1\舞动\dgrw_002.jpg" />
+    <Content Include="assets\imgLib\测试类2\001.jpg" />
+    <Content Include="assets\imgLib\测试类2\002.jpg" />
+    <Content Include="assets\imgLib\测试类2\003.jpg" />
+    <Content Include="assets\imgLib\测试类2\004.jpg" />
+    <Content Include="assets\imgLib\测试类2\印迹\shutterstock_23501056.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\001.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\002.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\003.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\004.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\005.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\006.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\007.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\008.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\009.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\010.jpg" />
+    <Content Include="assets\imgLib\测试类2\诛仙\011.jpg" />
+    <Content Include="assets\lib\jquery.qrcode.min.js" />
+    <Content Include="assets\lib\qrcode.js" />
+    <Content Include="assets\lib\ruler.min.css" />
+    <Content Include="assets\lib\ruler.min.js" />
+    <Content Include="assets\lib\semantic.min.css" />
     <Content Include="qrcode.html" />
     <Content Include="Scripts\ruler.min.js" />
     <Content Include="Content\bootstrap.css" />
@@ -272,6 +313,15 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\imgLib\gallery.json" />
+    <Content Include="assets\imgLib\list.json" />
+    <Content Include="assets\imgLib\测试类1\list.json" />
+    <Content Include="assets\imgLib\测试类1\吉祥\list.json" />
+    <Content Include="assets\imgLib\测试类1\吉祥\测试在\list.json" />
+    <Content Include="assets\imgLib\测试类1\舞动\list.json" />
+    <Content Include="assets\imgLib\测试类2\list.json" />
+    <Content Include="assets\imgLib\测试类2\印迹\list.json" />
+    <Content Include="assets\imgLib\测试类2\诛仙\list.json" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -379,6 +429,7 @@
     <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
     <Content Include="Views\KutoAdmin\GenImgLibJson.cshtml" />
+    <Content Include="Views\KutoAdmin\InsertCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
