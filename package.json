@@ -46,7 +46,7 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
-    "fabric": "^1.7.19",
+    "fabric": "^1.7.20",
     "fabric-customise-controls": "^0.3.5",
     "fontfaceobserver": "^2.0.13",
     "lodash": "^4.17.4",

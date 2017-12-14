@@ -1,21 +1,17 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { fabric } from 'fabric'
-import { Button, Sidebar, Icon, Segment, Popup, List, Label, Menu } from 'semantic-ui-react'
+import { Sidebar, Icon, Segment, Popup, List, Menu, Radio, Form, Grid, Button } from 'semantic-ui-react'
 // import eventProxy from '../eventProxy'
 
 class EditPicture extends Component {
-    constructor() {
-        super()
 
-        this.state = {
-            isOpen: false,
-            visible: false,
-            imgObj: {
-                threshold: 90,
-                distance: 40
-            }
-        }
+    state = {
+        isOpen: false,
+        visible: false,
+        checked: false,
+        threshold: 0,
+        distance: 0
     }
 
     componentDidMount() {
@@ -34,32 +30,39 @@ class EditPicture extends Component {
         }
     }
 
-    handleClose = () => {
-        this.setState({ isOpen: false })
+    toggle = () => {
+        this.setState({ checked: !this.state.checked })
+        this.setGray()
     }
-
+    handleClose = () => this.setState({ isOpen: false })
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
-    changeThresholdValue = e => this.setState({ imgObj: { threshold: parseInt(e.target.value), distance: this.state.imgObj.distance } })
+    changeThresholdValue = e => {
+        this.setState({
+            threshold: parseInt(e.target.value),
+        })
+        console.log(`state.threshold: ${this.state.threshold}, e.target.value: ${e.target.value}`);
+    }
 
-    handleThresholdAdd = e => this.setState({ imgObj: { threshold: this.state.imgObj.threshold + 1, distance: this.state.imgObj.distance } })
-    handleThresholdMinus = e => this.setState({ imgObj: { threshold: this.state.imgObj.threshold - 1, distance: this.state.imgObj.distance } })
+    handleThresholdAdd = e => this.setState({ threshold: this.state.threshold + 1 })
+    handleThresholdMinus = e => this.setState({ threshold: this.state.threshold - 1, })
 
-    changeDistanceValue = e => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: parseInt(e.target.value) } })
+    changeDistanceValue = e => this.setState({
+        distance: parseInt(e.target.value)
+    })
 
-    handleDistanceAdd = e => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: this.state.imgObj.distance + 1 } })
-    handleDistanceMinus = e => this.setState({ imgObj: { threshold: this.state.imgObj.threshold, distance: this.state.imgObj.distance - 1 } })
+    handleDistanceAdd = e => this.setState({ distance: this.state.distance + 1 })
+    handleDistanceMinus = e => this.setState({ distance: this.state.distance - 1 })
 
     changeThreshold = () => {
         const { canvas } = this.props;
         const
-            { imgObj } = this.state,
+            { threshold } = this.state,
             obj = canvas.getActiveObject(),
-            distance = obj.filters[1].distance,
-            val = imgObj.threshold
+            distance = obj.filters[1].distance;
 
         obj.clone(obj => {
-            obj.filters[1].threshold = val
+            obj.filters[1].threshold = threshold
             obj.lockRotation = false
             obj.hasBorders = true
             obj.lockUniScaling = true
@@ -77,13 +80,12 @@ class EditPicture extends Component {
     changeDistance = e => {
         const { canvas } = this.props;
         const
-            { imgObj } = this.state,
+            { distance } = this.state,
             obj = canvas.getActiveObject(),
-            threshold = obj.filters[1].threshold,
-            val = imgObj.distance
+            threshold = obj.filters[1].threshold;
 
         obj.clone(obj => {
-            obj.filters[1].distance = val
+            obj.filters[1].distance = distance
             obj.lockRotation = false
             obj.hasBorders = true
             obj.lockUniScaling = true
@@ -95,11 +97,33 @@ class EditPicture extends Component {
 
             canvas.remove(canvas.getActiveObject()).add(obj).setActiveObject(obj)
         })
+    }
 
+    setGray = () => {
+        const { canvas } = this.props;
+        const picture = canvas.getActiveObject();
+
+        if (!this.state.checked) {
+            picture.filters[0] = new fabric.Image.filters.Grayscale()
+            picture.filters[1] = new fabric.Image.filters.RemoveWhite()
+            // picture.filters.push(new fabric.Image.filters.Tint({
+            //     color: color.silver
+            // }));
+
+            picture.applyFilters(canvas.renderAll.bind(canvas));
+
+            this.setState({
+                threshold: picture.filters[1].threshold,
+                distance: picture.filters[1].distance,
+            });
+        } else {
+            picture.filters = [];
+            picture.applyFilters(canvas.renderAll.bind(canvas));
+        }
     }
 
     render() {
-        const { imgObj } = this.state
+        const { threshold, distance } = this.state;
 
         return (
             <div>
@@ -111,7 +135,7 @@ class EditPicture extends Component {
                     open={this.state.isOpen}
                     onOpen={this.handleOpen}
                     onClose={this.handleClose}
-                    content='请选中一张灰度化图片'
+                    content='请选中一张图片'
                 />
                 <Sidebar as={Segment} animation="push" direction='bottom' visible={this.state.visible}>
                     <Menu pointing secondary>
@@ -124,22 +148,51 @@ class EditPicture extends Component {
                     </Menu>
                     <List>
                         <List.Item>
-                            <span>过滤梯度: </span>
-                            <input style={{ position: 'relative', top: '5px', right: '5px' }} type="range" min={0} max={200} value={imgObj.distance} onChange={this.changeDistanceValue} onMouseUp={this.changeDistance} onTouchEnd={this.changeDistance} />
-                            <Menu size='mini' compact>
-                                <Menu.Item disabled={imgObj.distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
-                                <Menu.Item name={imgObj.distance.toString()} />
-                                <Menu.Item disabled={imgObj.distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
-                            </Menu>
+                            <Radio toggle label="灰度化" checked={this.state.checked} onChange={this.toggle} />
                         </List.Item>
-                        <List.Item>
-                            <span>过滤像素: </span>
-                            <input style={{ position: 'relative', top: '5px', right: '5px' }} type="range" min={0} max={200} value={imgObj.threshold} onChange={this.changeThresholdValue} onMouseUp={this.changeThreshold} onTouchEnd={this.changeThreshold} />
-                            <Menu size='mini' compact>
-                                <Menu.Item disabled={imgObj.threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
-                                <Menu.Item name={imgObj.threshold.toString()} />
-                                <Menu.Item disabled={imgObj.threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
-                            </Menu>
+                        <List.Item disabled={!this.state.checked}>
+                            <Grid columns={2}>
+                                <Grid.Column as={Form}>
+                                    <Form.Input
+                                        label={`过滤像素值: ${threshold}`}
+                                        min={0}
+                                        max={200}
+                                        name='duration'
+                                        onChange={this.changeThresholdValue}
+                                        step={5}
+                                        type='range'
+                                        value={threshold}
+                                        disabled={!this.state.checked}
+                                        onMouseUp={this.changeThreshold}
+                                        onTouchEnd={this.changeThreshold}
+                                    />
+                                    <Button.Group>
+                                        <Button disabled={threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
+                                        <Button>{threshold}</Button>
+                                        <Button disabled={threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
+                                    </Button.Group>
+                                </Grid.Column>
+                                <Grid.Column as={Form}>
+                                    <Form.Input
+                                        label={`过滤梯度值: ${distance}`}
+                                        min={0}
+                                        max={200}
+                                        name='duration'
+                                        onChange={this.changeDistanceValue}
+                                        step={5}
+                                        type='range'
+                                        value={distance}
+                                        disabled={!this.state.checked}
+                                        onMouseUp={this.changeDistance}
+                                        onTouchEnd={this.changeDistance}
+                                    />
+                                    <Button.Group>
+                                        <Button disabled={distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
+                                        <Button>{distance}</Button>
+                                        <Button disabled={distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
+                                    </Button.Group>
+                                </Grid.Column>
+                            </Grid>
                         </List.Item>
                     </List>
                 </Sidebar>

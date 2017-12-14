@@ -17,7 +17,7 @@ body {
     height: 500px;
 }
 
-input[type="range"] {
+/* input[type="range"] {
     -webkit-appearance: none;
     box-shadow: 0 1px 0 0px #424242,
         0 1px 0 #060607 inset,
@@ -39,7 +39,7 @@ input[type="range"]::-webkit-slider-thumb {
     background: none repeat scroll 0 0 #777;
     border-radius: 15px;
     box-shadow: 0 -1px 1px black inset;
-}
+} */
 
 input[type="color"] {
     width: 42px;
