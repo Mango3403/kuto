@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { fabric } from 'fabric'
+import { fabric } from 'fabric/dist/fabric.min'
 import { Sidebar, Icon, Segment, Popup, List, Menu, Radio, Form, Grid, Button } from 'semantic-ui-react'
 // import eventProxy from '../eventProxy'
 
@@ -143,7 +143,7 @@ class EditPicture extends Component {
                             <h3>编辑图片</h3>
                         </Menu.Item>
                         <Menu.Item position="right">
-                            <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
+                            <Icon onTouchEnd={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
                     <List>
@@ -167,9 +167,9 @@ class EditPicture extends Component {
                                         onTouchEnd={this.changeThreshold}
                                     />
                                     <Button.Group>
-                                        <Button disabled={threshold === 0} icon='minus' onClick={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
+                                        <Button disabled={threshold === 0} icon='minus' onTouchEnd={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
                                         <Button>{threshold}</Button>
-                                        <Button disabled={threshold === 200} icon='plus' onClick={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
+                                        <Button disabled={threshold === 200} icon='plus' onTouchEnd={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
                                     </Button.Group>
                                 </Grid.Column>
                                 <Grid.Column as={Form}>
@@ -187,9 +187,9 @@ class EditPicture extends Component {
                                         onTouchEnd={this.changeDistance}
                                     />
                                     <Button.Group>
-                                        <Button disabled={distance === 0} icon='minus' onClick={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
+                                        <Button disabled={distance === 0} icon='minus' onTouchEnd={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
                                         <Button>{distance}</Button>
-                                        <Button disabled={distance === 200} icon='plus' onClick={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
+                                        <Button disabled={distance === 200} icon='plus' onTouchEnd={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
                                     </Button.Group>
                                 </Grid.Column>
                             </Grid>

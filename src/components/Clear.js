@@ -4,14 +4,7 @@ import clear from '../assets/images/control/clear.png'
 
 class Clear extends React.Component {
     state = {
-        open: false,
-        canvas: null
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            canvas: nextProps.canvas
-        })
+        open: false
     }
 
     show = () => this.setState({ open: true })
@@ -26,7 +19,7 @@ class Clear extends React.Component {
 
     close = () => this.setState({ open: false })
 
-    clear = () => { this.state.canvas.clear() }
+    clear = () => this.props.canvas.clear()
 
     render() {
         return (

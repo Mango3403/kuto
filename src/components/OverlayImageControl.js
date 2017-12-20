@@ -139,7 +139,7 @@ class OverlayImageControl extends Component {
                             <h3>遮罩层</h3>
                         </Menu.Item>
                         <Menu.Item position="right">
-                            <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
+                            <Icon onTouchEnd={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
                     <Form.Group
@@ -152,8 +152,8 @@ class OverlayImageControl extends Component {
                     >
                         <Form.Field control={Input} type="number" label="高度" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.height : 0} onChange={this.setHeight} />
                         <Button.Group>
-                            <Button icon='plus' onClick={this.plusHeight} />
-                            <Button icon='minus' onClick={this.minusHeight} />
+                            <Button icon='plus' onTouchEnd={this.plusHeight} />
+                            <Button icon='minus' onTouchEnd={this.minusHeight} />
                         </Button.Group>
                     </Form.Group>
                     <Form.Group
@@ -166,8 +166,8 @@ class OverlayImageControl extends Component {
                     >
                         <Form.Field control={Input} type="number" label="宽度" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.width : 0} onChange={this.setWidth} />
                         <Button.Group>
-                            <Button icon='plus' onClick={this.plusWidth} />
-                            <Button icon='minus' onClick={this.minusWidth} />
+                            <Button icon='plus' onTouchEnd={this.plusWidth} />
+                            <Button icon='minus' onTouchEnd={this.minusWidth} />
                         </Button.Group>
                     </Form.Group>
                     <Form.Group
@@ -180,8 +180,8 @@ class OverlayImageControl extends Component {
                     >
                         <Form.Field control={Input} type="number" label="上边距" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.top : 0} onChange={this.setTop} />
                         <Button.Group>
-                            <Button icon='plus' onClick={this.plusTop} />
-                            <Button icon='minus' onClick={this.minusTop} />
+                            <Button icon='plus' onTouchEnd={this.plusTop} />
+                            <Button icon='minus' onTouchEnd={this.minusTop} />
                         </Button.Group>
                     </Form.Group>
                     <Form.Group
@@ -194,8 +194,8 @@ class OverlayImageControl extends Component {
                     >
                         <Form.Field control={Input} type="number" label="左边距" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.left : 0} onChange={this.setLeft} />
                         <Button.Group>
-                            <Button icon='plus' onClick={this.plusLeft} />
-                            <Button icon='minus' onClick={this.minusLeft} />
+                            <Button icon='plus' onTouchEnd={this.plusLeft} />
+                            <Button icon='minus' onTouchEnd={this.minusLeft} />
                         </Button.Group>
                     </Form.Group>
                 </Sidebar>

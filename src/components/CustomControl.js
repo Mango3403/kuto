@@ -9,6 +9,7 @@ import Save from './Save'
 import EditPicture from './EditPicture'
 import EditLayer from './EditLayer'
 import OverlayImageControl from './OverlayImageControl'
+import Shape from './Shape'
 
 const styles = {
 	menu1: {
@@ -22,7 +23,7 @@ const styles = {
 		position: 'absolute',
 		right: '5px',
 		// 56.53 224.63
-		top: '320px'
+		top: '240px'
 	},
 	menu3: {
 		position: 'absolute',
@@ -38,10 +39,7 @@ const styles = {
 class CustomControl extends Component {
 	state = {
 		view: true,
-		activeItem: ''
 	}
-
-	handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
 	handleViewToggle = () => {
 		const
@@ -66,52 +64,52 @@ class CustomControl extends Component {
 	}
 
 	render() {
-		const { activeItem } = this.state
 		const { canvas } = this.props;
 
 		return (
 			<div>
 				<Menu icon style={styles.menu1} ref='menu1'>
-					<Menu.Item style={styles.menuItem} name='font' active={activeItem === 'font'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<Text canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='picture' active={activeItem === 'picture'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<Picture canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='dilicious' active={activeItem === 'dilicious'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<Background canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='save' active={activeItem === 'save'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<Save canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='trash' active={activeItem === 'trash'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<Clear canvas={canvas} />
 					</Menu.Item>
 
-					<Menu.Item style={styles.menuItem} name='hide' active={activeItem === 'hide'} onClick={this.handleItemClick}>
-						<Icon style={{ transform: 'rotate(135deg)' }} link onClick={this.handleViewToggle} rotated='clockwise' name='long arrow up' />
+					<Menu.Item style={styles.menuItem}>
+						<Icon style={{ transform: 'rotate(135deg)' }} link onTouchEnd={this.handleViewToggle} rotated='clockwise' name='long arrow up' />
 					</Menu.Item>
 				</Menu>
 
 				<Menu icon vertical style={styles.menu2} ref="menu2">
-					<Menu.Item style={styles.menuItem} name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<OverlayImageControl canvas={canvas} />
 					</Menu.Item>
-					<Menu.Item style={styles.menuItem} name="paint brush" active={activeItem === 'paint brush'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<EditPicture canvas={canvas} />
 					</Menu.Item>
-					<Menu.Item style={styles.menuItem} name="object" active={activeItem === 'object'} onClick={this.handleItemClick}>
+					<Menu.Item style={styles.menuItem}>
 						<EditLayer canvas={canvas} />
 					</Menu.Item>
+					<Shape canvas={canvas} />
 				</Menu>
 
 				<Menu icon style={styles.menu3} ref='menu3'>
-					<Menu.Item style={styles.menuItem} name='show' active={activeItem === 'show'} onClick={this.handleItemClick}>
-						<Icon style={{ transform: 'rotate(-45deg)' }} link onClick={this.handleViewToggle} rotated='clockwise' name='long arrow up' />
+					<Menu.Item style={styles.menuItem}>
+						<Icon style={{ transform: 'rotate(-45deg)' }} link onTouchEnd={this.handleViewToggle} rotated='clockwise' name='long arrow up' />
 					</Menu.Item>
 				</Menu>
 			</div>

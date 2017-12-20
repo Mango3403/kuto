@@ -43,19 +43,19 @@ class EditLayer extends React.Component {
                             <h3>编辑图层</h3>
                         </Menu.Item>
                         <Menu.Item position="right">
-                            <Icon onClick={this.toggleVisibility} name="close" bordered />
+                            <Icon onTouchEnd={this.toggleVisibility} name="close" bordered />
                         </Menu.Item>
                     </Menu>
                     <Menu compact>
-                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="置顶" onClick={this.bringToFront} />
+                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="置顶" onTouchEnd={this.bringToFront} />
 
-                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="向上一层" onClick={this.bringForward} />
+                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="向上一层" onTouchEnd={this.bringForward} />
 
-                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="向下一层" onClick={this.sendBackwards} />
+                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="向下一层" onTouchEnd={this.sendBackwards} />
 
-                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="置底" onClick={this.sendToBack} />
+                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="置底" onTouchEnd={this.sendToBack} />
 
-                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="中心对齐" onClick={this.center} />
+                        <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="中心对齐" onTouchEnd={this.center} />
                     </Menu>
                 </Sidebar>
             </div>

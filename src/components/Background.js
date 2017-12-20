@@ -50,11 +50,7 @@ class Background extends Component {
         this.state = {}
     }
 
-    setColor = (e, { value }) => {
-        const { canvas } = this.props
-
-        canvas.setBackgroundColor(value).renderAll()
-    }
+    setColor = (e, { value }) => this.props.canvas.setBackgroundColor(value).renderAll()
 
     setBackgroundImage = e => {
         const { canvas } = this.props
@@ -113,14 +109,14 @@ class Background extends Component {
 
         return (
             <div>
-                <Icon onClick={this.toggleVisibility} name='delicious' />
+                <Icon onTouchEnd={this.toggleVisibility} name='delicious' />
                 <Sidebar as={Segment} animation='push' direction='bottom' visible={visible} style={{ overflowX: 'hidden' }}>
                     <Menu pointing secondary>
                         <Menu.Item header>
                             <h3>背景</h3>
                         </Menu.Item>
                         <Menu.Item position="right">
-                            <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
+                            <Icon onTouchEnd={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
                     <Header>背景色</Header>
@@ -138,21 +134,21 @@ class Background extends Component {
                     <Header>背景图</Header>
                     <Container style={{ overflowX: 'auto' }}>
                         <Image.Group style={{ width: 1000 }}>
-                            <Image floated="left" bordered height={60} src={white} onClick={this.removeBackgroundImage} />
+                            <Image floated="left" bordered height={60} src={white} onTouchEnd={this.removeBackgroundImage} />
                             {
                                 background.map(bg => (
-                                    <Image floated="left" bordered height={60} key={bg.key} src={bg.src} onClick={this.setBackgroundImage} />
+                                    <Image floated="left" bordered height={60} key={bg.key} src={bg.src} onTouchEnd={this.setBackgroundImage} />
                                 ))
                             }
                         </Image.Group>
                     </Container>
                     <Header>遮罩层</Header>
                     <Container style={{ overflowX: 'auto' }}>
-                        <Image floated="left" bordered height={60} src={white} onClick={this.removeOverlayImage} />
+                        <Image floated="left" bordered height={60} src={white} onTouchEnd={this.removeOverlayImage} />
                         <Image.Group style={{ width: 1000 }}>
                             {
                                 overlay.map(ol => (
-                                    <Image floated="left" bordered height={60} key={ol.key} src={ol.src} onClick={this.setOverlayImage} />
+                                    <Image floated="left" bordered height={60} key={ol.key} src={ol.src} onTouchEnd={this.setOverlayImage} />
                                 ))
                             }
                         </Image.Group>
@@ -165,7 +161,7 @@ class Background extends Component {
 
 export default Background
 
-{/* <Menu.Item onClick={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
+{/* <Menu.Item onTouchEnd={this.openInputColor} style={{ backgroundColor: styles.backgroundColors.violet }}>
 ...
 <input id="color" type="color" onChange={e => console.log(e.target.value)} style={{ position: 'absolute', bottom: '3000px' }} />
 </Menu.Item> */}

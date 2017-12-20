@@ -127,7 +127,7 @@ class Save extends Component {
 
         return (
             <div>
-                <Icon name="save" onClick={this.show(true)} />
+                <Icon name="save" onTouchEnd={this.show(true)} />
                 <Modal closeOnDimmerClick={false} dimmer={this.state.dimmer} open={this.state.open} onClose={this.close}>
                     <Modal.Header>保存完毕</Modal.Header>
                     <Modal.Content image>
@@ -140,7 +140,7 @@ class Save extends Component {
                     </Modal.Content>
                     <Modal.Actions>
                         <Link to={path}>
-                            <Button positive content="下一步" onClick={this.close} style={{ marginBottom: '10px' }} />
+                            <Button positive content="下一步" onTouchEnd={this.close} style={{ marginBottom: '10px' }} />
                         </Link>
                     </Modal.Actions>
                 </Modal>

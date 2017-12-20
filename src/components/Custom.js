@@ -1,5 +1,5 @@
 import React from 'react'
-import { fabric } from 'fabric'
+import { fabric } from 'fabric/dist/fabric.min'
 import 'fabric-customise-controls'
 import CustomControl from './CustomControl'
 import del from '../assets/images/control/handle_del.png'
@@ -89,7 +89,7 @@ class Custom extends React.Component {
         borderColor: 'black',
         cornerSize: 50,
         cornerShape: 'rect',
-        cornerPadding: 20
+        cornerPadding: 20,
       },
       tl: {
         icon: del

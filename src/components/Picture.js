@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Sidebar, Icon, Image, Popup, Table, Checkbox, Button, Segment, Menu, Dropdown, Grid } from 'semantic-ui-react'
-import { fabric } from 'fabric'
+import { fabric } from 'fabric/dist/fabric.min'
 // import eventProxy from '../eventProxy'
 import upload from '../assets/images/upload.png'
 import img0 from '../assets/images/picture/0.jpeg'
@@ -91,7 +91,7 @@ class Panel extends Component {
 const options1 = [
     {
         key: 'all',
-        text: '全部',
+        text: '所有图片',
         value: 'all',
     },
     {
@@ -110,7 +110,7 @@ const options1 = [
 const options2 = [
     {
         key: 'all',
-        text: '全部',
+        text: '所有类型',
         value: 'all',
     },
     {
@@ -240,17 +240,13 @@ class PanelO extends Component {
     render() {
         return (
             <div style={{ overflow: 'hidden' }}>
-                <Menu pointing secondary>
+                <Menu secondary>
                     <Menu.Item>
-                        <Button primary size="tiny" onClick={this.clickFileInput}>上传</Button>
+                        <Button primary size="tiny" onTouchEnd={this.clickFileInput}>上传</Button>
                         <input style={{ position: 'absolute', left: 1000, top: 0, opacity: 0 }} type="file" ref="file" accept="image/*" onChange={this.uploadImage} />
                     </Menu.Item>
-                    <Menu.Item>
-                        <Dropdown inline options={options1} defaultValue={options1[0].value} onChange={this.setOption1} />
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Dropdown inline options={options2} defaultValue={options2[0].value} onChange={this.setOption2} />
-                    </Menu.Item>
+                    <Dropdown item options={options1} defaultValue={options1[0].value} onChange={this.setOption1} />
+                    <Dropdown item options={options2} defaultValue={options2[0].value} onChange={this.setOption2} />
                 </Menu>
 
                 <div style={{ height: '250px', overflowX: 'hidden' }}>
@@ -259,7 +255,7 @@ class PanelO extends Component {
                             {
                                 this.state.currentPicture.map(p => (
                                     <Grid.Column key={p.key} style={{ marginTop: '10px' }}>
-                                        <Image bordered height={100} width={100} src={p.src} onClick={this.addImage} />
+                                        <Image bordered height={100} width={100} src={p.src} onTouchEnd={this.addImage} />
                                     </Grid.Column>
                                 ))
                             }
@@ -288,14 +284,14 @@ class Picture extends Component {
     render() {
         return (
             <div>
-                <Icon onClick={this.toggleVisibility} name='picture' />
+                <Icon onTouchEnd={this.toggleVisibility} name='picture' />
                 <Sidebar as={Segment} animation="push" direction='bottom' visible={this.state.visible}>
                     <Menu pointing secondary>
                         <Menu.Item header>
                             <h3>图片</h3>
                         </Menu.Item>
                         <Menu.Item position="right">
-                            <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
+                            <Icon onTouchEnd={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
                     {/* <Panel picture={this.state.picture} canvas={this.props.canvas} setClose={this.toggleVisibility} /> */}
