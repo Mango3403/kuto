@@ -46,14 +46,15 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
-    "fabric": "^1.7.20",
-    "fabric-customise-controls": "^0.3.5",
+    "fabric": "^2.0.0-rc.3",
+    "fabric-customise-controls": "^0.3.6",
     "fontfaceobserver": "^2.0.13",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "semantic-ui-css": "^2.2.12",
-    "semantic-ui-react": "^0.73.1"
+    "semantic-ui-react": "^0.73.1",
+    "uglifyjs-webpack-plugin": "^1.1.4"
   }
 }

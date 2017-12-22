@@ -24,7 +24,7 @@ class OverlayImageControl extends Component {
     setHeight = e => {
         const { canvas } = this.props;
 
-        canvas.overlayImage.height = parseInt(e.target.value);
+        canvas.overlayImage.scaleY = parseInt(e.target.value);
 
         canvas.renderAll();
     }
@@ -32,7 +32,7 @@ class OverlayImageControl extends Component {
     plusHeight = () => {
         const { canvas } = this.props;
 
-        canvas.overlayImage.height++;
+        canvas.overlayImage.scaleY += 0.01;
 
         canvas.renderAll();
     }
@@ -40,7 +40,7 @@ class OverlayImageControl extends Component {
     minusHeight = () => {
         const { canvas } = this.props;
 
-        canvas.overlayImage.height--;
+        canvas.overlayImage.scaleY -= 0.01;
 
         canvas.renderAll();
     }
@@ -48,7 +48,7 @@ class OverlayImageControl extends Component {
     setWidth = e => {
         const { canvas } = this.props;
 
-        canvas.overlayImage.width = parseInt(e.target.value);
+        canvas.overlayImage.scaleX = parseInt(e.target.value);
 
         canvas.renderAll();
     }
@@ -56,7 +56,7 @@ class OverlayImageControl extends Component {
     plusWidth = () => {
         const { canvas } = this.props;
 
-        canvas.overlayImage.width++;
+        canvas.overlayImage.scaleX += 0.01;
 
         canvas.renderAll();
     }
@@ -64,7 +64,7 @@ class OverlayImageControl extends Component {
     minusWidth = () => {
         const { canvas } = this.props;
 
-        canvas.overlayImage.width--;
+        canvas.overlayImage.scaleX -= 0.01;
 
         canvas.renderAll();
     }
@@ -150,7 +150,7 @@ class OverlayImageControl extends Component {
                             justifyContent: 'center'
                         }}
                     >
-                        <Form.Field control={Input} type="number" label="高度" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.height : 0} onChange={this.setHeight} />
+                        <Form.Field control={Input} type="number" label="高度" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.scaleY : 0} onChange={this.setHeight} />
                         <Button.Group>
                             <Button icon='plus' onTouchEnd={this.plusHeight} />
                             <Button icon='minus' onTouchEnd={this.minusHeight} />
@@ -164,7 +164,7 @@ class OverlayImageControl extends Component {
                             justifyContent: 'center'
                         }}
                     >
-                        <Form.Field control={Input} type="number" label="宽度" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.width : 0} onChange={this.setWidth} />
+                        <Form.Field control={Input} type="number" label="宽度" placeholder={(canvas && canvas.overlayImage) ? canvas.overlayImage.scaleX : 0} onChange={this.setWidth} />
                         <Button.Group>
                             <Button icon='plus' onTouchEnd={this.plusWidth} />
                             <Button icon='minus' onTouchEnd={this.minusWidth} />

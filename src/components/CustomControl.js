@@ -10,13 +10,14 @@ import EditPicture from './EditPicture'
 import EditLayer from './EditLayer'
 import OverlayImageControl from './OverlayImageControl'
 import Shape from './Shape'
+import EditShape from './EditShape'
 
 const styles = {
 	menu1: {
 		position: 'absolute',
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
-		left: (window.innerWidth - 10 - 250) / 2,
+		left: (window.innerWidth - 10 - 290) / 2,
 		top: '475px'
 	},
 	menu2: {
@@ -30,7 +31,7 @@ const styles = {
 		display: 'none',
 		// 56.53 224.63
 		// left: (window.innerWidth - 10 - 332) / 2,
-		right: (window.innerWidth - 10 - 250) / 2,
+		right: (window.innerWidth - 10 - 290) / 2,
 		top: '460px'
 	},
 	menuItem: { padding: '4px', fontSize: '2em' }
@@ -69,26 +70,22 @@ class CustomControl extends Component {
 		return (
 			<div>
 				<Menu icon style={styles.menu1} ref='menu1'>
+					<Shape canvas={canvas} />
 					<Menu.Item style={styles.menuItem}>
 						<Text canvas={canvas} />
 					</Menu.Item>
-
 					<Menu.Item style={styles.menuItem}>
 						<Picture canvas={canvas} />
 					</Menu.Item>
-
 					<Menu.Item style={styles.menuItem}>
 						<Background canvas={canvas} />
 					</Menu.Item>
-
 					<Menu.Item style={styles.menuItem}>
 						<Save canvas={canvas} />
 					</Menu.Item>
-
 					<Menu.Item style={styles.menuItem}>
 						<Clear canvas={canvas} />
 					</Menu.Item>
-
 					<Menu.Item style={styles.menuItem}>
 						<Icon style={{ transform: 'rotate(135deg)' }} link onTouchEnd={this.handleViewToggle} rotated='clockwise' name='long arrow up' />
 					</Menu.Item>
@@ -104,7 +101,9 @@ class CustomControl extends Component {
 					<Menu.Item style={styles.menuItem}>
 						<EditLayer canvas={canvas} />
 					</Menu.Item>
-					<Shape canvas={canvas} />
+					<Menu.Item style={styles.menuItem}>
+						<EditShape canvas={canvas} />
+					</Menu.Item>
 				</Menu>
 
 				<Menu icon style={styles.menu3} ref='menu3'>

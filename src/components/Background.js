@@ -45,9 +45,8 @@ const
     ];
 
 class Background extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {}
+    state = {
+        visible: false
     }
 
     setColor = (e, { value }) => this.props.canvas.setBackgroundColor(value).renderAll()
@@ -67,16 +66,12 @@ class Background extends Component {
     setOverlayImage = e => {
         const { canvas } = this.props;
 
-        fabric.Image.fromURL(e.target.src, function (img) {
-            img.set({
-                width: canvas.getWidth(),
-                height: canvas.getHeight(),
-                left: canvas.getWidth() / 2,
-                top: canvas.getHeight() / 2,
-            });
-
-            canvas.setOverlayImage(img, canvas.renderAll.bind(canvas));
+        canvas.setOverlayImage(e.target.src, canvas.renderAll.bind(canvas), {
+            scaleX: 0.5,
+            left: canvas.width / 2,
+            top: canvas.height / 2
         });
+        console.log(canvas);
     }
 
     openInputColor = () => {
@@ -104,7 +99,7 @@ class Background extends Component {
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
     render() {
-        const { visible, active } = this.state
+        const { visible } = this.state
         const { canvas } = this.props
 
         return (

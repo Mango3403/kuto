@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Sidebar, Icon, Image, Popup, Table, Checkbox, Button, Segment, Menu, Dropdown, Grid } from 'semantic-ui-react'
-import { fabric } from 'fabric/dist/fabric.min'
+import { fabric } from 'fabric/dist/fabric'
 // import eventProxy from '../eventProxy'
 import upload from '../assets/images/upload.png'
 import img0 from '../assets/images/picture/0.jpeg'

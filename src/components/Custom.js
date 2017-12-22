@@ -1,5 +1,5 @@
 import React from 'react'
-import { fabric } from 'fabric/dist/fabric.min'
+import { fabric } from 'fabric/dist/fabric'
 import 'fabric-customise-controls'
 import CustomControl from './CustomControl'
 import del from '../assets/images/control/handle_del.png'

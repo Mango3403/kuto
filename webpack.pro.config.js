@@ -3,6 +3,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin'); 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const env = process.env.NODE_ENV || 'production';
 
@@ -83,7 +84,8 @@ module.exports = {
         new ExtractTextPlugin({
             filename: 'css/[name].[contenthash].css'
         }),
-        new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
+        new UglifyJsPlugin(),
         new CopyWebpackPlugin([
             {
                 from: __dirname + '/src/assets',

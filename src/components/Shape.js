@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
-import { Icon, Dropdown, Radio, Label } from 'semantic-ui-react'
-import { fabric } from 'fabric/dist/fabric.min';
+import { Icon, Dropdown, Radio, Label, Image } from 'semantic-ui-react'
+import { fabric } from 'fabric/dist/fabric';
+import line from '../assets/images/control/line.png';
+import circle from '../assets/images/control/circle.png';
+import rect from '../assets/images/control/rect.png';
+import star from '../assets/images/control/star.png';
+import polygon from '../assets/images/control/polygon.png';
 
 class Shape extends Component {
   state = {
@@ -12,17 +17,19 @@ class Shape extends Component {
   }
 
   addLine = () => {
-    this.props.canvas.add(new fabric.Line([ 250, 105, 250, 205 ], {
+    let line = new fabric.Line([250, 105, 250, 205], {
       left: 200,
       top: 200,
       fill: '#ff0',
       stroke: '#ccc',
-      strokeWidth: 10
-    })).renderAll();
+      strokeWidth: 10,
+      lockUniScaling: this.state.lockUniScaling
+    })
+    this.props.canvas.add(line).setActiveObject(line).renderAll();
   }
 
   addCircle = () => {
-    this.props.canvas.add(new fabric.Circle({
+    let circle = new fabric.Circle({
       left: 200,
       top: 200,
       radius: 30,
@@ -30,7 +37,9 @@ class Shape extends Component {
       stroke: '#ccc',
       strokeWidth: 10,
       lockUniScaling: this.state.lockUniScaling
-    })).renderAll();
+    })
+    this.props.canvas.add(circle).setActiveObject(circle).renderAll();
+    console.log(circle.type);
   }
 
   addRect = () => {
@@ -120,18 +129,24 @@ class Shape extends Component {
 
   render() {
     return (
-      <Dropdown item icon={null} text="G" upward button pointing="top right" closeOnChange={false}>
+      <Dropdown item icon="cube" upward button pointing="top left" closeOnChange={false}>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={this.addLine}>直线</Dropdown.Item>
-          <Dropdown.Item onClick={this.addCircle}>圆形</Dropdown.Item>
-          <Dropdown.Item onClick={this.addRect}>矩形</Dropdown.Item>
+          <Dropdown.Item onClick={this.addLine}>
+            <Icon as={Image} src={line} />
+          </Dropdown.Item>
+          <Dropdown.Item onClick={this.addCircle}>
+            <Icon as={Image} src={circle} />
+          </Dropdown.Item>
+          <Dropdown.Item onClick={this.addRect}>
+            <Icon as={Image} src={rect} />
+          </Dropdown.Item>
           <Dropdown.Item onClick={this.addPolygon}>
             <Label>{this.state.sideCount}</Label>
-            多边形
+            <Icon as={Image} src={polygon} />
           </Dropdown.Item>
           <Dropdown.Item onClick={this.addStarPolygon}>
             <Label>{this.state.spikeCount}</Label>
-            星形
+            <Icon as={Image} src={star} />
           </Dropdown.Item>
           <Dropdown.Item onClick={this.drawingModeToggle}>
             {this.state.isDrawingMode ? '选择模式' : '绘制模式'}

@@ -1,32 +1,30 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { fabric } from 'fabric/dist/fabric.min'
+import { fabric } from 'fabric/dist/fabric'
 import { Sidebar, Icon, Segment, Popup, List, Menu, Radio, Form, Grid, Button } from 'semantic-ui-react'
 // import eventProxy from '../eventProxy'
 
 class EditPicture extends Component {
-
     state = {
         isOpen: false,
         visible: false,
         checked: false,
-        threshold: 0,
-        distance: 0
+        distance: 0.02
     }
 
-    componentDidMount() {
-        // eventProxy.on('openFilter', () => {
-        //     this.handleOpen()
-        // })
+    componentDidUpdate() {
+        if (this.state.visible) {
+            this.changeDistance();
+        }
     }
 
     handleOpen = () => {
         const { canvas } = this.props
 
-        if (!(canvas.getActiveObject() && canvas.getActiveObject().isType('image'))) {
-            this.setState({ isOpen: true })
-        } else {
+        if (canvas.getActiveObject() && canvas.getActiveObject().isType('image')) {
             this.toggleVisibility()
+        } else {
+            this.setState({ isOpen: true })
         }
     }
 
@@ -37,93 +35,47 @@ class EditPicture extends Component {
     handleClose = () => this.setState({ isOpen: false })
     toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
-    changeThresholdValue = e => {
-        this.setState({
-            threshold: parseInt(e.target.value),
-        })
-        console.log(`state.threshold: ${this.state.threshold}, e.target.value: ${e.target.value}`);
+    changeDistanceValue = e => {
+        this.setState({ distance: parseFloat(e.target.value) })
+        console.log(this.state.distance);
     }
 
-    handleThresholdAdd = e => this.setState({ threshold: this.state.threshold + 1 })
-    handleThresholdMinus = e => this.setState({ threshold: this.state.threshold - 1, })
-
-    changeDistanceValue = e => this.setState({
-        distance: parseInt(e.target.value)
-    })
-
-    handleDistanceAdd = e => this.setState({ distance: this.state.distance + 1 })
-    handleDistanceMinus = e => this.setState({ distance: this.state.distance - 1 })
-
-    changeThreshold = () => {
-        const { canvas } = this.props;
-        const
-            { threshold } = this.state,
-            obj = canvas.getActiveObject(),
-            distance = obj.filters[1].distance;
-
-        obj.clone(obj => {
-            obj.filters[1].threshold = threshold
-            obj.lockRotation = false
-            obj.hasBorders = true
-            obj.lockUniScaling = true
-            obj.centeredScaling = true
-
-            obj.setControlsVisibility({
-                mtr: false
-            })
-
-            canvas.remove(canvas.getActiveObject()).add(obj).setActiveObject(obj)
-        })
-
-    }
+    handleDistanceAdd = e => this.setState({ distance: this.state.distance + 0.01 })
+    handleDistanceMinus = e => this.setState({ distance: this.state.distance - 0.01 })
 
     changeDistance = e => {
         const { canvas } = this.props;
-        const
-            { distance } = this.state,
-            obj = canvas.getActiveObject(),
-            threshold = obj.filters[1].threshold;
+        const { distance } = this.state;
+        const obj = canvas.getActiveObject();
 
-        obj.clone(obj => {
-            obj.filters[1].distance = distance
-            obj.lockRotation = false
-            obj.hasBorders = true
-            obj.lockUniScaling = true
-            obj.centeredScaling = true
-
-            obj.setControlsVisibility({
-                mtr: false
-            })
-
-            canvas.remove(canvas.getActiveObject()).add(obj).setActiveObject(obj)
-        })
+        if (obj && obj.filters.length > 0) {
+            obj.filters[1].distance = distance.toFixed(2);
+            obj.applyFilters();
+            canvas.renderAll();
+        }
     }
 
     setGray = () => {
         const { canvas } = this.props;
         const picture = canvas.getActiveObject();
-
         if (!this.state.checked) {
             picture.filters[0] = new fabric.Image.filters.Grayscale()
-            picture.filters[1] = new fabric.Image.filters.RemoveWhite()
-            // picture.filters.push(new fabric.Image.filters.Tint({
-            //     color: color.silver
-            // }));
-
-            picture.applyFilters(canvas.renderAll.bind(canvas));
-
+            picture.filters[1] = new fabric.Image.filters.RemoveColor({
+                color: '#fff',
+                distance: 0
+            })
             this.setState({
-                threshold: picture.filters[1].threshold,
-                distance: picture.filters[1].distance,
+                distance: picture.filters[1].distance
             });
         } else {
             picture.filters = [];
-            picture.applyFilters(canvas.renderAll.bind(canvas));
         }
+        picture.applyFilters();
+        canvas.renderAll();
     }
 
     render() {
-        const { threshold, distance } = this.state;
+        const { distance } = this.state;
 
         return (
             <div>
@@ -143,7 +95,7 @@ class EditPicture extends Component {
                             <h3>编辑图片</h3>
                         </Menu.Item>
                         <Menu.Item position="right">
-                            <Icon onTouchEnd={this.toggleVisibility} name="close" bordered size="small" />
+                            <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
                         </Menu.Item>
                     </Menu>
                     <List>
@@ -154,42 +106,20 @@ class EditPicture extends Component {
                             <Grid columns={2}>
                                 <Grid.Column as={Form}>
                                     <Form.Input
-                                        label={`过滤像素值: ${threshold}`}
+                                        label={`过滤梯度值: ${distance.toFixed(2)}`}
                                         min={0}
-                                        max={200}
-                                        name='duration'
-                                        onChange={this.changeThresholdValue}
-                                        step={5}
-                                        type='range'
-                                        value={threshold}
-                                        disabled={!this.state.checked}
-                                        onMouseUp={this.changeThreshold}
-                                        onTouchEnd={this.changeThreshold}
-                                    />
-                                    <Button.Group>
-                                        <Button disabled={threshold === 0} icon='minus' onTouchEnd={this.handleThresholdMinus} onMouseUp={this.changeThreshold} />
-                                        <Button>{threshold}</Button>
-                                        <Button disabled={threshold === 200} icon='plus' onTouchEnd={this.handleThresholdAdd} onMouseUp={this.changeThreshold} />
-                                    </Button.Group>
-                                </Grid.Column>
-                                <Grid.Column as={Form}>
-                                    <Form.Input
-                                        label={`过滤梯度值: ${distance}`}
-                                        min={0}
-                                        max={200}
+                                        max={1}
                                         name='duration'
                                         onChange={this.changeDistanceValue}
-                                        step={5}
+                                        step={0.01}
                                         type='range'
-                                        value={distance}
+                                        value={distance.toFixed(2)}
                                         disabled={!this.state.checked}
-                                        onMouseUp={this.changeDistance}
-                                        onTouchEnd={this.changeDistance}
                                     />
                                     <Button.Group>
-                                        <Button disabled={distance === 0} icon='minus' onTouchEnd={this.handleDistanceMinus} onMouseUp={this.changeDistance} />
-                                        <Button>{distance}</Button>
-                                        <Button disabled={distance === 200} icon='plus' onTouchEnd={this.handleDistanceAdd} onMouseUp={this.changeDistance} />
+                                        <Button disabled={distance === 0} icon='minus' onClick={this.handleDistanceMinus} />
+                                        <Button>{distance.toFixed(2)}</Button>
+                                        <Button disabled={distance === 1} icon='plus' onClick={this.handleDistanceAdd} />
                                     </Button.Group>
                                 </Grid.Column>
                             </Grid>
