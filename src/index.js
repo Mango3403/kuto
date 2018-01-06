@@ -1,7 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+import ReactDOM from 'react-dom';
+import CustomRouter from './route/routes';
 
-const MOUNT_NODE = document.getElementById('root');
-
-render(<App />, MOUNT_NODE);
+ReactDOM.render(
+  <CustomRouter />,
+  document.getElementById('root'),
+);
