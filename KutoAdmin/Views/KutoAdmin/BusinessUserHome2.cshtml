@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "BusinessUserHome";
+}
+
+<h2>BusinessUserHome</h2>
+
+<form id="myForm" action="/KutoAdmin/BusinessUserHome" method="post">
+    <div>
+        <fieldset>
+
+            <p>
+                <label for="username">
+                    Username:
+                </label>
+                @Html.TextBox("BusinessUserID")
+                @Html.ValidationMessage("BusinessUserID")
+            </p>
+
+            <p>
+                <input type="submit" value="Log On" />
+            </p>
+
+        </fieldset>
+    </div>
+</form>

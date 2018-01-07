@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "InsertCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>InsertCustomer</h2>
+
+<form id="myForm" action="/KutoAdmin/InsertCustomer" method="post">
+    <div>
+        <fieldset>
+            name, string mobile, double LONG, double lat, string address
+            <p>
+                <label for="username">
+                    name:
+                </label>
+                @Html.TextBox("name")
+                @Html.ValidationMessage("name")
+            </p>
+            <p>
+                <label for="mobile">
+                    mobile:
+                </label>
+                @Html.TextBox("mobile")
+                @Html.ValidationMessage("mobile")
+            </p>
+            <p>
+                <label for="LONG">
+                    LONG:
+                </label>
+                @Html.TextBox("LONG")
+                @Html.ValidationMessage("LONG")
+            </p>
+            <p>
+                <label for="lat">
+                    lat:
+                </label>
+                @Html.TextBox("lat")
+                @Html.ValidationMessage("lat")
+            </p>
+            <p>
+                <label for="address">
+                    address:
+                </label>
+                @Html.TextBox("address")
+                @Html.ValidationMessage("address")
+            </p>
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+
+        </fieldset>
+    </div>
+</form>
