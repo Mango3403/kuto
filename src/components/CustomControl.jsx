@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import { Menu, Icon } from 'semantic-ui-react';
 import { fabric } from 'fabric/dist/fabric';
 import Image from './Image';
@@ -12,6 +13,9 @@ import EditImage from './EditImage';
 import EditShape from './EditShape';
 import DrawingMode from './DrawingMode';
 import Help from './Help';
+import EditLayer from './EditLayer';
+
+const WINDOW_WIDTH = window.innerWidth > 400 ? 400 : window.innerWidth - 10;
 
 const styles = {
   menu1: {
@@ -43,6 +47,7 @@ class CustomControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      help: false,
       view: true,
       isFill: false,
       fill: '#ff0',
@@ -50,19 +55,19 @@ class CustomControl extends Component {
       strokeWidth: 5,
       isDrawingMode: false,
       initialText: null,
-      textVisible: false,
-      imageVisible: false,
-      shapeVisible: false,
+      edittext: false,
+      editimage: false,
+      editshape: false,
     };
   }
 
   componentDidMount() {
-    const that = this;
+    const _this = this;
 
     fabric.Canvas.prototype.customiseControls({
       bl: {
         action(e, target) {
-          that.isType(target);
+          _this.isType(target);
         },
         cursor: 'pointer',
       },
@@ -97,6 +102,9 @@ class CustomControl extends Component {
     this.setState({ isFill: !this.state.isFill });
   }
 
+  /**
+   * 绘制\控制模式按钮
+   */
   drawingModeToggle = () => {
     const { canvas } = this.props;
     canvas.isDrawingMode = !canvas.isDrawingMode;
@@ -105,24 +113,22 @@ class CustomControl extends Component {
     });
   }
 
-  textToggleVisibility = () => {
+  /**
+   * 文本面板
+   */
+  textToggle = () => {
     const { canvas } = this.props;
     const text = canvas.getActiveObject();
     this.setState({
-      textVisible: !this.state.textVisible,
+      edittext: !this.state.edittext,
       initialText: text,
     });
   }
 
-  imageToggleVisibility = () => {
-    this.setState({ imageVisible: !this.state.imageVisible });
-  }
-
-  shapeToggleVisibility = () => {
-    this.setState({ shapeVisible: !this.state.shapeVisible });
-  }
-
-  handleViewToggle = () => {
+  /**
+   * 菜单
+   */
+  menuToggle = () => {
     const menu1 = ReactDOM.findDOMNode(this.refs.menu1);
     const menu2 = ReactDOM.findDOMNode(this.refs.menu2);
     const menu3 = ReactDOM.findDOMNode(this.refs.menu3);
@@ -143,13 +149,16 @@ class CustomControl extends Component {
     });
   }
 
+  /**
+   * 判断画布对象的类型：文本、图片、图形
+   */
   isType = (target) => {
     if (target.type === 'text') {
-      this.textToggleVisibility();
+      this.textToggle();
     } else if (target.type === 'image') {
-      this.imageToggleVisibility();
+      this.editImageToggle();
     } else {
-      this.shapeToggleVisibility();
+      this.editShapeToggle();
     }
   }
 
@@ -171,23 +180,48 @@ class CustomControl extends Component {
     this.setState({ strokeWidth: value });
   }
 
+  /**
+   * 帮助按钮
+   */
+  helpToggle = () => this.setState({ help: !this.state.help })
+
+  /**
+   * 编辑图形面板
+   */
+  openEditShape = () => this.setState({ editshape: true })
+  closeEditShape = () => this.setState({ editshape: false })
+  editShapeToggle = () => this.setState({ editshape: !this.state.editshape })
+
+  /**
+   * 编辑图片面板
+   */
+  openEditImage = () => this.setState({ editimage: true })
+  closeEditImage = () => this.setState({ editimage: false })
+  editImageToggle = () => this.setState({ editimage: !this.state.editimage })
+
   render() {
     const { canvas } = this.props;
 
     return (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {
+          this.state.help ?
+            <Help />
+            :
+            null
+        }
         <Menu icon style={styles.menu1} ref="menu1">
-          <Shape canvas={canvas} isFill={this.state.isFill} />
+          <Shape canvas={canvas} openEditShape={this.openEditShape} isFill={this.state.isFill} />
           <Menu.Item style={styles.menuItem}>
             <Text
               canvas={canvas}
-              textVisible={this.state.textVisible}
+              textVisible={this.state.edittext}
               initialText={this.state.initialText}
-              textToggleVisibility={this.textToggleVisibility}
+              textToggleVisibility={this.textToggle}
             />
           </Menu.Item>
           <Menu.Item style={styles.menuItem}>
-            <Image canvas={canvas} />
+            <Image canvas={canvas} openEditImage={this.openEditImage} />
           </Menu.Item>
           <Menu.Item style={styles.menuItem}>
             <Background canvas={canvas} />
@@ -199,19 +233,19 @@ class CustomControl extends Component {
             <Clear canvas={canvas} />
           </Menu.Item>
           <Menu.Item style={styles.menuItem}>
-            <Icon style={{ transform: 'rotate(135deg)' }} link onTouchEnd={this.handleViewToggle} rotated="clockwise" name="long arrow up" />
+            <Icon style={{ transform: 'rotate(135deg)' }} link onClick={this.menuToggle} rotated="clockwise" name="long arrow up" />
           </Menu.Item>
         </Menu>
 
         <EditImage
           canvas={canvas}
-          imageVisible={this.state.imageVisible}
-          imageToggleVisibility={this.imageToggleVisibility}
+          editimage={this.state.editimage}
+          closeEditImage={this.closeEditImage}
         />
         <EditShape
           canvas={canvas}
-          shapeVisibility={this.state.shapeVisible}
-          shapeToggleVisibility={this.shapeToggleVisibility}
+          editshape={this.state.editshape}
+          closeEditShape={this.closeEditShape}
           fill={this.state.fill}
           isFill={this.state.isFill}
           fillToggle={this.fillToggle}
@@ -230,19 +264,35 @@ class CustomControl extends Component {
               drawingModeToggle={this.drawingModeToggle}
             />
           </Menu.Item>
-          <Menu.Item style={styles.menuItem}>
-            <Help />
+          <Menu.Item style={styles.menuItem} onClick={this.helpToggle}>
+            <Icon name="help" />
           </Menu.Item>
+          {
+            this.props.visible ?
+              <Menu.Item style={styles.menuItem}>
+                <EditLayer canvas={canvas} />
+              </Menu.Item>
+              :
+              null
+          }
         </Menu>
 
         <Menu icon style={styles.menu3} ref="menu3">
           <Menu.Item style={styles.menuItem}>
-            <Icon style={{ transform: 'rotate(-45deg)' }} link onTouchEnd={this.handleViewToggle} rotated="clockwise" name="long arrow up" />
+            <Icon style={{ transform: 'rotate(-45deg)' }} link onClick={this.menuToggle} rotated="clockwise" name="long arrow up" />
           </Menu.Item>
         </Menu>
-      </div>
+      </div >
     );
   }
 }
+
+CustomControl.defaultProps = {
+  visible: false,
+};
+
+CustomControl.propTypes = {
+  visible: PropTypes.bool,
+};
 
 export default CustomControl;

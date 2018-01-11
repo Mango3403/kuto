@@ -59,8 +59,8 @@ class EditShape extends Component {
   render() {
     const {
       strokeWidth,
-      shapeToggleVisibility,
-      shapeVisibility,
+      closeEditShape,
+      editshape,
       strokeWidthMinus,
       strokeWidthPlus,
       fillToggle,
@@ -90,14 +90,14 @@ class EditShape extends Component {
         },
         popover1: {
           position: 'absolute',
-          top: '370px',
-          right: '30px',
+          top: '210px',
+          right: '50px',
           zIndex: '110',
         },
         popover2: {
           position: 'absolute',
-          top: '310px',
-          right: '30px',
+          top: '160px',
+          right: '50px',
           zIndex: '110',
         },
         cover: {
@@ -112,13 +112,13 @@ class EditShape extends Component {
 
     return (
       <div>
-        <Sidebar as={Segment} animation="push" direction="bottom" visible={shapeVisibility}>
+        <Sidebar as={Segment} animation="push" direction="bottom" visible={editshape}>
           <Menu pointing secondary>
             <Menu.Item header>
               <h3>图形</h3>
             </Menu.Item>
             <Menu.Item position="right">
-              <Icon onClick={shapeToggleVisibility} name="close" bordered size="small" />
+              <Icon onClick={closeEditShape} name="close" bordered size="small" />
             </Menu.Item>
           </Menu>
           <Form style={{ padding: '5px' }}>

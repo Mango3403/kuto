@@ -26,17 +26,17 @@ class Image extends Component {
 
     return (
       <div>
-        <Icon onTouchEnd={this.toggleVisibility} name="image" />
+        <Icon onClick={this.toggleVisibility} name="image" />
         <Sidebar as={Segment} animation="push" direction="bottom" visible={this.state.visible}>
           <Menu pointing secondary>
             <Menu.Item header>
               <h3>图片</h3>
             </Menu.Item>
             <Menu.Item position="right">
-              <Icon onTouchEnd={this.toggleVisibility} name="close" bordered size="small" />
+              <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
             </Menu.Item>
           </Menu>
-          <Panel canvas={canvas} image={this.state.image} />
+          <Panel canvas={canvas} image={this.state.image} openEditImage={this.props.openEditImage} />
         </Sidebar>
       </div>
     );

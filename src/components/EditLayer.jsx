@@ -2,6 +2,16 @@ import React from 'react';
 import { Icon, Sidebar, Segment, Popup, Image, Menu } from 'semantic-ui-react';
 import order from '../static/images/control/order.png';
 
+const styles = {
+  iconImage: {
+    width: '1.3em',
+  },
+  menuItem: {
+    paddingRight: '5px',
+    paddingLeft: '5px',
+  },
+};
+
 class EditLayer extends React.Component {
   constructor() {
     super();
@@ -54,7 +64,7 @@ class EditLayer extends React.Component {
       <div>
         <Popup
           trigger={
-            <Icon as={Image} style={{ width: '1.3em' }} src={order} />
+            <Icon as={Image} style={styles.iconImage} src={order} />
           }
           on="click"
           open={this.state.isOpen}
@@ -68,19 +78,19 @@ class EditLayer extends React.Component {
               <h3>编辑图层</h3>
             </Menu.Item>
             <Menu.Item position="right">
-              <Icon onTouchEnd={this.toggleVisibility} name="close" bordered />
+              <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
             </Menu.Item>
           </Menu>
-          <Menu compact>
-            <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="置顶" onTouchEnd={this.bringToFront} />
+          <Menu compact style={{ marginTop: '10px' }}>
+            <Menu.Item style={styles.menuItem} fitted="horizontally" name="置顶" onTouchEnd={this.bringToFront} />
 
-            <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="向上一层" onTouchEnd={this.bringForward} />
+            <Menu.Item style={styles.menuItem} fitted="horizontally" name="向上一层" onTouchEnd={this.bringForward} />
 
-            <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="向下一层" onTouchEnd={this.sendBackwards} />
+            <Menu.Item style={styles.menuItem} fitted="horizontally" name="向下一层" onTouchEnd={this.sendBackwards} />
 
-            <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="置底" onTouchEnd={this.sendToBack} />
+            <Menu.Item style={styles.menuItem} fitted="horizontally" name="置底" onTouchEnd={this.sendToBack} />
 
-            <Menu.Item style={{ paddingRight: '5px', paddingLeft: '5px' }} fitted="horizontally" name="中心对齐" onTouchEnd={this.center} />
+            <Menu.Item style={styles.menuItem} fitted="horizontally" name="中心对齐" onTouchEnd={this.center} />
           </Menu>
         </Sidebar>
       </div>

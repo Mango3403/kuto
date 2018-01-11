@@ -126,7 +126,7 @@ class Text extends Component {
         },
         popover: {
           position: 'absolute',
-          top: '-160px',
+          top: '-250px',
           zIndex: '110',
         },
         cover: {
@@ -135,6 +135,9 @@ class Text extends Component {
           right: '0px',
           bottom: '0px',
           left: '0px',
+        },
+        iconClose: {
+          width: '2em',
         },
       },
     });
@@ -148,7 +151,7 @@ class Text extends Component {
               <h3>文字</h3>
             </Menu.Item>
             <Menu.Item position="right">
-              <Icon onClick={textToggleVisibility} name="close" bordered size="small" />
+              <Icon onClick={textToggleVisibility} name="close" bordered size="small" style={styles.iconClose} />
             </Menu.Item>
           </Menu>
           <Form style={{ padding: '5px', textAlign: 'center' }}>

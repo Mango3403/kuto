@@ -13,8 +13,8 @@ class EditImage extends Component {
   }
 
   componentDidUpdate() {
-    const { imageVisible } = this.props;
-    if (imageVisible) {
+    const { editimage } = this.props;
+    if (editimage) {
       this.changeDistance();
     }
   }
@@ -60,18 +60,18 @@ class EditImage extends Component {
   }
 
   render() {
-    const { imageVisible, imageToggleVisibility } = this.props;
+    const { editimage, closeEditImage } = this.props;
     const { distance } = this.state;
 
     return (
       <div>
-        <Sidebar as={Segment} animation="push" direction="bottom" visible={imageVisible}>
+        <Sidebar as={Segment} animation="push" direction="bottom" visible={editimage}>
           <Menu pointing secondary>
             <Menu.Item header>
               <h3>编辑图片</h3>
             </Menu.Item>
             <Menu.Item position="right">
-              <Icon onClick={imageToggleVisibility} name="close" bordered size="small" />
+              <Icon onClick={closeEditImage} name="close" bordered size="small" />
             </Menu.Item>
           </Menu>
           <List style={{ marginTop: '10px' }}>

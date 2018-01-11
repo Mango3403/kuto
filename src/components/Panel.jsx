@@ -72,7 +72,7 @@ class Panel extends Component {
   }
 
   addImage = (e) => {
-    const { canvas } = this.props;
+    const { canvas, openEditImage } = this.props;
     // 发布 openFilter 事件，由 EditImage 组件接收
     // setTimeout(() => eventProxy.trigger('openFilter'), 300)
     fabric.Image.fromURL(e.target.src, (img) => {
@@ -85,6 +85,8 @@ class Panel extends Component {
         .add(img)
         .setActiveObject(img);
     });
+
+    openEditImage();
   }
 
   setOption1 = (e, { value }) => {
@@ -168,7 +170,7 @@ class Panel extends Component {
       <div style={{ overflow: 'hidden' }}>
         <Menu secondary>
           <Menu.Item>
-            <Button primary size="tiny" onTouchEnd={this.clickFileInput}>上传</Button>
+            <Button primary size="tiny" onClick={this.clickFileInput}>上传</Button>
             <input style={styles.inputFileButton} type="file" ref="file" accept="image/*" onChange={this.uploadImage} />
           </Menu.Item>
           <Dropdown
@@ -196,7 +198,7 @@ class Panel extends Component {
                       height={100}
                       width={100}
                       src={p.src}
-                      onTouchEnd={this.addImage}
+                      onClick={this.addImage}
                     />
                   </Grid.Column>
                 ))

@@ -66,7 +66,7 @@ class Save extends Component {
     });
   }
 
-  close = () => {
+  save = () => {
     const { checked } = this.state;
 
     if (checked) {
@@ -75,8 +75,10 @@ class Save extends Component {
       window.onbeforeunload = null;
     }
 
-    this.setState({ open: false });
+    this.close();
   }
+
+  close = () => this.setState({ open: false })
 
   saveImage = () => {
     const { canvas } = this.props;
@@ -135,13 +137,13 @@ class Save extends Component {
           <Modal.Content image>
             <Image wrapped size="small" bordered src={this.state.saveImages.src} />
             <Modal.Description>
-              微信用户, 按住图片3秒, 可保存到本地 <br />
               <Checkbox label="保存图片到本地?" onChange={this.toggle} checked={this.state.checked} />
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
+            <Button content="取消" color="black" onClick={this.close} />
             <Link to={path}>
-              <Button positive content="下一步" onTouchEnd={this.close} style={{ marginBottom: '10px' }} />
+              <Button positive content="下一步" onClick={this.save} style={{ marginBottom: '10px' }} />
             </Link>
           </Modal.Actions>
         </Modal>

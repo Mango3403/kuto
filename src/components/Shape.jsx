@@ -10,16 +10,21 @@ import pentagram from '../static/images/control/pentagram.png';
 import hexagon from '../static/images/control/hexagon.png';
 
 class Shape extends Component {
+  constructor(props) {
+    super(props);
+    
+  }
+
   addLine = () => {
     const line = new fabric.Line([105, 250, 205, 250], {
       left: 200,
       top: 200,
       fill: this.props.isFill ? '#ff0' : null,
       stroke: '#ccc',
-      strokeWidth: 5,
-      padding: 15,
+      strokeWidth: 1,
     });
     this.props.canvas.add(line).setActiveObject(line).renderAll();
+    this.props.openEditShape();
   }
 
   addCircle = () => {
@@ -32,6 +37,7 @@ class Shape extends Component {
       strokeWidth: 5,
     });
     this.props.canvas.add(circle).setActiveObject(circle).renderAll();
+    this.props.openEditShape();
   }
 
   addTriangle = () => {
@@ -45,6 +51,7 @@ class Shape extends Component {
       strokeWidth: 5,
     });
     this.props.canvas.add(triangle).setActiveObject(triangle).renderAll();
+    this.props.openEditShape();
   }
 
   addRect = () => {
@@ -58,6 +65,7 @@ class Shape extends Component {
       strokeWidth: 5,
     });
     this.props.canvas.add(rect).setActiveObject(rect).renderAll();
+    this.props.openEditShape();
   }
 
   regularPolygonPoints = (sideCount, radius) => {
@@ -83,6 +91,7 @@ class Shape extends Component {
       strokeWidth: 5,
     });
     this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
+    this.props.openEditShape();
   }
 
   addHexagon = () => {
@@ -95,6 +104,7 @@ class Shape extends Component {
       strokeWidth: 5,
     });
     this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
+    this.props.openEditShape();
   }
 
   starPolygonPoints = (spikeCount, outerRadius, innerRadius) => {
@@ -128,6 +138,7 @@ class Shape extends Component {
       strokeWidth: 5,
     });
     this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
+    this.props.openEditShape();
   }
 
   render() {

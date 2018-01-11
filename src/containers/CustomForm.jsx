@@ -102,9 +102,6 @@ class CustomForm extends Component {
       <Container text>
         <Header as="h2">表单信息</Header>
         <Form warning onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <Form.Input label="打印部 ID" name="id" value="123***456" disabled />
-          </Form.Field>
           <Form.Field required>
             <span>手机号</span>
             <Form.Input placeholder="" name="mobile" required onChange={this.handleChange} />
@@ -132,3 +129,9 @@ class CustomForm extends Component {
 }
 
 export default CustomForm;
+
+{ /*
+  <Form.Field>
+    <Form.Input label="打印部 ID" name="id" value="123***456" disabled />
+  </Form.Field>
+*/ }

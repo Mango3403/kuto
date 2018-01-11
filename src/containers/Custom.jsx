@@ -38,6 +38,19 @@ const styles = {
     left: 'calc(100% / 2 - 10px)',
     zIndex: '1',
   },
+  canvasWrapper: {
+    margin: '0 auto',
+    width: WINDOW_WIDTH,
+    height: '100vh',
+  },
+  ruler: {
+    width: WINDOW_WIDTH,
+    height: '500px',
+  },
+  canvas: {
+    userSelect: 'none',
+    border: '0.1px dotted #ccc',
+  },
 };
 
 const Sign = () => (
@@ -52,6 +65,7 @@ class Custom extends React.Component {
     super();
     this.state = {
       canvas: null,
+      visible: false,
     };
   }
 
@@ -123,6 +137,7 @@ class Custom extends React.Component {
       mtr: false,
     });
 
+    fabric.Object.prototype.padding = 20;
     fabric.Object.prototype.centeredScaling = true;
     fabric.Object.prototype.originX = 'center';
     fabric.Object.prototype.originY = 'center';
@@ -172,14 +187,25 @@ class Custom extends React.Component {
   }
 
   init() {
-    const canvas = new fabric.Canvas('c', {
+    const canvas = new fabric.Canvas('canvas', {
       preserveObjectStacking: true,
       selection: false,
       stopContextMenu: true,
       width: WINDOW_WIDTH,
       height: 500,
     });
-    window.c = canvas;
+
+    canvas.on('selection:created', () => {
+      this.setState({
+        visible: true,
+      });
+    });
+
+    canvas.on('selection:cleared', () => {
+      this.setState({
+        visible: false,
+      });
+    });
 
     document.getElementsByClassName('canvas-wrapper').item(0).setAttribute('clientWidth', canvas.getWidth());
 
@@ -202,11 +228,13 @@ class Custom extends React.Component {
 
   render() {
     return (
-      <div className="canvas-wrapper" style={{ margin: '0 auto', width: WINDOW_WIDTH, height: '100vh' }}>
+      <div className="canvas-wrapper" style={styles.canvasWrapper}>
         <Sign />
-        <div id="r" style={{ position: 'absolute', width: WINDOW_WIDTH, height: '500px' }} />
-        <canvas id="c" style={{ userSelect: 'none', border: '0.1px dotted #ccc' }}>你的浏览器不支持画布功能，尝试更换浏览器</canvas>
-        <CustomControl canvas={this.state.canvas} />
+        <div id="ruler" style={styles.ruler} />
+        <canvas id="canvas" style={styles.canvas}>
+          你的浏览器不支持画布功能，尝试更换浏览器
+        </canvas>
+        <CustomControl canvas={this.state.canvas} visible={this.state.visible} />
       </div>
     );
   }

@@ -20,7 +20,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <title>React App</title>
+  <title>激光打印定制 - KuTo.Shop</title>
   <link href='http://cdn.webfont.youziku.com/webfonts/nomal/105162/45803/5a33664af629d909a013452c.css' rel='stylesheet' type='text/css'
   />
   <link href='http://cdn.webfont.youziku.com/webfonts/nomal/105162/46010/5a336aaef629d909a0134532.css' rel='stylesheet' type='text/css'
@@ -52,14 +52,14 @@
   <script>
     // // 标尺
     window.onload = function () {
-      if (window.r) {
+      if (window.ruler) {
         const rul1 = new ruler({
-          container: document.getElementById('r'),
+          container: document.getElementById('ruler'),
         });
         rul1.api.setScale(0.02);
         rul1.api.setPos({
-          x: (c.width / 2) - 16,
-          y: (c.height / 2) - 16,
+          x: (600 / 2) - 16,
+          y: (600 / 2) - 16,
         });
       }
     }
