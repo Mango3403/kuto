@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Link,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Checkbox, Modal, Icon, Button, Image } from 'semantic-ui-react';
 
 class Save extends Component {
@@ -100,14 +98,10 @@ class Save extends Component {
         top: this.state.valTop,
         height: this.state.valHeight,
         width: this.state.valWidth,
-      });
+      }, 0.5);
     }
 
-    this.setState({
-      saveImages: {
-        src: dataurl,
-      },
-    });
+    this.setState({ saveImages: { src: dataurl, }, });
   }
 
   download() {
@@ -126,7 +120,7 @@ class Save extends Component {
 
     return (
       <div>
-        <Icon name="save" onTouchEnd={this.show(true)} />
+        <Icon name="save" onClick={this.show(true)} />
         <Modal
           closeOnDimmerClick={false}
           dimmer={this.state.dimmer}

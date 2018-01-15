@@ -1,25 +1,14 @@
 import React, { Component } from 'react';
 import { Popup, Icon } from 'semantic-ui-react';
 
-export default class DrawingMode extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDrawingMode: props.isDrawingMode,
-    };
-  }
+const DrawingMode = (props) => (
+  <Popup
+    trigger={
+      <Icon name="pencil" onClick={props.drawingModeToggle} />
+    }
+    on="click"
+    content={props.isDrawingMode ? '控制模式' : '绘制模式'}
+  />
+);
 
-  render() {
-    const { drawingModeToggle } = this.props;
-
-    return (
-      <Popup
-        trigger={
-          <Icon name="pencil" onClick={drawingModeToggle} />
-        }
-        on="click"
-        content={`切换至${this.state.isDrawingMode}` ? '绘制模式' : '控制模式'}
-      />
-    );
-  }
-}
+export default DrawingMode;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Sidebar, Icon, Segment, Menu, Form } from 'semantic-ui-react';
 import { fabric } from 'fabric/dist/fabric';
-import 'fabric-customise-controls';
 import reactCSS from 'reactcss';
 import { ChromePicker } from 'react-color';
 
@@ -17,7 +16,7 @@ class Text extends Component {
   constructor() {
     super();
     this.state = {
-      text: '你的内容',
+      text: undefined,
       displayColorPicker: false,
       color: {
         r: '241',
@@ -34,23 +33,36 @@ class Text extends Component {
     field1.style.width = 'calc(100% - 42px)';
     field2.style.paddingRight = '0';
     field2.style.height = '38px';
+    this.createText();
   }
 
-  // componentDidUpdate() {
-  //     if (this.props.canvas) {
-  //         let text = this.props.canvas.getActiveObject();
-  //         this.init(text);
-  //     }
-  // }
+  createText = () => {
+    const text = new fabric.Text('你的内容', {
+      fontSize: 40,
+      fill: '#D6D8EA', // 银色
+      fontFamily: 'Arial', // 默认字体
+    });
+
+    this.setState({ text });
+  }
+
+  addText = () => {
+    const { canvas, openEditText } = this.props;
+    const { text } = this.state;
+
+    canvas.viewportCenterObject(text).add(text).setActiveObject(text).renderAll();
+
+    this.setState({ text });
+
+    openEditText();
+  }
 
   setText = ({ target: { value } }) => {
     const { canvas } = this.props;
     const { text } = this.state;
-    const newText = text ? text.set('text', value) : canvas.getActiveObject();
+    text.set('text', value);
     canvas.renderAll();
-    this.setState({
-      text: newText,
-    });
+    this.setState({ text });
   }
 
   setFill = (color) => {
@@ -69,36 +81,8 @@ class Text extends Component {
     this.setState({ text });
   }
 
-  addText = () => {
-    const { canvas } = this.props;
-
-    const text = new fabric.Text('你的内容', {
-      fontSize: 40,
-      fill: '#D6D8EA', // 银色
-      fontFamily: 'Arial', // 默认字体
-    });
-
-    this.init(text);
-
-    canvas.viewportCenterObject(text).add(text).setActiveObject(text);
-  }
-
-  init = (text) => {
-    const that = this;
-    text.on('selected', () => {
-      that.setState({ text });
-    });
-  }
-
-  handleClick = () => {
-    this.setState({
-      displayColorPicker: !this.state.displayColorPicker,
-    });
-  }
-
-  handleClose = () => {
-    this.setState({ displayColorPicker: false });
-  }
+  handleOpen = () => this.setState({ displayColorPicker: true })
+  handleClose = () => this.setState({ displayColorPicker: false })
 
   handleChange = (color) => {
     this.setState({ color: color.rgb });
@@ -106,7 +90,7 @@ class Text extends Component {
   }
 
   render() {
-    const { textToggleVisibility, textVisible } = this.props;
+    const { closeEditText, edittext } = this.props;
     const { text } = this.state;
     const styles = reactCSS({
       default: {
@@ -145,13 +129,13 @@ class Text extends Component {
     return (
       <div>
         <Icon onClick={this.addText} name="font" />
-        <Sidebar as={Segment} animation="push" direction="bottom" visible={textVisible}>
+        <Sidebar as={Segment} animation="push" direction="bottom" visible={edittext}>
           <Menu pointing secondary>
             <Menu.Item header>
               <h3>文字</h3>
             </Menu.Item>
             <Menu.Item position="right">
-              <Icon onClick={textToggleVisibility} name="close" bordered size="small" style={styles.iconClose} />
+              <Icon onClick={closeEditText} name="close" bordered size="small" style={styles.iconClose} />
             </Menu.Item>
           </Menu>
           <Form style={{ padding: '5px', textAlign: 'center' }}>
@@ -159,7 +143,7 @@ class Text extends Component {
             <Form.Input value={text ? text.text : '你的内容'} onChange={this.setText} onFocus={this.setText} />
             <Form.Group inline style={{ margin: 0 }}>
               <Form.Select selection options={fontFamily} pointing="bottom" defaultValue={text ? text.fontFamily : fontFamily[0].value} onChange={this.setFontFamily} style={{ width: '100%' }} />
-              <div style={styles.swatch} onKeyPress={this.handleClick} onClick={this.handleClick}>
+              <div style={styles.swatch} onKeyPress={this.handleOpen} onClick={this.handleOpen}>
                 <div style={styles.color} />
               </div>
             </Form.Group>

@@ -20,6 +20,7 @@ class Image extends Component {
   }
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
+  closeVisibility = () => this.setState({ visible: false })
 
   render() {
     const { canvas } = this.props;
@@ -36,7 +37,12 @@ class Image extends Component {
               <Icon onClick={this.toggleVisibility} name="close" bordered size="small" />
             </Menu.Item>
           </Menu>
-          <Panel canvas={canvas} image={this.state.image} openEditImage={this.props.openEditImage} />
+          <Panel
+            canvas={canvas}
+            image={this.state.image}
+            openEditImage={this.props.openEditImage}
+            closeVisibility={this.closeVisibility}
+          />
         </Sidebar>
       </div>
     );

@@ -7,7 +7,8 @@ const styles = {
   help: {
     position: 'absolute',
     width: WINDOW_WIDTH,
-    bottom: '50px',
+    bottom: '45px',
+    left: '0'
   },
   p: {
     writingMode: 'vertical-lr',

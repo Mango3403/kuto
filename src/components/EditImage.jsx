@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric/dist/fabric';
-import { Sidebar, Icon, Segment, List, Menu, Radio, Form, Button } from 'semantic-ui-react';
+import { Sidebar, Icon, Segment, List, Menu, Radio, Form, Input, Button } from 'semantic-ui-react';
 // import eventProxy from '../eventProxy'
 
 class EditImage extends Component {
@@ -10,6 +10,11 @@ class EditImage extends Component {
       checked: false,
       distance: 0.00,
     };
+  }
+
+  componentDidMount() {
+    const field1 = document.getElementsByClassName('field').item(1);
+    field1.style.height = '23px';
   }
 
   componentDidUpdate() {
@@ -81,11 +86,10 @@ class EditImage extends Component {
             <List.Item disabled={!this.state.checked}>
               <Form>
                 <p>过滤梯度值: {distance.toFixed(2)}</p>
-                <Button.Group style={{ width: '100%' }}>
+                <Button.Group size="small" style={{ width: '100%' }}>
                   <Button disabled={distance === 0} icon="minus" onClick={this.handleDistanceMinus} />
                   <Button>
-                    <Form.Input
-                      className="slider"
+                    <Input
                       min={0}
                       max={1}
                       name="duration"
@@ -94,6 +98,7 @@ class EditImage extends Component {
                       type="range"
                       value={distance.toFixed(2)}
                       disabled={!this.state.checked}
+                      size="big"
                     />
                   </Button>
                   <Button disabled={distance === 1} icon="plus" onClick={this.handleDistancePlus} />

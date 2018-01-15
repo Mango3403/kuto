@@ -17,8 +17,8 @@ class CustomForm extends Component {
   }
 
   componentDidMount() {
-    // const dataurl = window.history.state.state.dataurl;
-    // this.setState({ dataurl });
+    const dataurl = window.history.state.state.dataurl;
+    this.setState({ dataurl });
   }
 
   handleChange = (e, { name, value }) => {
@@ -64,12 +64,13 @@ class CustomForm extends Component {
 
   // 将dataURL转化为blob类型
   dataURLtoBlob = (dataurl) => {
-    const arr = dataurl.split(',');
-    const mime = arr[0].match(/:(.*?)/)[1];
-    const bstr = atob(arr[1]);
-    const n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n - 1 > 0) {
+    let 
+      arr = dataurl.split(','), 
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), 
+      n = bstr.length, 
+      u8arr = new Uint8Array(n);
+    while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
     return new Blob([u8arr], { type: mime });
@@ -114,11 +115,11 @@ class CustomForm extends Component {
           />
           <Form.Field>
             <span>姓名</span>
-            <Form.Input placeholder="" name="name" required onChange={this.handleChange} />
+            <Form.Input placeholder="" name="name" onChange={this.handleChange} />
           </Form.Field>
           <Form.Field>
             <span>地址</span>
-            <Form.Input placeholder="" name="address" required onChange={this.handleChange} />
+            <Form.Input placeholder="" name="address" onChange={this.handleChange} />
           </Form.Field>
           <Form.Button content="提交" />
           <Link id="link" to="/help" />

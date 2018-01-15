@@ -72,7 +72,7 @@ class Panel extends Component {
   }
 
   addImage = (e) => {
-    const { canvas, openEditImage } = this.props;
+    const { canvas, openEditImage, closeVisibility } = this.props;
     // 发布 openFilter 事件，由 EditImage 组件接收
     // setTimeout(() => eventProxy.trigger('openFilter'), 300)
     fabric.Image.fromURL(e.target.src, (img) => {
@@ -87,6 +87,7 @@ class Panel extends Component {
     });
 
     openEditImage();
+    closeVisibility();
   }
 
   setOption1 = (e, { value }) => {

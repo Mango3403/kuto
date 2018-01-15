@@ -19,21 +19,20 @@ const WINDOW_WIDTH = window.innerWidth > 400 ? 400 : window.innerWidth - 10;
 
 const styles = {
   menu1: {
-    margin: 0,
+    margin: '0',
     position: 'relative',
     top: '-41px',
   },
   menu2: {
-    margin: 0,
+    margin: '0',
     position: 'absolute',
     right: '5px',
     // 56.53 224.63
     top: '240px',
   },
   menu3: {
-    margin: 0,
+    margin: '0',
     position: 'relative',
-    display: 'none',
     left: '130px',
     top: '-41px',
   },
@@ -47,17 +46,16 @@ class CustomControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      help: false,
-      view: true,
       isFill: false,
       fill: '#ff0',
       stroke: '#ccc',
       strokeWidth: 5,
-      isDrawingMode: false,
-      initialText: null,
+      isDrawingMode: true,
       edittext: false,
       editimage: false,
       editshape: false,
+      menu: true,
+      help: false,
     };
   }
 
@@ -72,6 +70,34 @@ class CustomControl extends Component {
         cursor: 'pointer',
       },
     });
+  }
+
+  /**
+   * 绘制\控制模式按钮
+   */
+  drawingModeToggle = () => {
+    const { canvas } = this.props;
+    const { isDrawingMode } = this.state;
+    canvas.isDrawingMode = isDrawingMode;
+    this.setState({ isDrawingMode: !isDrawingMode });
+  }
+
+  /**
+   * 菜单
+   */
+  menuToggle = () => this.setState({ menu: !this.state.menu })
+
+  /**
+   * 判断画布对象的类型：文本、图片、图形
+   */
+  isType = (target) => {
+    if (target.type === 'text') {
+      this.editTextToggle();
+    } else if (target.type === 'image') {
+      this.editImageToggle();
+    } else {
+      this.editShapeToggle();
+    }
   }
 
   setStroke = (color) => {
@@ -102,66 +128,6 @@ class CustomControl extends Component {
     this.setState({ isFill: !this.state.isFill });
   }
 
-  /**
-   * 绘制\控制模式按钮
-   */
-  drawingModeToggle = () => {
-    const { canvas } = this.props;
-    canvas.isDrawingMode = !canvas.isDrawingMode;
-    this.setState({
-      isDrawingMode: !canvas.isDrawingMode,
-    });
-  }
-
-  /**
-   * 文本面板
-   */
-  textToggle = () => {
-    const { canvas } = this.props;
-    const text = canvas.getActiveObject();
-    this.setState({
-      edittext: !this.state.edittext,
-      initialText: text,
-    });
-  }
-
-  /**
-   * 菜单
-   */
-  menuToggle = () => {
-    const menu1 = ReactDOM.findDOMNode(this.refs.menu1);
-    const menu2 = ReactDOM.findDOMNode(this.refs.menu2);
-    const menu3 = ReactDOM.findDOMNode(this.refs.menu3);
-    const { view } = this.state;
-
-    if (view) {
-      menu1.style.display = 'none';
-      menu2.style.display = 'none';
-      menu3.style.display = 'flex';
-    } else {
-      menu1.style.display = 'flex';
-      menu2.style.display = 'flex';
-      menu3.style.display = 'none';
-    }
-
-    this.setState({
-      view: !this.state.view,
-    });
-  }
-
-  /**
-   * 判断画布对象的类型：文本、图片、图形
-   */
-  isType = (target) => {
-    if (target.type === 'text') {
-      this.textToggle();
-    } else if (target.type === 'image') {
-      this.editImageToggle();
-    } else {
-      this.editShapeToggle();
-    }
-  }
-
   strokeWidthPlus = () => {
     const { canvas } = this.props;
     const obj = canvas.getActiveObject();
@@ -186,6 +152,13 @@ class CustomControl extends Component {
   helpToggle = () => this.setState({ help: !this.state.help })
 
   /**
+   * 编辑文本面板
+   */
+  openEditText = () => this.setState({ edittext: true })
+  closeEditText = () => this.setState({ edittext: false })
+  editTextToggle = () => this.setState({ edittext: !this.state.edittext })
+
+  /**
    * 编辑图形面板
    */
   openEditShape = () => this.setState({ editshape: true })
@@ -205,84 +178,89 @@ class CustomControl extends Component {
     return (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         {
-          this.state.help ?
-            <Help />
+          this.state.menu ?
+            <div>
+              {
+                this.state.help ?
+                  <Help />
+                  :
+                  null
+              }
+              <Menu icon style={styles.menu1}>
+                <Shape canvas={canvas} openEditShape={this.openEditShape} isFill={this.state.isFill} />
+                <Menu.Item style={styles.menuItem}>
+                  <Text
+                    canvas={canvas}
+                    edittext={this.state.edittext}
+                    closeEditText={this.closeEditText}
+                    openEditText={this.openEditText}
+                  />
+                </Menu.Item>
+                <Menu.Item style={styles.menuItem}>
+                  <Image canvas={canvas} openEditImage={this.openEditImage} />
+                </Menu.Item>
+                <Menu.Item style={styles.menuItem}>
+                  <Background canvas={canvas} />
+                </Menu.Item>
+                <Menu.Item style={styles.menuItem}>
+                  <Save canvas={canvas} />
+                </Menu.Item>
+                <Menu.Item style={styles.menuItem}>
+                  <Clear canvas={canvas} />
+                </Menu.Item>
+                <Menu.Item style={styles.menuItem}>
+                  <Icon style={{ transform: 'rotate(135deg)' }} link onClick={this.menuToggle} rotated="clockwise" name="long arrow up" />
+                </Menu.Item>
+              </Menu>
+
+              <EditImage
+                canvas={canvas}
+                editimage={this.state.editimage}
+                closeEditImage={this.closeEditImage}
+              />
+              <EditShape
+                canvas={canvas}
+                editshape={this.state.editshape}
+                closeEditShape={this.closeEditShape}
+                fill={this.state.fill}
+                isFill={this.state.isFill}
+                fillToggle={this.fillToggle}
+                setShapeFill={this.setShapeFill}
+                stroke={this.state.stroke}
+                setStroke={this.setStroke}
+                strokeWidth={this.state.strokeWidth}
+                strokeWidthPlus={this.strokeWidthPlus}
+                strokeWidthMinus={this.strokeWidthMinus}
+              />
+
+              <Menu icon vertical style={styles.menu2}>
+                <Menu.Item style={styles.menuItem}>
+                  <DrawingMode
+                    isDrawingMode={this.state.isDrawingMode}
+                    drawingModeToggle={this.drawingModeToggle}
+                  />
+                </Menu.Item>
+                <Menu.Item style={styles.menuItem} onClick={this.helpToggle}>
+                  <Icon name="help" />
+                </Menu.Item>
+                {
+                  this.props.visible ?
+                    <Menu.Item style={styles.menuItem}>
+                      <EditLayer canvas={canvas} />
+                    </Menu.Item>
+                    :
+                    null
+                }
+              </Menu>
+            </div>
             :
-            null
-        }
-        <Menu icon style={styles.menu1} ref="menu1">
-          <Shape canvas={canvas} openEditShape={this.openEditShape} isFill={this.state.isFill} />
-          <Menu.Item style={styles.menuItem}>
-            <Text
-              canvas={canvas}
-              textVisible={this.state.edittext}
-              initialText={this.state.initialText}
-              textToggleVisibility={this.textToggle}
-            />
-          </Menu.Item>
-          <Menu.Item style={styles.menuItem}>
-            <Image canvas={canvas} openEditImage={this.openEditImage} />
-          </Menu.Item>
-          <Menu.Item style={styles.menuItem}>
-            <Background canvas={canvas} />
-          </Menu.Item>
-          <Menu.Item style={styles.menuItem}>
-            <Save canvas={canvas} />
-          </Menu.Item>
-          <Menu.Item style={styles.menuItem}>
-            <Clear canvas={canvas} />
-          </Menu.Item>
-          <Menu.Item style={styles.menuItem}>
-            <Icon style={{ transform: 'rotate(135deg)' }} link onClick={this.menuToggle} rotated="clockwise" name="long arrow up" />
-          </Menu.Item>
-        </Menu>
-
-        <EditImage
-          canvas={canvas}
-          editimage={this.state.editimage}
-          closeEditImage={this.closeEditImage}
-        />
-        <EditShape
-          canvas={canvas}
-          editshape={this.state.editshape}
-          closeEditShape={this.closeEditShape}
-          fill={this.state.fill}
-          isFill={this.state.isFill}
-          fillToggle={this.fillToggle}
-          setShapeFill={this.setShapeFill}
-          stroke={this.state.stroke}
-          setStroke={this.setStroke}
-          strokeWidth={this.state.strokeWidth}
-          strokeWidthPlus={this.strokeWidthPlus}
-          strokeWidthMinus={this.strokeWidthMinus}
-        />
-
-        <Menu icon vertical style={styles.menu2} ref="menu2">
-          <Menu.Item style={styles.menuItem}>
-            <DrawingMode
-              isDrawingMode={this.state.isDrawingMode}
-              drawingModeToggle={this.drawingModeToggle}
-            />
-          </Menu.Item>
-          <Menu.Item style={styles.menuItem} onClick={this.helpToggle}>
-            <Icon name="help" />
-          </Menu.Item>
-          {
-            this.props.visible ?
+            <Menu icon style={styles.menu3}>
               <Menu.Item style={styles.menuItem}>
-                <EditLayer canvas={canvas} />
+                <Icon style={{ transform: 'rotate(-45deg)' }} link onClick={this.menuToggle} rotated="clockwise" name="long arrow up" />
               </Menu.Item>
-              :
-              null
-          }
-        </Menu>
-
-        <Menu icon style={styles.menu3} ref="menu3">
-          <Menu.Item style={styles.menuItem}>
-            <Icon style={{ transform: 'rotate(-45deg)' }} link onClick={this.menuToggle} rotated="clockwise" name="long arrow up" />
-          </Menu.Item>
-        </Menu>
-      </div >
+            </Menu>
+        }
+      </div>
     );
   }
 }
