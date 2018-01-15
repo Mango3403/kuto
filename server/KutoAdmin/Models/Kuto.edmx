@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KutoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerPics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pic" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="createdTime" Type="datetime" Nullable="false" />
+          <Property Name="lastEditTime" Type="datetime" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="BusinessUserID" Type="int" Nullable="false" />
+          <Property Name="Draft" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Business_Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="pwd" Type="varchar" MaxLength="18" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="LONG." Type="float" Nullable="false" />
+          <Property Name="lat." Type="float" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__CustomerP__Busin__1A14E395">
+          <End Role="Business_Users" Type="Self.Business_Users" Multiplicity="1" />
+          <End Role="CustomerPics" Type="Self.CustomerPics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Business_Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerPics">
+              <PropertyRef Name="BusinessUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerP__Custo__29572725">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="CustomerPics" Type="Self.CustomerPics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerPics">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spAddImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+          <Parameter Name="image" Type="varchar" Mode="In" />
+          <Parameter Name="draft" Type="ntext" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+          <Parameter Name="BusinessUserID" Type="int" Mode="In" />
+          <Parameter Name="returnvalue" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="spEditImg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+          <Parameter Name="image" Type="varchar" Mode="In" />
+          <Parameter Name="draft" Type="ntext" Mode="In" />
+          <Parameter Name="msg" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="spGetDraftByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spImgListforBusinessUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="god">
+          <Parameter Name="BusinessUserID" Type="int" Mode="In" />
+          <Parameter Name="pageIndex" Type="int" Mode="In" />
+          <Parameter Name="pageSize" Type="int" Mode="In" />
+          <Parameter Name="pageCount" Type="int" Mode="InOut" />
+          <Parameter Name="totalCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="spInsertCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobile" Type="varchar" Mode="In" />
+          <Parameter Name="LONG" Type="float" Mode="In" />
+          <Parameter Name="lat" Type="float" Mode="In" />
+          <Parameter Name="address" Type="nvarchar" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="spSignin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="users">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="pwd" Type="varchar" Mode="In" />
+          <Parameter Name="returnvalue" Type="int" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="KutoModelStoreContainer">
+          <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" Schema="god" store:Type="Tables" />
+          <EntitySet Name="Business_Users" EntityType="Self.Business_Users" Schema="users" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="users" store:Type="Tables" />
+          <AssociationSet Name="FK__CustomerP__Busin__1A14E395" Association="Self.FK__CustomerP__Busin__1A14E395">
+            <End Role="Business_Users" EntitySet="Business_Users" />
+            <End Role="CustomerPics" EntitySet="CustomerPics" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerP__Custo__29572725" Association="Self.FK__CustomerP__Custo__29572725">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CustomerPics" EntitySet="CustomerPics" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KutoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerPics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pic" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="lastEditTime" Type="DateTime" Precision="3" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="BusinessUserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Business_Users" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="CustomerPics" ToRole="Business_Users" />
+          <NavigationProperty Name="Customers" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="CustomerPics" ToRole="Customers" />
+          <Property Name="Draft" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Business_Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pwd" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="Business_Users" ToRole="CustomerPics" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LONG_" Type="Double" Nullable="false" />
+          <Property Name="lat_" Type="Double" Nullable="false" />
+          <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="Customers" ToRole="CustomerPics" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="KutoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" />
+          <EntitySet Name="Business_Users" EntityType="Self.Business_Users" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <FunctionImport Name="spAddImg">
+            <Parameter Name="image" Mode="In" Type="String" />
+            <Parameter Name="draft" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+            <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
+            <Parameter Name="returnvalue" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spEditImg">
+            <Parameter Name="image" Mode="In" Type="String" />
+            <Parameter Name="draft" Mode="In" Type="String" />
+            <Parameter Name="msg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spSignin" ReturnType="Collection(Int32)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="pwd" Mode="In" Type="String" />
+            <Parameter Name="returnvalue" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <AssociationSet Name="FK__CustomerP__Busin__1A14E395" Association="KutoModel.FK__CustomerP__Busin__1A14E395">
+            <End Role="Business_Users" EntitySet="Business_Users" />
+            <End Role="CustomerPics" EntitySet="CustomerPics" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerP__Custo__1920BF5C" Association="KutoModel.FK__CustomerP__Custo__1920BF5C">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CustomerPics" EntitySet="CustomerPics" />
+          </AssociationSet>
+          <FunctionImport Name="spImgListforBusinessUser" ReturnType="Collection(KutoModel.spImgListforBusinessUser_Result1)">
+            <Parameter Name="BusinessUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="pageSize" Mode="In" Type="Int32" />
+            <Parameter Name="pageCount" Mode="InOut" Type="Int32" />
+            <Parameter Name="totalCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetDraftByID" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertCustomer">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+            <Parameter Name="LONG" Mode="In" Type="Double" />
+            <Parameter Name="lat" Mode="In" Type="Double" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          
+        </EntityContainer>
+        <Association Name="FK__CustomerP__Busin__1A14E395">
+          <End Type="KutoModel.Business_Users" Role="Business_Users" Multiplicity="1" />
+          <End Type="KutoModel.CustomerPics" Role="CustomerPics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Business_Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerPics">
+              <PropertyRef Name="BusinessUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerP__Custo__1920BF5C">
+          <End Type="KutoModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="KutoModel.CustomerPics" Role="CustomerPics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerPics">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spImgListforBusinessUser_Result">
+          
+          <Property Type="String" Name="pic" Nullable="false" MaxLength="19" />
+          <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="cID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spImgListforBusinessUser1_Result">
+          <Property Type="String" Name="pic" Nullable="false" MaxLength="55" />
+          <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="cID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spImgListforBusinessUser2_Result">
+          <Property Type="String" Name="pic" Nullable="false" MaxLength="55" />
+          <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="cID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spImgListforBusinessUser_Result1">
+          <Property Type="String" Name="pic" Nullable="false" MaxLength="55" />
+          <Property Type="DateTime" Name="lastEditTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="cID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KutoModelStoreContainer" CdmEntityContainer="KutoEntities">
+          <EntitySetMapping Name="CustomerPics">
+            <EntityTypeMapping TypeName="KutoModel.CustomerPics">
+              <MappingFragment StoreEntitySet="CustomerPics">
+                <ScalarProperty Name="Draft" ColumnName="Draft" />
+                <ScalarProperty Name="BusinessUserID" ColumnName="BusinessUserID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pic" ColumnName="pic" />
+                <ScalarProperty Name="createdTime" ColumnName="createdTime" />
+                <ScalarProperty Name="lastEditTime" ColumnName="lastEditTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Business_Users">
+            <EntityTypeMapping TypeName="KutoModel.Business_Users">
+              <MappingFragment StoreEntitySet="Business_Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="KutoModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="LONG_" ColumnName="LONG." />
+                <ScalarProperty Name="lat_" ColumnName="lat." />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spAddImg" FunctionName="KutoModel.Store.spAddImg" />
+          <FunctionImportMapping FunctionImportName="spEditImg" FunctionName="KutoModel.Store.spEditImg" />
+          <FunctionImportMapping FunctionImportName="spSignin" FunctionName="KutoModel.Store.spSignin" />
+          <FunctionImportMapping FunctionImportName="spImgListforBusinessUser" FunctionName="KutoModel.Store.spImgListforBusinessUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KutoModel.spImgListforBusinessUser_Result1">
+                <ScalarProperty Name="pic" ColumnName="pic" />
+                <ScalarProperty Name="lastEditTime" ColumnName="lastEditTime" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="cID" ColumnName="cID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetDraftByID" FunctionName="KutoModel.Store.spGetDraftByID" />
+          <FunctionImportMapping FunctionImportName="spInsertCustomer" FunctionName="KutoModel.Store.spInsertCustomer" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
