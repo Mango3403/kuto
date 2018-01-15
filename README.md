@@ -1,4 +1,4 @@
-# 定制项目
+﻿# 定制项目
 
 ## 框架
 * ui: semantic-ui-react
@@ -15,3 +15,5 @@
 
 ## 构建
 * npm run build
+
+##如果发现source tree没反应了就需要把本地文件再提交一下。
