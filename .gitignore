@@ -6,9 +6,13 @@
 # testing
 /coverage
 
+# production
+/build
+
+# server
+/server
+
 # misc
-.vs
-.vscode
 .DS_Store
 .env.local
 .env.development.local
@@ -18,7 +22,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
 src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide-shm
 src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide-wal
 src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide
-public/pro
