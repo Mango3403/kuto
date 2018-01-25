@@ -287,12 +287,17 @@
     <Content Include="assets\lib\ruler.min.css" />
     <Content Include="assets\lib\ruler.min.js" />
     <Content Include="assets\lib\semantic.min.css" />
-    <Content Include="qrcode.html" />
-    <Content Include="Scripts\ruler.min.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="example\productpage.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="qrcode.html" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ruler.min.js" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Models\Kuto.Context.tt">
@@ -308,8 +313,6 @@
       <LastGenOutput>Kuto1.cs</LastGenOutput>
       <DependentUpon>Kuto.edmx</DependentUpon>
     </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -322,6 +325,14 @@
     <Content Include="assets\imgLib\测试类2\list.json" />
     <Content Include="assets\imgLib\测试类2\印迹\list.json" />
     <Content Include="assets\imgLib\测试类2\诛仙\list.json" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -409,6 +420,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="static\media\logo.32c8ee51.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -426,18 +438,17 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\KutoAdmin\Login.cshtml" />
     <Content Include="Views\KutoAdmin\FileUpload.cshtml" />
-    <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
+    <Content Include="Views\KutoAdmin\BusinessUserHome3.cshtml" />
     <Content Include="Views\KutoAdmin\BusinessUserHome2.cshtml" />
     <Content Include="Views\KutoAdmin\GenImgLibJson.cshtml" />
     <Content Include="Views\KutoAdmin\InsertCustomer.cshtml" />
+    <Content Include="Views\KutoAdmin\BusinessUserHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="custom\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>

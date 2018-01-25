@@ -6,7 +6,7 @@ class Save extends Component {
   constructor() {
     super();
     this.state = {
-      checked: false,
+      checked: true,
       open: false,
       valLeft: '0.0',
       valTop: '0.0',
@@ -86,10 +86,10 @@ class Save extends Component {
     if (canvas.overlayImage !== null) {
       dataurl = canvas.toDataURL({
         format: 'png',
-        left: canvas.overlayImage.left - (canvas.overlayImage.width / 2),
-        top: canvas.overlayImage.top - (canvas.overlayImage.height / 2),
-        height: canvas.overlayImage.height,
-        width: canvas.overlayImage.width,
+        left: canvas.overlayImage.left - (canvas.overlayImage.width * canvas.overlayImage.scaleX / 2),
+        top: canvas.overlayImage.top - (canvas.overlayImage.height  * canvas.overlayImage.scaleY / 2),
+        height: canvas.overlayImage.height * canvas.overlayImage.scaleY,
+        width: canvas.overlayImage.width * canvas.overlayImage.scaleX,
       });
     } else {
       dataurl = canvas.toDataURL({
@@ -98,7 +98,7 @@ class Save extends Component {
         top: this.state.valTop,
         height: this.state.valHeight,
         width: this.state.valWidth,
-      }, 0.5);
+      });
     }
 
     this.setState({ saveImages: { src: dataurl, }, });
@@ -130,6 +130,7 @@ class Save extends Component {
           <Modal.Header>保存完毕</Modal.Header>
           <Modal.Content image>
             <Image wrapped size="small" bordered src={this.state.saveImages.src} />
+            <span>微信端需要长按图片保存到本地</span>
             <Modal.Description>
               <Checkbox label="保存图片到本地?" onChange={this.toggle} checked={this.state.checked} />
             </Modal.Description>

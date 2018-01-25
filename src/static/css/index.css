@@ -1,7 +1,9 @@
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    overflow: hidden;
 }
 
 #ruler {
@@ -26,14 +28,6 @@ html, body {
     -webkit-justify-content: center;
 }
 
-
-/* .workspace {
-    border: 0.1px solid red;
-    background-color: white;
-    width: calc(100vw - 10px);
-    height: 500px;
-} */
-
 input[type="range"] {
     -webkit-appearance: none;
     width: 10rem;
@@ -50,4 +44,11 @@ input[type="range"]::-webkit-slider-thumb {
     border: .25rem solid grey;
     border-radius: 1rem;
     cursor: pointer;
+}
+
+
+/* 纵向列表按钮调出的菜单中，关闭按钮恢复正常宽度 */
+
+.ui.vertical.menu .item>i.icon.close {
+    width: 2em;
 }

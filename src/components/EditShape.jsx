@@ -5,11 +5,11 @@ import { ChromePicker } from 'react-color';
 
 class EditShape extends Component {
   state = {
-    displayborderColorPicker: false,
-    borderColor: {
-      r: '30',
-      g: '30',
-      b: '30',
+    displaystrokeColorPicker: false,
+    strokeColor: {
+      r: '0',
+      g: '0',
+      b: '0',
       a: '1',
     },
     displayfillColorPicker: false,
@@ -27,9 +27,9 @@ class EditShape extends Component {
     });
   }
 
-  borderColorHandleClick = () => {
+  strokeColorHandleClick = () => {
     this.setState({
-      displayborderColorPicker: !this.state.displayborderColorPicker,
+      displaystrokeColorPicker: !this.state.displaystrokeColorPicker,
     });
   }
 
@@ -40,18 +40,18 @@ class EditShape extends Component {
       });
     } else {
       this.setState({
-        displayborderColorPicker: false,
+        displaystrokeColorPicker: false,
       });
     }
   }
 
   handleChange = (color) => {
-    const { setShapeFill, setStroke } = this.props;
-    if (this.state.displayfillColorPicker) {
+    const { setShapeFill, setStroke, isFill } = this.props;
+    if (this.state.displayfillColorPicker && isFill) {
       this.setState({ fillColor: color.rgb });
       setShapeFill(color.hex);
-    } else {
-      this.setState({ borderColor: color.rgb });
+    } else if (this.state.displaystrokeColorPicker) {
+      this.setState({ strokeColor: color.rgb });
       setStroke(color.hex);
     }
   }
@@ -64,21 +64,23 @@ class EditShape extends Component {
       strokeWidthMinus,
       strokeWidthPlus,
       fillToggle,
+      shape
     } = this.props;
+    const { strokeColor, fillColor } = this.state;
 
     const styles = reactCSS({
       default: {
-        borderColor: {
+        strokeColor: {
           width: '28px',
           height: '28px',
           borderRadius: '2px',
-          background: `rgba(${this.state.borderColor.r}, ${this.state.borderColor.g}, ${this.state.borderColor.b}, ${this.state.borderColor.a})`,
+          background: shape ? shape.stroke : `rgba(${strokeColor.r}, ${strokeColor.g}, ${strokeColor.b}, ${strokeColor.a})`,
         },
         fillColor: {
           width: '28px',
           height: '28px',
           borderRadius: '2px',
-          background: `rgba(${this.state.fillColor.r}, ${this.state.fillColor.g}, ${this.state.fillColor.b}, ${this.state.fillColor.a})`,
+          background: shape ? shape.fill : `rgba(${fillColor.r}, ${fillColor.g}, ${fillColor.b}, ${fillColor.a})`,
         },
         swatch: {
           padding: '5px',
@@ -125,24 +127,24 @@ class EditShape extends Component {
             <Form.Group inline style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
               <span>边框粗细</span>
               <Button.Group>
-                <Button disabled={strokeWidth === 1} icon="minus" onClick={strokeWidthMinus} />
-                <Button>{strokeWidth}</Button>
-                <Button disabled={strokeWidth === 30} icon="plus" onClick={strokeWidthPlus} />
+                <Button disabled={shape ? shape.strokeWidth === 1 : strokeWidth === 1} icon="minus" onClick={strokeWidthMinus} />
+                <Button>{shape ? shape.strokeWidth : strokeWidth}</Button>
+                <Button disabled={shape ? shape.strokeWidth === 30 : strokeWidth === 30} icon="plus" onClick={strokeWidthPlus} />
               </Button.Group>
             </Form.Group>
             <Form.Group inline style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span>边框颜色</span>
               <div
                 style={styles.swatch}
-                onKeyPress={this.borderColorHandleClick}
-                onClick={this.borderColorHandleClick}
+                onKeyPress={this.strokeColorHandleClick}
+                onClick={this.strokeColorHandleClick}
               >
-                <div style={styles.borderColor} />
+                <div style={styles.strokeColor} />
               </div>
             </Form.Group>
             <Form.Group inline style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0' }}>
               <span>填充颜色</span>
-              <Form.Checkbox label="填充" onChange={this.props.fillToggle} />
+              <Form.Checkbox label="填充" checked={shape ? shape.fill ? true : false : false} onChange={this.props.fillToggle} />
               <div
                 style={styles.swatch}
                 onKeyPress={this.fillColorHandleClick}
@@ -154,7 +156,7 @@ class EditShape extends Component {
           </Form>
         </Sidebar>
         {
-          this.state.displayfillColorPicker || this.state.displayborderColorPicker ?
+          this.state.displayfillColorPicker || this.state.displaystrokeColorPicker ?
             <div style={this.state.displayfillColorPicker ? styles.popover1 : styles.popover2}>
               <div
                 style={styles.cover}
@@ -165,7 +167,7 @@ class EditShape extends Component {
                 color={
                   this.state.displayfillColorPicker ?
                     this.state.fillColor :
-                    this.state.borderColor
+                    this.state.strokeColor
                 }
                 onChange={this.handleChange}
               />

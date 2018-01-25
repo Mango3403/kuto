@@ -4,7 +4,8 @@ import order from '../static/images/control/order.png';
 
 const styles = {
   iconImage: {
-    width: '1.3em',
+    margin: 'auto',
+    width: '1em',
   },
   menuItem: {
     paddingRight: '5px',

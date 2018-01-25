@@ -27,7 +27,7 @@ class Clear extends React.Component {
   render() {
     return (
       <div style={{ padding: '0 4px', width: '33px' }}>
-        <Icon as={Image} style={{ width: '24px', height: '28px' }} src={clear} onClick={this.show} />
+        <Icon as={Image} src={clear} onClick={this.show} />
         <Confirm
           open={this.state.open}
           content={<div className="content"><h2>确定要清空画布吗?</h2></div>}

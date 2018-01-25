@@ -300,3 +300,4 @@ C:\custom\server\KutoAdmin\bin\zh-Hans\Microsoft.Owin.Security.MicrosoftAccount.
 C:\custom\server\KutoAdmin\obj\Debug\KutoAdmin.csproj.CoreCompileInputs.cache
 C:\custom\server\KutoAdmin\obj\Debug\KutoAdmin.dll
 C:\custom\server\KutoAdmin\obj\Debug\KutoAdmin.pdb
+C:\custom\server\KutoAdmin\obj\Debug\KutoAdmin.csprojResolveAssemblyReference.cache

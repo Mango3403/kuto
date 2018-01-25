@@ -12,47 +12,56 @@ import left from '../static/images/control/left.svg';
 import top from '../static/images/control/top.svg';
 import bottom from '../static/images/control/bottom.svg';
 
-const WINDOW_WIDTH = window.innerWidth > 400 ? 400 : window.innerWidth - 10;
+let WINDOW_WIDTH = window.innerWidth / 2;
+let WINDOW_HEIGHT = 500;
+
+if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+  WINDOW_WIDTH = window.innerWidth;
+  WINDOW_HEIGHT = window.innerHeight;
+}
 
 const styles = {
   signLayout: {
     position: 'absolute',
     width: WINDOW_WIDTH,
-    height: '500px',
+    height: WINDOW_HEIGHT,
   },
+  // 纵向准心
   signCenterVertical: {
     borderTop: '0.1px solid red',
     position: 'absolute',
-    width: '10px',
-    height: '10px',
-    top: '250px',
-    left: 'calc(100% / 2 - 5px)',
+    width: '15px',
+    height: '15px',
+    top: WINDOW_HEIGHT / 2 + 'px',
+    left: WINDOW_WIDTH / 2 + 7.5 - 15 + 'px',
     zIndex: '1',
   },
+  // 横向准心
   signCenterHorizontal: {
     borderRight: '0.1px solid red',
     position: 'absolute',
-    width: '10px',
-    height: '10px',
-    top: '245px',
-    left: 'calc(100% / 2 - 10px)',
+    width: '15px',
+    height: '15px',
+    top: WINDOW_HEIGHT / 2 - 7.5 + 'px',
+    left: WINDOW_WIDTH / 2 - 15 + 'px',
     zIndex: '1',
   },
   canvasWrapper: {
     margin: '0 auto',
     width: WINDOW_WIDTH,
-    height: '100vh',
+    height: WINDOW_HEIGHT,
   },
   ruler: {
     width: WINDOW_WIDTH,
-    height: '500px',
+    height: WINDOW_HEIGHT,
   },
   canvas: {
     userSelect: 'none',
-    border: '0.1px dotted #ccc',
+    // border: '0.1px dotted #ccc',
   },
 };
 
+// 准心
 const Sign = () => (
   <div style={styles.signLayout}>
     <div style={styles.signCenterVertical} />
@@ -61,11 +70,17 @@ const Sign = () => (
 );
 
 class Custom extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      canvas: null,
+      canvas: undefined,
       visible: false,
+      text: undefined,
+      image: undefined,
+      shape: undefined,
+      edittext: false,
+      editimage: false,
+      editshape: false,
     };
   }
 
@@ -151,6 +166,7 @@ class Custom extends React.Component {
     window.onbeforeunload = this.saveLocalStorage.bind(this);
   }
 
+  // 设置cookie值
   setCookie = (name, value, expiredays) => {
     const exdate = new Date();
 
@@ -159,6 +175,7 @@ class Custom extends React.Component {
     document.cookie = `${name}=${window.escape(value)}${(expiredays == null) ? '' : `expires=${exdate.toGMTString()}`}`;
   }
 
+  // 获取cookie取得缓存 —— 未使用
   getCookie = (name) => {
     if (document.cookie.length > 0) {
       let start = document.cookie.indexOf(`${name}=`);
@@ -186,28 +203,70 @@ class Custom extends React.Component {
     localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));
   }
 
+  // 初始化
   init() {
-    const canvas = new fabric.Canvas('canvas', {
+    const canvas = window._canvas = new fabric.Canvas('canvas', {
       preserveObjectStacking: true,
       selection: false,
       stopContextMenu: true,
       width: WINDOW_WIDTH,
-      height: 500,
+      height: WINDOW_HEIGHT,
     });
 
-    canvas.on('selection:created', () => {
+    canvas.on('selection:created', (e) => {
+      if (e.target.type == 'text') {
+        this.setState({
+          text: e.target,
+        });
+      } else if (e.target.type == 'image') {
+        this.setState({
+          image: e.target,
+        });
+      } else if (e.target.type === 'path') {
+        return false;
+      } else {
+        this.setState({
+          shape: e.target,
+        });
+      }
+
       this.setState({
         visible: true,
       });
     });
 
+    canvas.on('selection:updated', (e) => {
+      if (e.target.type == 'text') {
+        this.closeEditImage();
+        this.closeEditShape();
+        this.setState({
+          text: e.target,
+        });
+      } else if (e.target.type == 'image') {
+        this.closeEditText();
+        this.closeEditShape();
+        this.setState({
+          image: e.target,
+        });
+      } else if (e.target.type === 'path') {
+        return false;
+      } else {
+        this.closeEditText();
+        this.closeEditImage();
+        this.setState({
+          shape: e.target,
+        });
+      }
+    });
+
     canvas.on('selection:cleared', () => {
       this.setState({
         visible: false,
+        edittext: false,
+        editimage: false,
+        editshape: false,
       });
     });
-
-    document.getElementsByClassName('canvas-wrapper').item(0).setAttribute('clientWidth', canvas.getWidth());
 
     // 当 localStorage 中存在缓存并且缓存对象不为空时，提示是否读取缓存
     const myCanvas = JSON.parse(localStorage.getItem('myCanvas')) || null;
@@ -224,7 +283,38 @@ class Custom extends React.Component {
     }
 
     this.setState({ canvas });
+
+    // document.getElementsByClassName('canvas-wrapper').item(0).setAttribute('clientWidth', canvas.getWidth());
   }
+
+  /**
+   * 编辑文本面板
+   */
+  openEditText = () => {
+    this.setState({
+      edittext: true
+    });
+  }
+  closeEditText = () => this.setState({ edittext: false })
+  editTextToggle = () => {
+    this.setState({
+      edittext: !this.state.edittext
+    });
+  }
+
+  /**
+   * 编辑图片面板
+   */
+  openEditImage = () => this.setState({ editimage: true })
+  closeEditImage = () => this.setState({ editimage: false })
+  editImageToggle = () => this.setState({ editimage: !this.state.editimage })
+
+  /**
+   * 编辑图形面板
+   */
+  openEditShape = () => this.setState({ editshape: true })
+  closeEditShape = () => this.setState({ editshape: false })
+  editShapeToggle = () => this.setState({ editshape: !this.state.editshape })
 
   render() {
     return (
@@ -234,7 +324,25 @@ class Custom extends React.Component {
         <canvas id="canvas" style={styles.canvas}>
           你的浏览器不支持画布功能，尝试更换浏览器
         </canvas>
-        <CustomControl canvas={this.state.canvas} visible={this.state.visible} />
+        <CustomControl
+          canvas={this.state.canvas}
+          visible={this.state.visible}
+          text={this.state.text}
+          image={this.state.image}
+          shape={this.state.shape}
+          editimage={this.state.editimage}
+          edittext={this.state.edittext}
+          editshape={this.state.editshape}
+          openEditText={this.openEditText}
+          closeEditText={this.closeEditText}
+          editTextToggle={this.editTextToggle}
+          openEditImage={this.openEditImage}
+          closeEditImage={this.closeEditImage}
+          editImageToggle={this.editImageToggle}
+          openEditShape={this.openEditShape}
+          closeEditShape={this.closeEditShape}
+          editShapeToggle={this.editShapeToggle}
+        />
       </div>
     );
   }

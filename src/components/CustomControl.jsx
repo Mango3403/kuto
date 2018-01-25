@@ -15,8 +15,6 @@ import DrawingMode from './DrawingMode';
 import Help from './Help';
 import EditLayer from './EditLayer';
 
-const WINDOW_WIDTH = window.innerWidth > 400 ? 400 : window.innerWidth - 10;
-
 const styles = {
   menu1: {
     margin: '0',
@@ -72,6 +70,10 @@ class CustomControl extends Component {
     });
   }
 
+  componentDidUpdate(nextProps) {
+    // console.log(this.props.text);
+  }
+
   /**
    * 绘制\控制模式按钮
    */
@@ -92,11 +94,13 @@ class CustomControl extends Component {
    */
   isType = (target) => {
     if (target.type === 'text') {
-      this.editTextToggle();
+      this.props.editTextToggle();
     } else if (target.type === 'image') {
-      this.editImageToggle();
+      this.props.editImageToggle();
+    } else if (target.type === 'path') {
+      return false;
     } else {
-      this.editShapeToggle();
+      this.props.editShapeToggle();
     }
   }
 
@@ -151,27 +155,6 @@ class CustomControl extends Component {
    */
   helpToggle = () => this.setState({ help: !this.state.help })
 
-  /**
-   * 编辑文本面板
-   */
-  openEditText = () => this.setState({ edittext: true })
-  closeEditText = () => this.setState({ edittext: false })
-  editTextToggle = () => this.setState({ edittext: !this.state.edittext })
-
-  /**
-   * 编辑图形面板
-   */
-  openEditShape = () => this.setState({ editshape: true })
-  closeEditShape = () => this.setState({ editshape: false })
-  editShapeToggle = () => this.setState({ editshape: !this.state.editshape })
-
-  /**
-   * 编辑图片面板
-   */
-  openEditImage = () => this.setState({ editimage: true })
-  closeEditImage = () => this.setState({ editimage: false })
-  editImageToggle = () => this.setState({ editimage: !this.state.editimage })
-
   render() {
     const { canvas } = this.props;
 
@@ -187,17 +170,18 @@ class CustomControl extends Component {
                   null
               }
               <Menu icon style={styles.menu1}>
-                <Shape canvas={canvas} openEditShape={this.openEditShape} isFill={this.state.isFill} />
+                <Shape canvas={canvas} openEditShape={this.props.openEditShape} isFill={this.state.isFill} />
                 <Menu.Item style={styles.menuItem}>
                   <Text
                     canvas={canvas}
-                    edittext={this.state.edittext}
-                    closeEditText={this.closeEditText}
-                    openEditText={this.openEditText}
+                    edittext={this.props.edittext}
+                    closeEditText={this.props.closeEditText}
+                    openEditText={this.props.openEditText}
+                    text={this.props.text}
                   />
                 </Menu.Item>
                 <Menu.Item style={styles.menuItem}>
-                  <Image canvas={canvas} openEditImage={this.openEditImage} />
+                  <Image canvas={canvas} openEditImage={this.props.openEditImage} />
                 </Menu.Item>
                 <Menu.Item style={styles.menuItem}>
                   <Background canvas={canvas} />
@@ -215,13 +199,14 @@ class CustomControl extends Component {
 
               <EditImage
                 canvas={canvas}
-                editimage={this.state.editimage}
-                closeEditImage={this.closeEditImage}
+                editimage={this.props.editimage}
+                closeEditImage={this.props.closeEditImage}
+                image={this.props.image}
               />
               <EditShape
                 canvas={canvas}
-                editshape={this.state.editshape}
-                closeEditShape={this.closeEditShape}
+                editshape={this.props.editshape}
+                closeEditShape={this.props.closeEditShape}
                 fill={this.state.fill}
                 isFill={this.state.isFill}
                 fillToggle={this.fillToggle}
@@ -231,6 +216,7 @@ class CustomControl extends Component {
                 strokeWidth={this.state.strokeWidth}
                 strokeWidthPlus={this.strokeWidthPlus}
                 strokeWidthMinus={this.strokeWidthMinus}
+                shape={this.props.shape}
               />
 
               <Menu icon vertical style={styles.menu2}>

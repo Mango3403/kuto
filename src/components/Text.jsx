@@ -8,20 +8,19 @@ const fontFamily = [
   { key: 'Arial', value: 'Arial', text: '默认字体' },
   { key: 'LiDeBiao-Xing3efdf0dc8b19aca', value: 'LiDeBiao-Xing3efdf0dc8b19aca', text: '德彪钢笔' },
   { key: 'winmantun23001efe02015619aca', value: 'winmantun23001efe02015619aca', text: '浪漫原体' },
-  { key: 'GoodVibrationsRf33e9f42419aca', value: 'GoodVibrationsRf33e9f42419aca', text: 'GoodVibrationsROB' },
-  { key: 'Helvetica-Neue-f33f1506b19aca', value: 'Helvetica-Neue-f33f1506b19aca', text: 'Helvetica-Neue-LT-Std' },
+  { key: 'GoodVibrationsRf33e9f42419aca', value: 'GoodVibrationsRf33e9f42419aca', text: 'GoodVibrationsROB(英文)' },
+  { key: 'Helvetica-Neue-f33f1506b19aca', value: 'Helvetica-Neue-f33f1506b19aca', text: 'Helvetica-Neue-LT-Std(英文)' },
 ];
 
 class Text extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      text: undefined,
       displayColorPicker: false,
       color: {
-        r: '241',
-        g: '112',
-        b: '19',
+        r: '211',
+        g: '212',
+        b: '213',
         a: '1',
       },
     };
@@ -29,26 +28,24 @@ class Text extends Component {
 
   componentDidMount() {
     const field1 = document.getElementsByClassName('field').item(1);
-    const field2 = document.getElementsByClassName('field').item(2);
     field1.style.width = 'calc(100% - 42px)';
-    field2.style.paddingRight = '0';
-    field2.style.height = '38px';
-    this.createText();
   }
 
-  createText = () => {
-    const text = new fabric.Text('你的内容', {
-      fontSize: 40,
-      fill: '#D6D8EA', // 银色
-      fontFamily: 'Arial', // 默认字体
-    });
-
-    this.setState({ text });
-  }
+  // componentDidUpdate(nextProps, nextState) {
+  //   if (!!nextProps.canvas) {
+  //     console.log(nextProps.canvas.getActiveObject());
+  //   }
+  // }
 
   addText = () => {
     const { canvas, openEditText } = this.props;
-    const { text } = this.state;
+    const { color } = this.state;
+
+    const text = new fabric.Text('你的内容', {
+      fontSize: 40,
+      fill: `rgb(${color.r},${color.g},${color.b})`, // 银色
+      fontFamily: 'Arial', // 默认字体
+    });
 
     canvas.viewportCenterObject(text).add(text).setActiveObject(text).renderAll();
 
@@ -58,24 +55,21 @@ class Text extends Component {
   }
 
   setText = ({ target: { value } }) => {
-    const { canvas } = this.props;
-    const { text } = this.state;
+    const { canvas, text } = this.props;
     text.set('text', value);
     canvas.renderAll();
     this.setState({ text });
   }
 
   setFill = (color) => {
-    const { canvas } = this.props;
-    const { text } = this.state;
+    const { canvas, text } = this.props;
     text.set('fill', color);
     canvas.renderAll();
     this.setState({ text });
   }
 
   setFontFamily = (e, { value }) => {
-    const { canvas } = this.props;
-    const { text } = this.state;
+    const { canvas, text } = this.props;
     text.set('fontFamily', value);
     canvas.renderAll();
     this.setState({ text });
@@ -90,15 +84,15 @@ class Text extends Component {
   }
 
   render() {
-    const { closeEditText, edittext } = this.props;
-    const { text } = this.state;
+    const { closeEditText, edittext, text } = this.props;
+    const { color, displayColorPicker } = this.state;
     const styles = reactCSS({
       default: {
         color: {
           width: '28px',
           height: '28px',
           borderRadius: '2px',
-          background: `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`,
+          background: text ? text.fill : `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
         },
         swatch: {
           padding: '5px',
@@ -142,7 +136,7 @@ class Text extends Component {
             <h3 style={{ marginTop: '10px' }}>你的内容</h3>
             <Form.Input value={text ? text.text : '你的内容'} onChange={this.setText} onFocus={this.setText} />
             <Form.Group inline style={{ margin: 0 }}>
-              <Form.Select selection options={fontFamily} pointing="bottom" defaultValue={text ? text.fontFamily : fontFamily[0].value} onChange={this.setFontFamily} style={{ width: '100%' }} />
+              <Form.Select selection options={fontFamily} pointing="bottom" value={text ? text.fontFamily : null} placeholder="字体" onChange={this.setFontFamily} style={{ width: '100%' }} />
               <div style={styles.swatch} onKeyPress={this.handleOpen} onClick={this.handleOpen}>
                 <div style={styles.color} />
               </div>
@@ -150,10 +144,10 @@ class Text extends Component {
           </Form>
         </Sidebar>
         {
-          this.state.displayColorPicker ?
+          displayColorPicker ?
             <div style={styles.popover}>
               <div style={styles.cover} onKeyPress={this.handleClose} onClick={this.handleClose} />
-              <ChromePicker color={this.state.color} onChange={this.handleChange} />
+              <ChromePicker color={color} onChange={this.handleChange} />
             </div>
             :
             null

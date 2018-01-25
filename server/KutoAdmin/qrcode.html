@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -15,11 +15,15 @@
     <script type="text/javascript" src="/assets/lib/qrcode.js"></script>
 
     <p>扫码开始定制</p>
-    <div id="qrcodeCanvas"></div>
+    <div id="qrcodeCanvas">
+        <div>
+            <img src="/static/media/logo.32c8ee51.png" width="150" alt="酷兔" style="position:relative; top: 203px;" />
+        </div>
+    </div>
 
     <script>
         jQuery('#qrcodeCanvas').qrcode({
-            text: "http://kuto.gotoip1.com/custom" + window.location.search
+            text: "http://kuto.shop/" + window.location.search
         });	
     </script>
 

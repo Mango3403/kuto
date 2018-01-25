@@ -23,7 +23,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="pwd" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="pwd" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -132,7 +132,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="pwd" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pwd" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="Business_Users" ToRole="CustomerPics" />
         </EntityType>
         <EntityType Name="Customers">

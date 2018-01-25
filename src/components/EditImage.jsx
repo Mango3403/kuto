@@ -12,11 +12,6 @@ class EditImage extends Component {
     };
   }
 
-  componentDidMount() {
-    const field1 = document.getElementsByClassName('field').item(1);
-    field1.style.height = '23px';
-  }
-
   componentDidUpdate() {
     const { editimage } = this.props;
     if (editimage) {
@@ -25,8 +20,7 @@ class EditImage extends Component {
   }
 
   setGray = () => {
-    const { canvas } = this.props;
-    const image = canvas.getActiveObject();
+    const { canvas, image } = this.props;
 
     if (!this.state.checked) {
       image.filters[0] = new fabric.Image.filters.Grayscale();
@@ -54,18 +48,18 @@ class EditImage extends Component {
   handleDistancePlus = () => this.setState({ distance: this.state.distance + 0.01 })
   handleDistanceMinus = () => this.setState({ distance: this.state.distance - 0.01 })
   changeDistance = () => {
-    const { canvas } = this.props;
+    const { canvas, image } = this.props;
     const { distance } = this.state;
-    const obj = canvas.getActiveObject();
-    if (obj && obj.filters.length > 0) {
-      obj.filters[1].distance = distance.toFixed(2);
-      obj.applyFilters();
+
+    if (image && image.filters.length > 0) {
+      image.filters[1].distance = distance.toFixed(2);
+      image.applyFilters();
       canvas.renderAll();
     }
   }
 
   render() {
-    const { editimage, closeEditImage } = this.props;
+    const { editimage, closeEditImage, image } = this.props;
     const { distance } = this.state;
 
     return (
@@ -81,11 +75,11 @@ class EditImage extends Component {
           </Menu>
           <List style={{ marginTop: '10px' }}>
             <List.Item style={{ display: 'flex' }}>
-              <Radio toggle label="灰度化" checked={this.state.checked} onChange={this.toggle} />
+              <Radio toggle label="灰度化" checked={image ? image.filters.length > 0 ? true : false : this.state.checked} onChange={this.toggle} />
             </List.Item>
-            <List.Item disabled={!this.state.checked}>
+            <List.Item disabled={image ? (image.filters.length > 0 ? false : true) : !this.state.checked}>
               <Form>
-                <p>过滤梯度值: {distance.toFixed(2)}</p>
+                <p>过滤梯度值: {image ? image.filters.length > 0 ? parseFloat(image.filters[1].distance) : 0.00 : 0.00}</p>
                 <Button.Group size="small" style={{ width: '100%' }}>
                   <Button disabled={distance === 0} icon="minus" onClick={this.handleDistanceMinus} />
                   <Button>
@@ -96,8 +90,8 @@ class EditImage extends Component {
                       onChange={this.changeDistanceValue}
                       step={0.01}
                       type="range"
-                      value={distance.toFixed(2)}
-                      disabled={!this.state.checked}
+                      value={image ? image.filters.length > 0 ? parseFloat(image.filters[1].distance) : 0.00 : 0.00}
+                      disabled={image ? image.filters.length > 0 ? false : true : !this.state.checked}
                       size="big"
                     />
                   </Button>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 
-const WINDOW_WIDTH = window.innerWidth > 400 ? 400 : window.innerWidth - 10;
+const WINDOW_WIDTH = window.innerWidth;
 
 const styles = {
   help: {
     position: 'absolute',
     width: WINDOW_WIDTH,
-    bottom: '45px',
+    bottom: '50px',
     left: '0'
   },
   p: {

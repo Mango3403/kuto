@@ -20,7 +20,7 @@ class Shape extends Component {
       left: 200,
       top: 200,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 1,
     });
     this.props.canvas.add(line).setActiveObject(line).renderAll();
@@ -33,7 +33,7 @@ class Shape extends Component {
       top: 200,
       radius: 30,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 5,
     });
     this.props.canvas.add(circle).setActiveObject(circle).renderAll();
@@ -47,7 +47,7 @@ class Shape extends Component {
       width: 100,
       height: 100,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 5,
     });
     this.props.canvas.add(triangle).setActiveObject(triangle).renderAll();
@@ -61,7 +61,7 @@ class Shape extends Component {
       width: 100,
       height: 80,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 5,
     });
     this.props.canvas.add(rect).setActiveObject(rect).renderAll();
@@ -87,7 +87,7 @@ class Shape extends Component {
       left: 200,
       top: 200,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 5,
     });
     this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
@@ -100,7 +100,7 @@ class Shape extends Component {
       left: 200,
       top: 200,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 5,
     });
     this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
@@ -134,7 +134,7 @@ class Shape extends Component {
       left: 200,
       top: 200,
       fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#ccc',
+      stroke: '#000',
       strokeWidth: 5,
     });
     this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();

@@ -144,12 +144,9 @@ namespace KutoAdmin.Controllers
                     //Response.Write("<script>alert('登录成功！');</script>");
                     //Response.End();
                     return RedirectToAction("BusinessUserHome", new { BusinessUserID = 1 });
-
-
                 }
                 else
                 {
-
                     return View();
                 }
 
