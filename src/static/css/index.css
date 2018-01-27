@@ -6,6 +6,10 @@ body {
     overflow: hidden;
 }
 
+a {
+    cursor: default !important;
+}
+
 #ruler {
     position: absolute;
     width: 100%;

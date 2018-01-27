@@ -2,7 +2,8 @@ import React from 'react';
 import { fabric } from 'fabric/dist/fabric';
 import 'fabric-customise-controls';
 import { ruler } from 'ruler.js/dist/ruler';
-import CustomControl from '../components/CustomControl';
+import CustomControl from './CustomControl';
+import Contact from './Contact';
 import del from '../static/images/control/handle_del.png';
 import rotate from '../static/images/control/handle_rotate.png';
 import zoom from '../static/images/control/handle_zoom.png';
@@ -343,6 +344,7 @@ class Custom extends React.Component {
           closeEditShape={this.closeEditShape}
           editShapeToggle={this.editShapeToggle}
         />
+        <Contact />
       </div>
     );
   }

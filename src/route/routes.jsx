@@ -3,10 +3,10 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import Custom from '../containers/Custom';
-import CustomForm from '../containers/CustomForm';
-import CustomHelp from '../containers/CustomHelp';
-import Test from '../containers/Test';
+import Custom from '../components/Custom';
+import CustomForm from '../components/CustomForm';
+import CustomHelp from '../components/CustomHelp';
+import Test from '../components/Test';
 
 const CustomRouter = () => (
   <Router basename="/custom">

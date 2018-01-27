@@ -64,11 +64,11 @@ class CustomForm extends Component {
 
   // 将dataURL转化为blob类型
   dataURLtoBlob = (dataurl) => {
-    let 
-      arr = dataurl.split(','), 
+    let
+      arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]), 
-      n = bstr.length, 
+      bstr = atob(arr[1]),
+      n = bstr.length,
       u8arr = new Uint8Array(n);
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
@@ -99,6 +99,12 @@ class CustomForm extends Component {
   }
 
   render() {
+    const data = { dataurl: this.state.dataurl };
+    const path = {
+      pathname: '/help',
+      state: data,
+    };
+
     return (
       <Container text>
         <Header as="h2">表单信息</Header>
@@ -122,7 +128,7 @@ class CustomForm extends Component {
             <Form.Input placeholder="" name="address" onChange={this.handleChange} />
           </Form.Field>
           <Form.Button content="提交" />
-          <Link id="link" to="/help" />
+          <Link id="link" to={path} />
         </Form>
       </Container>
     );
