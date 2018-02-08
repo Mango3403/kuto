@@ -22,7 +22,7 @@
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.4.0",
     "extract-text-webpack-plugin": "3.0.2",
-    "fabric": "^2.0.0-rc.3",
+    "fabric": "^2.0.0",
     "fabric-customise-controls": "^0.3.6",
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
@@ -39,10 +39,8 @@
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-sketch": "^0.4.1",
     "reactcss": "^1.2.3",
-    "ruler.js": "^1.0.1",
-    "semantic-ui-react": "^0.77.1",
+    "semantic-ui-react": "^0.78.2",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
@@ -55,8 +53,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "lint": "eslint ./src",
-    "lint.fix": "eslint ./src --fix"
+    "lint": "eslint ./src/components",
+    "lint.fix": "eslint ./src/route/*.jsx --fix"
   },
   "devDependencies": {
     "eslint": "^4.14.0",

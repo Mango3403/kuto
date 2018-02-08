@@ -147,6 +147,7 @@ namespace KutoAdmin.Controllers
                 }
                 else
                 {
+                    ViewBag.ErrorMessage = "用户名或密码错误";
                     return View();
                 }
 
@@ -189,11 +190,8 @@ namespace KutoAdmin.Controllers
             {
                 var ulist = db.spImgListforBusinessUser(BusinessUserID, pageIndex, pageSize, pageCount, totalCount).ToList();
 
-
-
                 JavaScriptSerializer ser = new JavaScriptSerializer();
                 return "{\"total\":" + totalCount.Value.ToString() + ",\"rows\":" + ser.Serialize(ulist) + "}";
-
             }
         }
 

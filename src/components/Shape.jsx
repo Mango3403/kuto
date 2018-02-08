@@ -1,175 +1,230 @@
 import React, { Component } from 'react';
-import { Icon, Dropdown, Image } from 'semantic-ui-react';
-import { fabric } from 'fabric/dist/fabric';
-import circle from '../static/images/control/circle.png';
-import line from '../static/images/control/line.png';
-import triangle from '../static/images/control/triangle.png';
-import rect from '../static/images/control/rect.png';
+import { Icon, Dropdown, Image, Sidebar, Segment, Menu, Form, Button } from 'semantic-ui-react';
+import circleImg from '../static/images/control/circle.png';
+import lineImg from '../static/images/control/line.png';
+import triangleImg from '../static/images/control/triangle.png';
+import rectImg from '../static/images/control/rect.png';
 import pentagon from '../static/images/control/pentagon.png';
 import pentagram from '../static/images/control/pentagram.png';
 import hexagon from '../static/images/control/hexagon.png';
+import reactCSS from 'reactcss';
+import { BlockPicker } from 'react-color';
 
-class Shape extends Component {
-  constructor(props) {
-    super(props);
-    
-  }
+const stylesMain = {
+    dropDown: {
+        margin: 0,
+        padding: 0,
+        minWidth: '3em',
+    },
+    panel: {
+        paddingTop: 0,
+        zIndex: 310,
+    },
+};
 
-  addLine = () => {
-    const line = new fabric.Line([105, 250, 205, 250], {
-      left: 200,
-      top: 200,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 1,
-    });
-    this.props.canvas.add(line).setActiveObject(line).renderAll();
-    this.props.openEditShape();
-  }
-
-  addCircle = () => {
-    const circle = new fabric.Circle({
-      left: 200,
-      top: 200,
-      radius: 30,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 5,
-    });
-    this.props.canvas.add(circle).setActiveObject(circle).renderAll();
-    this.props.openEditShape();
-  }
-
-  addTriangle = () => {
-    const triangle = new fabric.Triangle({
-      left: 200,
-      top: 200,
-      width: 100,
-      height: 100,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 5,
-    });
-    this.props.canvas.add(triangle).setActiveObject(triangle).renderAll();
-    this.props.openEditShape();
-  }
-
-  addRect = () => {
-    const rect = new fabric.Rect({
-      left: 200,
-      top: 200,
-      width: 100,
-      height: 80,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 5,
-    });
-    this.props.canvas.add(rect).setActiveObject(rect).renderAll();
-    this.props.openEditShape();
-  }
-
-  regularPolygonPoints = (sideCount, radius) => {
-    const sweep = (Math.PI * 2) / sideCount;
-    const cx = radius;
-    const cy = radius;
-    const points = [];
-    for (let i = 0; i < sideCount; i++) {
-      const x = cx + (radius * Math.sin(i * sweep));
-      const y = cy + (radius * -Math.cos(i * sweep));
-      points.push({ x, y });
+class ShapeMenu extends Component {
+    // 点击图形按钮方法
+    clickShapeButton = (func) => () => {
+        func();
+        this.props.openShapePanel();
     }
-    return points;
-  }
 
-  addPentagon = () => {
-    const points = this.regularPolygonPoints(5, 30);
-    const polygon = new fabric.Polygon(points, {
-      left: 200,
-      top: 200,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 5,
-    });
-    this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
-    this.props.openEditShape();
-  }
+    render() {
+        const { tooltip } = this.props;
 
-  addHexagon = () => {
-    const points = this.regularPolygonPoints(6, 30);
-    const polygon = new fabric.Polygon(points, {
-      left: 200,
-      top: 200,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 5,
-    });
-    this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
-    this.props.openEditShape();
-  }
-
-  starPolygonPoints = (spikeCount, outerRadius, innerRadius) => {
-    const cx = outerRadius;
-    const cy = outerRadius;
-    const sweep = Math.PI / spikeCount;
-    const points = [];
-    let angle = 0;
-
-    for (let i = 0; i < spikeCount; i++) {
-      let x = cx + (Math.sin(angle) * outerRadius);
-      let y = cy + (-Math.cos(angle) * outerRadius);
-      points.push({ x, y });
-      angle += sweep;
-
-      x = cx + (Math.sin(angle) * innerRadius);
-      y = cy + (-Math.cos(angle) * innerRadius);
-      points.push({ x, y });
-      angle += sweep;
+        return (
+            <Dropdown item icon="puzzle" upward button pointing="top left" closeOnChange={false} style={stylesMain.dropDown}>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addCircle)}>
+                        <Icon as={Image} src={circleImg} />
+                        {tooltip && ' 圆形'}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addLine)}>
+                        <Icon as={Image} src={lineImg} />
+                        {tooltip && ' 线段'}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addTriangle)}>
+                        <Icon as={Image} src={triangleImg} />
+                        {tooltip && ' 三角形'}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addRect)}>
+                        <Icon as={Image} src={rectImg} />
+                        {tooltip && ' 矩形'}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addPentagon)}>
+                        <Icon as={Image} src={pentagon} />
+                        {tooltip && ' 正五边形'}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addPentagram)}>
+                        <Icon as={Image} src={pentagram} />
+                        {tooltip && ' 五角星'}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addHexagon)}>
+                        <Icon as={Image} src={hexagon} />
+                        {tooltip && ' 正六边形'}
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        );
     }
-    return points;
-  }
-
-  addPentagram = () => {
-    const points = this.starPolygonPoints(5, 50, 25);
-    const polygon = new fabric.Polygon(points, {
-      left: 200,
-      top: 200,
-      fill: this.props.isFill ? '#ff0' : null,
-      stroke: '#000',
-      strokeWidth: 5,
-    });
-    this.props.canvas.add(polygon).setActiveObject(polygon).renderAll();
-    this.props.openEditShape();
-  }
-
-  render() {
-    return (
-      <Dropdown item icon="cube" upward button pointing="top left" closeOnChange={false}>
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={this.addCircle}>
-            <Icon as={Image} src={circle} />
-          </Dropdown.Item>
-          <Dropdown.Item onClick={this.addLine}>
-            <Icon as={Image} src={line} />
-          </Dropdown.Item>
-          <Dropdown.Item onClick={this.addTriangle}>
-            <Icon as={Image} src={triangle} />
-          </Dropdown.Item>
-          <Dropdown.Item onClick={this.addRect}>
-            <Icon as={Image} src={rect} />
-          </Dropdown.Item>
-          <Dropdown.Item onClick={this.addPentagon}>
-            <Icon as={Image} src={pentagon} />
-          </Dropdown.Item>
-          <Dropdown.Item onClick={this.addPentagram}>
-            <Icon as={Image} src={pentagram} />
-          </Dropdown.Item>
-          <Dropdown.Item onClick={this.addHexagon}>
-            <Icon as={Image} src={hexagon} />
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  }
 }
 
-export default Shape;
+class ShapePanel extends Component {
+    state = {
+        picker: false,
+        checked: false,
+        isFill: false,
+        color: {
+            r: '0',
+            g: '0',
+            b: '0',
+        },
+        stroke: '#000000',
+        fill: '#ffff00',
+    }
+
+    // 填充开关
+    toggleChecked = () => this.setState({ checked: !this.state.checked })
+    clickCheckButton = () => {
+        if (this.state.checked) {
+            this.props.setShapeFill(null);
+        } else {
+            this.props.setShapeFill(this.state.fill);
+        }
+        this.toggleChecked();
+    }
+
+    // 颜色选择器开关
+    colorPickerOpen = () => this.setState({ picker: true })
+    colorPickerClose = () => this.setState({ picker: false })
+
+    // 颜色选择器更换颜色
+    colorPickerChange = (color) => {
+        if (this.state.isFill) {
+            this.props.setShapeFill(color.hex);
+            this.setState({ color, fill: color.hex });
+        } else {
+            this.props.setShapeStroke(color.hex);
+            this.setState({ color, stroke: color.hex });
+        }
+    }
+
+    render() {
+        const { strokeWidth, shapepanel, shape } = this.props;
+        const { picker } = this.state;
+
+        const styles = reactCSS({
+            default: {
+                fill: {
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '2px',
+                    background: shape ? shape.fill : this.state.fill,
+                },
+                stroke: {
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '2px',
+                    background: shape ? shape.stroke : this.state.stroke,
+                },
+                swatch: {
+                    padding: '5px',
+                    background: '#fff',
+                    borderRadius: '1px',
+                    boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                    display: 'inline-block',
+                    cursor: 'pointer',
+                },
+                popover: {
+                    position: 'absolute',
+                    bottom: 0,
+                    zIndex: 311,
+                },
+                cover: {
+                    position: 'fixed',
+                    top: '0px',
+                    right: '0px',
+                    bottom: '0px',
+                    left: '0px',
+                },
+            },
+        });
+
+        return (
+            <div>
+                <Sidebar as={Segment} animation="push" direction="bottom" style={stylesMain.panel} visible={shapepanel}>
+                    <Menu pointing secondary>
+                        <Menu.Item header>
+                            <h3>图形</h3>
+                        </Menu.Item>
+                        <Menu.Item position="right">
+                            <Icon onClick={this.props.closeShapePanel} name="close" bordered size="small" />
+                        </Menu.Item>
+                    </Menu>
+                    <Form style={{ padding: '5px' }}>
+                        <Form.Group inline style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                            <span>边框粗细</span>
+                            <Button.Group>
+                                <Button disabled={shape ? shape.strokeWidth === 1 : strokeWidth === 1} icon="minus" onClick={this.props.strokeWidthMinus} />
+                                <Button>{shape ? shape.strokeWidth : strokeWidth}</Button>
+                                <Button disabled={shape ? shape.strokeWidth === 30 : strokeWidth === 30} icon="plus" onClick={this.props.strokeWidthPlus} />
+                            </Button.Group>
+                        </Form.Group>
+                        <Form.Group inline style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <span>边框颜色</span>
+                            <div
+                                style={styles.swatch}
+                                onKeyPress={() => { this.setState({ color: this.state.stroke }); this.colorPickerOpen(); }}
+                                onClick={() => { this.setState({ color: this.state.stroke }); this.colorPickerOpen(); }}
+                            >
+                                <div style={styles.stroke} />
+                            </div>
+                        </Form.Group>
+                        <Form.Group inline style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0' }}>
+                            <span>填充颜色</span>
+                            <Form.Checkbox label="填充" checked={this.state.checked} onChange={this.clickCheckButton} />
+                            <div
+                                style={styles.swatch}
+                                onKeyPress={() => {
+                                    if (this.state.checked) {
+                                        this.setState({ isFill: true, color: this.state.fill });
+                                        this.colorPickerOpen();
+                                    } else {
+                                        return false;
+                                    }
+                                }}
+                                onClick={() => {
+                                    if (this.state.checked) {
+                                        this.setState({ isFill: true, color: this.state.fill });
+                                        this.colorPickerOpen();
+                                    } else {
+                                        return false;
+                                    }
+                                }}
+                            >
+                                <div style={styles.fill} />
+                            </div>
+                        </Form.Group>
+                    </Form>
+                </Sidebar>
+                {
+                    picker &&
+                    <div style={styles.popover}>
+                        <div
+                            style={styles.cover}
+                            onKeyPress={() => { this.colorPickerClose(); this.setState({ isFill: false }); }}
+                            onClick={() => { this.colorPickerClose(); this.setState({ isFill: false }); }}
+                        />
+                        <BlockPicker
+                            color={this.state.color}
+                            onChangeComplete={this.colorPickerChange}
+                        />
+                    </div>
+                }
+            </div>
+        );
+    }
+}
+
+
+export { ShapeMenu, ShapePanel };

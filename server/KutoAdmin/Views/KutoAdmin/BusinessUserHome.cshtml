@@ -42,11 +42,12 @@
 <table id="list_data" class="easyui-datagrid" cellspacing="0" style="align-content:center" cellpadding="0">
     <thead>
         <tr data-options="nowrap:false">
-            <th class="down_qr" data-options="field:'Pic', align:'center',formatter:imgFormatter" width="500">效果图（<button onclick="DownLoadPics();">下载</button>）</th>
+            <th class="down_qr" data-options="field:'Pic', align:'center',formatter:imgFormatter" width="400">效果图（<button onclick="DownLoadPics();">下载</button>）</th>
 
             <th data-options="field:'lastEditTime',align:'center',formatter: DateTimeFormatter" width="200">时间</th>
             <th data-options="field:'mobile',align:'center'" width="100">手机号</th>
             <th data-options="field:'name',align:'center'" width="100">名字</th>
+            <th data-options="field:'address',align:'center'" width="200">地址</th>
         </tr>
     </thead>
 </table>
@@ -59,7 +60,7 @@
     $('#list_data').datagrid({
         title: '客户图片表',
         //iconCls: 'icon-edit',//图标
-        width: '900px',
+        width: 1000,
         height: 'auto',
         //nowrap: false,
         pagination: true,
@@ -74,7 +75,6 @@
         pageSize: 10,
         queryParams: { BusinessUserID: $('#hid_businessuserid').val() },
         onLoad: function (data) {
-
             //alert("加载成功");
         }
         //toolbar: [{
@@ -119,7 +119,6 @@
     });
 
     function DateTimeFormatter(value, row, index) {
-
         if (value == undefined) {
             return "";
         }
@@ -137,8 +136,8 @@
         var path = getRealPath();
 
         return '<img height="200px" border="0" class="qr_img"  src="' + path + row["pic"] + '" onclick="downloadImage(\'' + path + row["pic"] + '\')"/>';
-
     }
+
     //下载单个图片
     function downloadImage(src) {
         var filename = src.substring(src.lastIndexOf("/") + 1, src.length);
@@ -150,20 +149,17 @@
 
     //批量下载图片
     function DownLoadPics() {
-        $("img").each(function () {
+        $(".datagrid-row-selected img").each(function () {
             downloadImage(this.src);
         });
     }
 
     function getRealPath() {
-
         var localObj = window.location;
         var contextPath = localObj.pathname.split("/")[1];
         var basePath = localObj.protocol + "//" + localObj.host + "/save/";
         return basePath;
-
     }
-
 </script>
 
 

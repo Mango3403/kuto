@@ -73,9 +73,12 @@
 
     // // 标尺
     window.onload = function () {
-      if (window.ruler) {
+      const rulerDOM = document.getElementById('ruler');
+      if (!rulerDOM) {
+        console.log('未找到Ruler');
+      } else {
         const rul1 = new ruler({
-          container: document.getElementById('ruler'),
+          container: rulerDOM,
         });
         rul1.api.setScale(0.02);
         rul1.api.setPos({

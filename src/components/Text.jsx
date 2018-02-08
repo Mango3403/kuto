@@ -1,160 +1,137 @@
 import React, { Component } from 'react';
-import { Sidebar, Icon, Segment, Menu, Form } from 'semantic-ui-react';
-import { fabric } from 'fabric/dist/fabric';
+import { Sidebar, Icon, Segment, Menu, Dropdown, TextArea } from 'semantic-ui-react';
 import reactCSS from 'reactcss';
-import { ChromePicker } from 'react-color';
+import { BlockPicker } from 'react-color';
 
 const fontFamily = [
-  { key: 'Arial', value: 'Arial', text: '默认字体' },
-  { key: 'LiDeBiao-Xing3efdf0dc8b19aca', value: 'LiDeBiao-Xing3efdf0dc8b19aca', text: '德彪钢笔' },
-  { key: 'winmantun23001efe02015619aca', value: 'winmantun23001efe02015619aca', text: '浪漫原体' },
-  { key: 'GoodVibrationsRf33e9f42419aca', value: 'GoodVibrationsRf33e9f42419aca', text: 'GoodVibrationsROB(英文)' },
-  { key: 'Helvetica-Neue-f33f1506b19aca', value: 'Helvetica-Neue-f33f1506b19aca', text: 'Helvetica-Neue-LT-Std(英文)' },
+    { key: 'Arial', value: 'Arial', text: 'Arial' },
+    { key: 'LiDeBiao-Xing3efdf0dc8b19aca', value: 'LiDeBiao-Xing3efdf0dc8b19aca', text: '德彪钢笔' },
+    { key: 'winmantun23001efe02015619aca', value: 'winmantun23001efe02015619aca', text: '浪漫原体' },
+    { key: 'GoodVibrationsRf33e9f42419aca', value: 'GoodVibrationsRf33e9f42419aca', text: 'GoodVibrationsROB(英文)' },
+    { key: 'Helvetica-Neue-f33f1506b19aca', value: 'Helvetica-Neue-f33f1506b19aca', text: 'Helvetica-Neue-LT-Std(英文)' },
 ];
 
-class Text extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayColorPicker: false,
-      color: {
-        r: '211',
-        g: '212',
-        b: '213',
-        a: '1',
-      },
+const stylesMain = {
+    panel: {
+        paddingTop: 0,
+        zIndex: 310,
+        maxHeight: 300,
+    },
+    group: {
+        margin: 10,
+        minHeight: 130,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignContent: 'space-between',
+    },
+    textarea: {
+        width: '100%', 
+        minWidth: '100%',
+        minHeight: 80,
+    },
+    iconClose: {
+        width: '2em',
+    },
+};
+
+// “双击文字编辑”提示延迟时间 ms
+const timeoutLength = 2500;
+
+class TextPanel extends Component {
+    state = {
+        picker: false,
+        fill: {
+            r: '211',
+            g: '212',
+            b: '213',
+        },
     };
-  }
 
-  componentDidMount() {
-    const field1 = document.getElementsByClassName('field').item(1);
-    field1.style.width = 'calc(100% - 42px)';
-  }
+    // 颜色选择器开关
+    colorPickerOpen = () => this.setState({ picker: true })
+    colorPickerClose = () => this.setState({ picker: false })
 
-  // componentDidUpdate(nextProps, nextState) {
-  //   if (!!nextProps.canvas) {
-  //     console.log(nextProps.canvas.getActiveObject());
-  //   }
-  // }
+    // 颜色选择器更换颜色
+    colorPickerChange = (color) => {
+        this.setState({ fill: color.rgb });
+        this.props.setTextFill(color.hex);
+    }
 
-  addText = () => {
-    const { canvas, openEditText } = this.props;
-    const { color } = this.state;
+    render() {
+        const { closeTextPanel, textpanel, text } = this.props;
+        const { fill, picker } = this.state;
+        const styles = reactCSS({
+            default: {
+                color: {
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '2px',
+                    background: text ? text.fill : `rgb(${fill.r}, ${fill.g}, ${fill.b})`,
+                },
+                swatch: {
+                    padding: '5px',
+                    background: '#fff',
+                    borderRadius: '1px',
+                    boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                    display: 'inline-block',
+                    cursor: 'pointer',
+                },
+                popover: {
+                    position: 'absolute',
+                    bottom: 0,
+                    zIndex: 311,
+                },
+                cover: {
+                    position: 'fixed',
+                    top: '0px',
+                    right: '0px',
+                    bottom: '0px',
+                    left: '0px',
+                },
+            },
+        });
 
-    const text = new fabric.Text('你的内容', {
-      fontSize: 40,
-      fill: `rgb(${color.r},${color.g},${color.b})`, // 银色
-      fontFamily: 'Arial', // 默认字体
-    });
-
-    canvas.viewportCenterObject(text).add(text).setActiveObject(text).renderAll();
-
-    this.setState({ text });
-
-    openEditText();
-  }
-
-  setText = ({ target: { value } }) => {
-    const { canvas, text } = this.props;
-    text.set('text', value);
-    canvas.renderAll();
-    this.setState({ text });
-  }
-
-  setFill = (color) => {
-    const { canvas, text } = this.props;
-    text.set('fill', color);
-    canvas.renderAll();
-    this.setState({ text });
-  }
-
-  setFontFamily = (e, { value }) => {
-    const { canvas, text } = this.props;
-    text.set('fontFamily', value);
-    canvas.renderAll();
-    this.setState({ text });
-  }
-
-  handleOpen = () => this.setState({ displayColorPicker: true })
-  handleClose = () => this.setState({ displayColorPicker: false })
-
-  handleChange = (color) => {
-    this.setState({ color: color.rgb });
-    this.setFill(color.hex);
-  }
-
-  render() {
-    const { closeEditText, edittext, text } = this.props;
-    const { color, displayColorPicker } = this.state;
-    const styles = reactCSS({
-      default: {
-        color: {
-          width: '28px',
-          height: '28px',
-          borderRadius: '2px',
-          background: text ? text.fill : `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
-        },
-        swatch: {
-          padding: '5px',
-          background: '#fff',
-          borderRadius: '1px',
-          boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-          display: 'inline-block',
-          cursor: 'pointer',
-        },
-        popover: {
-          position: 'absolute',
-          top: '-250px',
-          zIndex: '110',
-        },
-        cover: {
-          position: 'fixed',
-          top: '0px',
-          right: '0px',
-          bottom: '0px',
-          left: '0px',
-        },
-        iconClose: {
-          width: '2em',
-        },
-      },
-    });
-
-    return (
-      <div>
-        <Icon onClick={this.addText} name="font" />
-        <Sidebar as={Segment} animation="push" direction="bottom" visible={edittext}>
-          <Menu pointing secondary>
-            <Menu.Item header>
-              <h3>文字</h3>
-            </Menu.Item>
-            <Menu.Item position="right">
-              <Icon onClick={closeEditText} name="close" bordered size="small" style={styles.iconClose} />
-            </Menu.Item>
-          </Menu>
-          <Form style={{ padding: '5px', textAlign: 'center' }}>
-            <h3 style={{ marginTop: '10px' }}>你的内容</h3>
-            <Form.Input value={text ? text.text : '你的内容'} onChange={this.setText} onFocus={this.setText} />
-            <Form.Group inline style={{ margin: 0 }}>
-              <Form.Select selection options={fontFamily} pointing="bottom" value={text ? text.fontFamily : null} placeholder="字体" onChange={this.setFontFamily} style={{ width: '100%' }} />
-              <div style={styles.swatch} onKeyPress={this.handleOpen} onClick={this.handleOpen}>
-                <div style={styles.color} />
-              </div>
-            </Form.Group>
-          </Form>
-        </Sidebar>
-        {
-          displayColorPicker ?
-            <div style={styles.popover}>
-              <div style={styles.cover} onKeyPress={this.handleClose} onClick={this.handleClose} />
-              <ChromePicker color={color} onChange={this.handleChange} />
+        return (
+            <div>
+                <Sidebar as={Segment} animation="push" direction="bottom" style={stylesMain.panel} visible={textpanel}>
+                    <Menu pointing secondary>
+                        <Menu.Item header>
+                            <h3>文字</h3>
+                        </Menu.Item>
+                        <Menu.Item position="right">
+                            <Icon onClick={closeTextPanel} name="close" bordered size="small" style={stylesMain.iconClose} />
+                        </Menu.Item>
+                    </Menu>
+                    <div style={stylesMain.group}>
+                        <TextArea
+                            placeholder={text ? text.text : '你的内容'}
+                            onInput={(e) => {this.props.setText(e.target.value);}}
+                            style={stylesMain.textarea}
+                        />
+                        <Dropdown
+                            selection
+                            options={fontFamily}
+                            pointing="bottom"
+                            value={text ? text.fontFamily : null}
+                            placeholder="字体"
+                            onChange={this.props.setFontFamily}
+                        />
+                        <div style={styles.swatch} onKeyPress={this.colorPickerOpen} onClick={this.colorPickerOpen}>
+                            <div style={styles.color} />
+                        </div>
+                    </div>
+                </Sidebar>
+                {
+                    picker &&
+                    <div style={styles.popover}>
+                        <div style={styles.cover} onKeyPress={this.colorPickerClose} onClick={this.colorPickerClose} />
+                        <BlockPicker color={fill} onChangeComplete={this.colorPickerChange} />
+                    </div>
+                }
             </div>
-            :
-            null
-        }
-      </div>
-    );
-  }
+        );
+    }
 }
 
-export default Text;
+export { TextPanel };
