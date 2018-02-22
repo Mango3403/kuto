@@ -13,6 +13,7 @@ const fontFamily = [
 
 const stylesMain = {
     panel: {
+        padding: 8,
         paddingTop: 0,
         zIndex: 310,
         maxHeight: 300,

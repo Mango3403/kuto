@@ -10,6 +10,7 @@ import white from '../static/images/white.jpg';
 
 const styles = {
     panel: {
+        padding: 8,
         paddingTop: 0,
         overflowX: 'hidden',
         maxHeight: 300,
@@ -26,10 +27,6 @@ const overlay = [
     { key: 2, src: ol2 },
     { key: 3, src: ol3 },
 ];
-const background = [
-    { key: 1, src: bg1 },
-    { key: 2, src: bg2 },
-];
 
 class BackgroundPanel extends Component {
     state = {
@@ -41,29 +38,22 @@ class BackgroundPanel extends Component {
         top: 250,
     };
 
+    // 设置背景色（未使用）
     setColor = (e, { value }) => {
         const { canvas } = this.props;
         canvas.setBackgroundColor(value).renderAll();
     }
 
-    setBackgroundImage = (e) => {
-        const { canvas } = this.props;
+    // 设置网格线背景
+    setCrossGrid = () => {
+        this.props.removeGrid();
+        this.props.createCrossGrid();
+    }
 
-        fabric.Image.fromURL(e.target.src, function (img) {
-            img.set({
-                width: canvas.getWidth(),
-                height: canvas.getHeight(),
-                scaleX: 1.2,
-                scaleY: 1.2,
-                opacity: 0.2,
-                top: (canvas.getHeight() - (img.height * 1.2)) / 2,
-                left: (canvas.getWidth() - (img.width * 1.2)) / 2,
-                originX: 'left',
-                originY: 'top',
-            });
-
-            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        });
+    // 设置齐分格线背景
+    setHorizontalGrid = () => {
+        this.props.removeGrid();
+        this.props.createHorizontalGrid();
     }
 
     checkOverlayImage = () => {
@@ -185,24 +175,12 @@ class BackgroundPanel extends Component {
         });
     }
 
-    removeBackgroundImage = () => {
-        const { canvas } = this.props;
-
-        canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
-    }
-
     removeOverlayImage = () => {
         const { canvas } = this.props;
 
         canvas.setOverlayImage(null, canvas.renderAll.bind(canvas));
 
         this.controlClose();
-    }
-
-    clear = () => {
-        const { canvas } = this.props;
-
-        canvas.setBackgroundColor(null).setBackgroundImage(null).renderAll();
     }
 
     toggleVisibility = () => {
@@ -271,7 +249,7 @@ class BackgroundPanel extends Component {
 
         return (
             <Sidebar as={Segment} animation="push" direction="bottom" visible={backgroundpanel} style={styles.panel}>
-                <Menu pointing secondary>
+                <Menu pointing secondary style={{ marginBottom: 0 }}>
                     <Menu.Item header>
                         <h3>编辑遮罩</h3>
                     </Menu.Item>
@@ -281,13 +259,10 @@ class BackgroundPanel extends Component {
                 </Menu>
                 <span>背景图</span>
                 <Container style={{ overflowX: 'auto' }}>
-                    <Image floated="left" bordered height={60} src={white} onClick={this.removeBackgroundImage} />
+                    <Image floated="left" bordered height={60} src={white} onClick={this.props.removeGrid} />
                     <Image.Group style={{ width: 1000 }}>
-                        {
-                            background.map(bg => (
-                                <Image floated="left" bordered height={60} width={60} key={bg.key} src={bg.src} onClick={this.setBackgroundImage} />
-                            ))
-                        }
+                        <Image floated="left" bordered height={60} width={60} src={bg1} onClick={this.setCrossGrid} />
+                        <Image floated="left" bordered height={60} width={60} src={bg2} onClick={this.setHorizontalGrid} />
                     </Image.Group>
                 </Container>
                 <span>遮罩层</span>

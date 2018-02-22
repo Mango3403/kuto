@@ -16,7 +16,11 @@ const stylesMain = {
         padding: 0,
         minWidth: '3em',
     },
+    dropDownItem: {
+        minWidth: '3.5em',
+    },
     panel: {
+        padding: 8,
         paddingTop: 0,
         zIndex: 310,
     },
@@ -33,33 +37,33 @@ class ShapeMenu extends Component {
         const { tooltip } = this.props;
 
         return (
-            <Dropdown item icon="puzzle" upward button pointing="top left" closeOnChange={false} style={stylesMain.dropDown}>
+            <Dropdown trigger={<Icon name="puzzle" />} item icon={null} upward button pointing="top left" closeOnChange={false} style={stylesMain.dropDown}>
                 <Dropdown.Menu>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addCircle)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addCircle)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={circleImg} />
                         {tooltip && ' 圆形'}
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addLine)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addLine)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={lineImg} />
                         {tooltip && ' 线段'}
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addTriangle)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addTriangle)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={triangleImg} />
                         {tooltip && ' 三角形'}
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addRect)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addRect)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={rectImg} />
                         {tooltip && ' 矩形'}
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addPentagon)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addPentagon)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={pentagon} />
                         {tooltip && ' 正五边形'}
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addPentagram)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addPentagram)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={pentagram} />
                         {tooltip && ' 五角星'}
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addHexagon)}>
+                    <Dropdown.Item onClick={this.clickShapeButton(this.props.addHexagon)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={hexagon} />
                         {tooltip && ' 正六边形'}
                     </Dropdown.Item>
@@ -153,7 +157,7 @@ class ShapePanel extends Component {
         return (
             <div>
                 <Sidebar as={Segment} animation="push" direction="bottom" style={stylesMain.panel} visible={shapepanel}>
-                    <Menu pointing secondary>
+                    <Menu pointing secondary style={{ marginBottom: 0 }}>
                         <Menu.Item header>
                             <h3>图形</h3>
                         </Menu.Item>

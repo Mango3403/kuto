@@ -1,7 +1,7 @@
-﻿# 定制项目
+﻿# 酷兔
 
 ## 框架
-* ui: semantic-ui-react
+* ui: semantic
 * tools: fabric.js, ruler.js
 * frame: react(create-react-app)
 

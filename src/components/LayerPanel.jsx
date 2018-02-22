@@ -3,6 +3,7 @@ import { Icon, Sidebar, Segment, Menu } from 'semantic-ui-react';
 
 const styles = {
     panel: {
+        padding: 8,
         paddingTop: 0,
         zIndex: 310,
     },
@@ -17,7 +18,7 @@ class LayerPanel extends React.Component {
 
         return (
             <Sidebar as={Segment} animation="push" direction="bottom" style={styles.panel} visible={layerpanel}>
-                <Menu pointing secondary>
+                <Menu pointing secondary style={{ marginBottom: 0 }}>
                     <Menu.Item header>
                         <h3>编辑图层</h3>
                     </Menu.Item>

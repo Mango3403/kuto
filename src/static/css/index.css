@@ -62,3 +62,8 @@ input[type="range"]::-webkit-slider-thumb {
     content: "";
     width: 100px;
 }
+
+/* 调整二级下拉菜单宽度 */
+.ui.labeled.icon.menu .item>.icon:not(.dropdown) {
+    margin: 0 auto !important;
+}

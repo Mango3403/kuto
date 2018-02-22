@@ -9,6 +9,7 @@ import img4 from '../static/images/picture/4.jpg';
 
 const styles = {
     panel: {
+        padding: 8,
         paddingTop: 0,
         zIndex: 310,
     },

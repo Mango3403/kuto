@@ -7,6 +7,7 @@ import BackgroundPanel from './BackgroundPanel';
 import SavePanel from './SavePanel';
 import { ShapeMenu, ShapePanel } from './Shape';
 import { TextPanel } from './Text';
+import { PaintMenu } from './Paint';
 import LayerPanel from './LayerPanel';
 import layerImg from '../static/images/control/order.png';
 
@@ -32,11 +33,15 @@ const styles = {
         paddingRight: 5,
         minWidth: '3em',
     },
-    menuItemShape: {
+    menuItemDropdown: {
         paddingLeft: 0,
         paddingRight: 0,
         minWidth: '3em',
-    }
+    },
+    // 提示文字样式
+    tooltipText: {
+        marginTop: 5,
+    },
 };
 
 class Controls extends Component {
@@ -112,6 +117,8 @@ class Controls extends Component {
     openSave = () => this.setState({ save: true })
     closeSave = () => this.setState({ save: false })
     clickSaveButton = () => {
+        // 移除分格线
+        this.props.removeGrid();
         const dataurl = this.props.saveImage();
         this.setState({ dataurl });
         this.openSave();
@@ -152,7 +159,7 @@ class Controls extends Component {
                     this.state.menu ?
                         <div>
                             <Menu compact icon="labeled" style={styles.bottomMenu}>
-                                <Menu.Item style={styles.menuItemShape}>
+                                <Menu.Item style={styles.menuItemDropdown}>
                                     <ShapeMenu
                                         tooltip={tooltip}
                                         openShapePanel={this.openShapePanel}
@@ -164,48 +171,55 @@ class Controls extends Component {
                                         addHexagon={this.props.addHexagon}
                                         addPentagram={this.props.addPentagram}
                                     />
-                                    {tooltip && '图形'}
+                                    {tooltip && <span style={styles.tooltipText}>图形</span>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem} onClick={this.clickTextButton}>
                                     <Icon name="font" />
-                                    {tooltip && '文字'}
+                                    {tooltip && <span style={styles.tooltipText}>文字</span>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem}>
                                     <Icon name="image" onClick={this.openImagePanel} />
-                                    {tooltip && '图片'}
+                                    {tooltip && <span style={styles.tooltipText}>图片</span>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem} onClick={this.clickBackgroundButton}>
                                     <Icon name="desktop" />
-                                    {tooltip && '背景'}
+                                    {tooltip && <span style={styles.tooltipText}>背景</span>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem} onClick={this.clickSaveButton}>
                                     <Icon name="save" />
-                                    {tooltip && '保存'}
+                                    {tooltip && <span style={styles.tooltipText}>保存</span>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem} onClick={this.openClearWarning}>
                                     <Icon name="trash" />
-                                    {tooltip && '清空'}
+                                    {tooltip && <span style={styles.tooltipText}>清空</span>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem} onClick={this.clickViewButton}>
                                     <Icon name="hide" />
-                                    {tooltip && '隐藏'}
+                                    {tooltip && <span style={styles.tooltipText}>隐藏</span>}
                                 </Menu.Item>
                             </Menu>
 
                             <Menu compact icon="labeled" vertical style={styles.rightMenu}>
-                                <Menu.Item style={styles.menuItem} onClick={this.drawingModeToggle}>
-                                    {isDrawingMode ? <Icon name="hand pointer" /> : <Icon name="paint brush" />}
-                                    {tooltip && '模式'}
+                                <Menu.Item style={isDrawingMode ? styles.menuItemDropdown : styles.menuItem}>
+                                    {
+                                        isDrawingMode ?
+                                            <PaintMenu
+                                                drawingModeToggle={this.drawingModeToggle}
+                                                setDrawingBrushWidth={this.props.setDrawingBrushWidth}
+                                            /> :
+                                            <Icon name="hand pointer" onClick={this.drawingModeToggle} />
+                                    }
+                                    {tooltip && <p style={styles.tooltipText}>模式</p>}
                                 </Menu.Item>
                                 <Menu.Item style={styles.menuItem} onClick={this.toggleTooltip}>
-                                    <Icon name="help" />
-                                    {tooltip && '帮助'}
+                                    <Icon name="help circle" />
+                                    {tooltip && <p style={styles.tooltipText}>帮助</p>}
                                 </Menu.Item>
                                 {
                                     this.props.layer &&
                                     <Menu.Item style={styles.menuItem} onClick={this.openLayerPanel}>
-                                        <Icon as={Image} src={layerImg} />
-                                        {tooltip && '图层'}
+                                        <Icon as={Image} src={layerImg} style={{ maxWidth: 28 }} />
+                                        {tooltip && <p style={styles.tooltipText}>图层</p>}
                                     </Menu.Item>
                                 }
                             </Menu>
@@ -214,7 +228,7 @@ class Controls extends Component {
                         <Menu compact icon="labeled" style={styles.bottomMenu}>
                             <Menu.Item style={styles.menuItem} onClick={this.clickViewButton}>
                                 <Icon name="unhide" />
-                                {tooltip && '展示'}
+                                {tooltip && <span style={styles.tooltipText}>展示</span>}
                             </Menu.Item>
                         </Menu>
                 }
@@ -257,6 +271,9 @@ class Controls extends Component {
                     canvas={this.props.canvas}
                     backgroundpanel={this.state.backgroundpanel}
                     closeBackgroundPanel={this.closeBackgroundPanel}
+                    createCrossGrid={this.props.createCrossGrid}
+                    createHorizontalGrid={this.props.createHorizontalGrid}
+                    removeGrid={this.props.removeGrid}
                 />
                 <LayerPanel
                     layerpanel={this.state.layerpanel}

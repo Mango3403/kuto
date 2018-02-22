@@ -564,6 +564,15 @@ class Kuto extends React.Component {
         localStorage.setItem('myCanvas', JSON.stringify(canvas.toJSON()));
     }
 
+    // 设置画笔粗细
+    setDrawingBrushWidth = (width = 8) => {
+        const { canvas } = this.state;
+        if (canvas.isDrawingMode) {
+            canvas.freeDrawingBrush.width = width;
+        }
+        console.log(canvas.freeDrawingBrush);
+    }
+
     // Controls组件方法
     closeShapePanel = () => {
         this.refs.controls.closeShapePanel();
@@ -576,6 +585,46 @@ class Kuto extends React.Component {
     }
     closeLayerPanel = () => {
         this.refs.controls.closeLayerPanel();
+    }
+
+    // 创建网格线
+    createCrossGrid = () => {
+        const { canvas } = this.state;
+        const grid = 50;
+
+        // 横向线
+        for (let i = 0; i < (WINDOW_HEIGHT / grid / 2); i++) {
+            canvas.add(new fabric.Line([0, i * grid + WINDOW_HEIGHT / 2, WINDOW_WIDTH, i * grid  + WINDOW_HEIGHT / 2], { uuid: 'grid', stroke: '#949494', selectable: false }));
+            canvas.add(new fabric.Line([0, WINDOW_HEIGHT / 2 - i * grid, WINDOW_WIDTH, WINDOW_HEIGHT / 2 - i * grid], { uuid: 'grid', stroke: '#949494', selectable: false }));
+        }
+        // 纵向线
+        for (let i = 0; i < (WINDOW_WIDTH / grid / 2); i++) { 
+            canvas.add(new fabric.Line([i * grid + WINDOW_WIDTH / 2, 0, i * grid + WINDOW_WIDTH / 2, WINDOW_HEIGHT], { uuid: 'grid', stroke: '#949494', selectable: false }));
+            canvas.add(new fabric.Line([WINDOW_WIDTH / 2 - i * grid, 0, WINDOW_WIDTH / 2 - i * grid, WINDOW_HEIGHT], { uuid: 'grid', stroke: '#949494', selectable: false }));        
+        }
+    }
+
+    // 移除所有背景格
+    removeGrid = () => {
+        const { canvas } = this.state;
+        const objects = canvas.getObjects('line');
+
+        for (let i in objects) {
+            if (objects[i].uuid === 'grid') {
+                canvas.remove(objects[i]);
+            }
+        }
+    }
+
+    // 创建齐分线
+    createHorizontalGrid = () => {
+        const { canvas } = this.state;
+        const grid = 50;
+
+        for (var i = 0; i < (WINDOW_HEIGHT / grid / 2); i++) {
+            canvas.add(new fabric.Line([0, i * grid + WINDOW_HEIGHT / 2, WINDOW_WIDTH, i * grid  + WINDOW_HEIGHT / 2], { uuid: 'grid', stroke: '#949494', selectable: false }));
+            canvas.add(new fabric.Line([0, WINDOW_HEIGHT / 2 - i * grid, WINDOW_WIDTH, WINDOW_HEIGHT / 2 - i * grid], { uuid: 'grid', stroke: '#949494', selectable: false }));
+        }
     }
 
     // 初始化
@@ -744,7 +793,12 @@ class Kuto extends React.Component {
                     distanceMinus={this.distanceMinus}
                     changeDistance={this.changeDistance}
 
+                    createCrossGrid={this.createCrossGrid}
+                    createHorizontalGrid={this.createHorizontalGrid}
+                    removeGrid={this.removeGrid}
+
                     drawingMode={this.drawingMode}
+                    setDrawingBrushWidth={this.setDrawingBrushWidth}
 
                     saveImage={this.saveImage}
                 />
