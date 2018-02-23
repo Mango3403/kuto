@@ -8,7 +8,7 @@ import pentagon from '../static/images/control/pentagon.png';
 import pentagram from '../static/images/control/pentagram.png';
 import hexagon from '../static/images/control/hexagon.png';
 import reactCSS from 'reactcss';
-import { BlockPicker } from 'react-color';
+import { SketchPicker } from 'react-color';
 
 const stylesMain = {
     dropDown: {
@@ -30,6 +30,8 @@ class ShapeMenu extends Component {
     // 点击图形按钮方法
     clickShapeButton = (func) => () => {
         func();
+        this.props.closeShapeMenu();
+        console.log(this.props.shapemenu);
         this.props.openShapePanel();
     }
 
@@ -37,7 +39,17 @@ class ShapeMenu extends Component {
         const { tooltip } = this.props;
 
         return (
-            <Dropdown trigger={<Icon name="puzzle" />} item icon={null} upward button pointing="top left" closeOnChange={false} style={stylesMain.dropDown}>
+            <Dropdown
+                trigger={<Icon name="puzzle" onClick={this.props.toggleShapeMenu} />}
+                item 
+                icon={null}
+                upward
+                button
+                pointing="top left"
+                open={this.props.shapemenu}
+                onBlur={this.props.closeShapeMenu}
+                style={stylesMain.dropDown}
+            >
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={this.clickShapeButton(this.props.addCircle)} style={stylesMain.dropDownItem}>
                         <Icon as={Image} src={circleImg} />
@@ -219,7 +231,7 @@ class ShapePanel extends Component {
                             onKeyPress={() => { this.colorPickerClose(); this.setState({ isFill: false }); }}
                             onClick={() => { this.colorPickerClose(); this.setState({ isFill: false }); }}
                         />
-                        <BlockPicker
+                        <SketchPicker
                             color={this.state.color}
                             onChangeComplete={this.colorPickerChange}
                         />

@@ -13,6 +13,12 @@ const styles = {
         paddingTop: 0,
         zIndex: 310,
     },
+    inputFileButton: {
+        position: 'absolute',
+        left: 1000,
+        top: 0,
+        opacity: 0,
+    },
 };
 
 // 大类
@@ -189,15 +195,6 @@ class Panel extends Component {
     }
 
     render() {
-        const styles = {
-            inputFileButton: {
-                position: 'absolute',
-                left: 1000,
-                top: 0,
-                opacity: 0,
-            },
-        };
-
         return (
             <div style={{ padding: '0', overflow: 'hidden', display: 'flex', flexWrap: 'wrap' }}>
                 <Menu secondary style={{ margin: 0, width: '100%', justifyContent: 'space-between' }}>

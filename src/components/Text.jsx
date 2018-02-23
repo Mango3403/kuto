@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Sidebar, Icon, Segment, Menu, Dropdown, TextArea } from 'semantic-ui-react';
 import reactCSS from 'reactcss';
-import { BlockPicker } from 'react-color';
+import { SketchPicker } from 'react-color';
 
 const fontFamily = [
     { key: 'Arial', value: 'Arial', text: 'Arial' },
     { key: 'LiDeBiao-Xing3efdf0dc8b19aca', value: 'LiDeBiao-Xing3efdf0dc8b19aca', text: '德彪钢笔' },
+    { key: 'maozedongziti106091f26a19aca', value: 'maozedongziti106091f26a19aca', text: '草檀斋毛泽东字体' },
     { key: 'winmantun23001efe02015619aca', value: 'winmantun23001efe02015619aca', text: '浪漫原体' },
     { key: 'GoodVibrationsRf33e9f42419aca', value: 'GoodVibrationsRf33e9f42419aca', text: 'GoodVibrationsROB(英文)' },
     { key: 'Helvetica-Neue-f33f1506b19aca', value: 'Helvetica-Neue-f33f1506b19aca', text: 'Helvetica-Neue-LT-Std(英文)' },
@@ -127,7 +128,7 @@ class TextPanel extends Component {
                     picker &&
                     <div style={styles.popover}>
                         <div style={styles.cover} onKeyPress={this.colorPickerClose} onClick={this.colorPickerClose} />
-                        <BlockPicker color={fill} onChangeComplete={this.colorPickerChange} />
+                        <SketchPicker color={fill} onChangeComplete={this.colorPickerChange} />
                     </div>
                 }
             </div>

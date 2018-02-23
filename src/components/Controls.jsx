@@ -49,6 +49,7 @@ class Controls extends Component {
         tooltip: false,
         isDrawingMode: false,
         strokeWidth: 5,
+        shapemenu: false,
         shapepanel: false,
         textpanel: false,
         imagepanel: false,
@@ -74,6 +75,10 @@ class Controls extends Component {
 
     // 控制按钮开关
     clickViewButton = () => this.setState({ menu: !this.state.menu })
+
+    // 图形下拉菜单
+    closeShapeMenu = () => this.setState({ shapemenu: false })    
+    toggleShapeMenu = () => this.setState({ shapemenu: !this.state.shapemenu })
 
     // 编辑图形面板
     openShapePanel = () => this.setState({ shapepanel: true })
@@ -159,9 +164,12 @@ class Controls extends Component {
                     this.state.menu ?
                         <div>
                             <Menu compact icon="labeled" style={styles.bottomMenu}>
-                                <Menu.Item style={styles.menuItemDropdown}>
-                                    <ShapeMenu
+                                <Menu.Item style={styles.menuItemDropdown} onClick={this.toggleShapeMenu}>
+                                    <ShapeMenu style={styles.menuItemDropdown}
                                         tooltip={tooltip}
+                                        shapemenu={this.state.shapemenu}
+                                        closeShapeMenu={this.closeShapeMenu}
+                                        toggleShapeMenu={this.toggleShapeMenu}
                                         openShapePanel={this.openShapePanel}
                                         addLine={this.props.addLine}
                                         addCircle={this.props.addCircle}

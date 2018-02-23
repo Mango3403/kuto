@@ -6,7 +6,8 @@ import bg2 from '../static/images/background/bg2.png';
 import ol1 from '../static/images/overlay/ol1.png';
 import ol2 from '../static/images/overlay/ol2.png';
 import ol3 from '../static/images/overlay/ol3.png';
-import white from '../static/images/white.jpg';
+import blank from '../static/images/blank.png';
+import upload from '../static/images/upload.png';
 
 const styles = {
     panel: {
@@ -20,13 +21,17 @@ const styles = {
         padding: '0',
         display: 'inline-block',
     },
+    image: {
+        marginLeft: '3.5px',
+        marginRight: '3.5px',
+    },
+    inputFileButton: {
+        position: 'absolute',
+        left: 1000,
+        top: 0,
+        opacity: 0,
+    },
 };
-
-const overlay = [
-    { key: 1, src: ol1 },
-    { key: 2, src: ol2 },
-    { key: 3, src: ol3 },
-];
 
 class BackgroundPanel extends Component {
     state = {
@@ -36,6 +41,11 @@ class BackgroundPanel extends Component {
         scaleX: 0.50,
         left: 182.5,
         top: 250,
+        overlay: [
+            { key: 1, src: ol1 },
+            { key: 2, src: ol2 },
+            { key: 3, src: ol3 },
+        ],
     };
 
     // 设置背景色（未使用）
@@ -243,9 +253,28 @@ class BackgroundPanel extends Component {
     controlOpen = () => this.setState({ control: true })
     controlClose = () => this.setState({ control: false })
 
+    clickFileInput = () => {
+        const fileInput = document.getElementById('upload1');
+        fileInput.click();
+    }
+
+    uploadImage = (e) => {
+        const { overlay } = this.state;
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        const obj = { key: overlay.length + 1 };
+
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            obj.src = reader.result;
+            overlay.unshift(obj);
+            this.setState({ overlay });
+        };
+    }
+
     render() {
         const { backgroundpanel } = this.props;
-        const { scaleY, scaleX, left, top, control, } = this.state;
+        const { scaleY, scaleX, left, top, control, overlay } = this.state;
 
         return (
             <Sidebar as={Segment} animation="push" direction="bottom" visible={backgroundpanel} style={styles.panel}>
@@ -259,7 +288,7 @@ class BackgroundPanel extends Component {
                 </Menu>
                 <span>背景图</span>
                 <Container style={{ overflowX: 'auto' }}>
-                    <Image floated="left" bordered height={60} src={white} onClick={this.props.removeGrid} />
+                    <Image floated="left" bordered height={60} src={blank} onClick={this.props.removeGrid} style={styles.image} />
                     <Image.Group style={{ width: 1000 }}>
                         <Image floated="left" bordered height={60} width={60} src={bg1} onClick={this.setCrossGrid} />
                         <Image floated="left" bordered height={60} width={60} src={bg2} onClick={this.setHorizontalGrid} />
@@ -267,7 +296,11 @@ class BackgroundPanel extends Component {
                 </Container>
                 <span>遮罩层</span>
                 <Container style={{ overflowX: 'auto' }}>
-                    <Image floated="left" bordered height={60} src={white} onClick={this.removeOverlayImage} />
+                    <Image floated="left" bordered height={60} src={blank} onClick={this.removeOverlayImage} style={styles.image} />
+                    <div>
+                        <Image floated="left" bordered height={60} src={upload} onClick={this.clickFileInput} style={styles.image} />
+                        <input style={styles.inputFileButton} type="file" id="upload1" accept="image/*" onChange={this.uploadImage} />
+                    </div>
                     <Image.Group style={{ width: 1000 }}>
                         {
                             overlay.map(ol => (

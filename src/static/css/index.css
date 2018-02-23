@@ -57,13 +57,28 @@ input[type="range"]::-webkit-slider-thumb {
     color: rgb(255, 255, 0) !important;
 }
 
+
 /* 用于解决justfy-content: space-between后的排版问题 */
+
 .wrap:after {
     content: "";
     width: 100px;
 }
 
+
 /* 调整二级下拉菜单宽度 */
+
 .ui.labeled.icon.menu .item>.icon:not(.dropdown) {
     margin: 0 auto !important;
+}
+
+
+/* 下拉菜单开关按钮 hover 时，背景色不变 */
+
+.ui.menu .active.item, .ui.vertical.menu .active.item {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.ui.menu .active.item:hover, .ui.vertical.menu .active.item:hover {
+    background-color: rgba(0, 0, 0, 0);
 }

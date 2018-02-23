@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Icon, Sidebar, Segment, Menu } from 'semantic-ui-react';
+import { Button, Icon, Sidebar, Segment, Menu, Image } from 'semantic-ui-react';
+import contactQQ from '../static/images/contactQQ.png';
 
 const styles = {
     panel: {
@@ -10,9 +11,6 @@ const styles = {
         position: 'fixed',
         right: 0,
         top: '30px',
-    },
-    ul: {
-        listStyle: 'none',
     },
 };
 
@@ -46,10 +44,8 @@ export default class Contact extends Component {
                             <Icon onClick={this.closeContact} name="close" bordered />
                         </Menu.Item>
                     </Menu>
-                    <ul style={styles.ul}>
-                        <li>联系QQ：<a>31825930</a></li>
-                        <li>邮件：<a href="mailto:31825930@qq.com?subject=酷兔加盟&body=手机号:">31825930@qq.com</a></li>
-                    </ul>
+                    <Image src={contactQQ} size='medium' centered />
+                    <h3 style={{ textAlign: 'center', }}>邮箱：<a href="mailto:yewu@kuto.shop?subject=酷兔加盟&body=手机号:">yewu@kuto.shop</a></h3>
                 </Sidebar>
             </div>
         );
