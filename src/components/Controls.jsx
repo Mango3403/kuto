@@ -29,13 +29,11 @@ const styles = {
         zIndex: 301,
     },
     menuItem: {
-        paddingLeft: 5,
-        paddingRight: 5,
+        padding: '0.6em 5px',
         minWidth: '3em',
     },
     menuItemDropdown: {
-        paddingLeft: 0,
-        paddingRight: 0,
+        padding: '0.6em 0',
         minWidth: '3em',
     },
     // 提示文字样式

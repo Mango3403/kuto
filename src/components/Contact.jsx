@@ -33,7 +33,7 @@ export default class Contact extends Component {
                     <Button basic color="hintyellow" icon attached="left" onClick={this.rightButtonVisibility}>
                         {rightButton ? <Icon name="right arrow" /> : <Icon name="left arrow" />}
                     </Button>
-                    {rightButton && <Button color="hintyellow" basic attached="right" onClick={this.contactVisibility} content="门店网点免费加盟使用" />}
+                    {rightButton && <Button color="hintyellow" basic attached="right" onClick={this.contactVisibility} content="门店网店免费加盟接入入口" />}
                 </div>
                 <Sidebar as={Segment} animation="push" direction="bottom" style={styles.panel} visible={contact}>
                     <Menu pointing secondary>

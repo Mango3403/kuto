@@ -47,6 +47,7 @@ class TextPanel extends Component {
             r: '211',
             g: '212',
             b: '213',
+            a: '1',
         },
     };
 
@@ -57,7 +58,7 @@ class TextPanel extends Component {
     // 颜色选择器更换颜色
     colorPickerChange = (color) => {
         this.setState({ fill: color.rgb });
-        this.props.setTextFill(color.hex);
+        this.props.setTextFill(`rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`);
     }
 
     render() {
@@ -69,7 +70,7 @@ class TextPanel extends Component {
                     width: '28px',
                     height: '28px',
                     borderRadius: '2px',
-                    background: text ? text.fill : `rgb(${fill.r}, ${fill.g}, ${fill.b})`,
+                    background: text ? text.fill : `rgba(${fill.r}, ${fill.g}, ${fill.b}, ${fill.a})`,
                 },
                 swatch: {
                     padding: '5px',
@@ -111,6 +112,7 @@ class TextPanel extends Component {
                             onInput={(e) => {this.props.setText(e.target.value);}}
                             style={stylesMain.textarea}
                         />
+                        <label>添加回车，可创建竖排文字</label>
                         <Dropdown
                             selection
                             options={fontFamily}

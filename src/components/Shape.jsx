@@ -31,7 +31,6 @@ class ShapeMenu extends Component {
     clickShapeButton = (func) => () => {
         func();
         this.props.closeShapeMenu();
-        console.log(this.props.shapemenu);
         this.props.openShapePanel();
     }
 
@@ -41,7 +40,7 @@ class ShapeMenu extends Component {
         return (
             <Dropdown
                 trigger={<Icon name="puzzle" onClick={this.props.toggleShapeMenu} />}
-                item 
+                item
                 icon={null}
                 upward
                 button
@@ -94,18 +93,30 @@ class ShapePanel extends Component {
             r: '0',
             g: '0',
             b: '0',
+            a: '1',
         },
-        stroke: '#000000',
-        fill: '#ffff00',
+        stroke: {
+            r: '0',
+            g: '0',
+            b: '0',
+            a: '1',
+        },
+        fill: {
+            r: '255',
+            g: '255',
+            b: '0',
+            a: '1',
+        },
     }
 
     // 填充开关
     toggleChecked = () => this.setState({ checked: !this.state.checked })
     clickCheckButton = () => {
+        const { fill } = this.state;
         if (this.state.checked) {
             this.props.setShapeFill(null);
         } else {
-            this.props.setShapeFill(this.state.fill);
+            this.props.setShapeFill(`rgba(${fill.r}, ${fill.g}, ${fill.b}, ${fill.a})`);
         }
         this.toggleChecked();
     }
@@ -117,17 +128,17 @@ class ShapePanel extends Component {
     // 颜色选择器更换颜色
     colorPickerChange = (color) => {
         if (this.state.isFill) {
-            this.props.setShapeFill(color.hex);
-            this.setState({ color, fill: color.hex });
+            this.props.setShapeFill(`rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`);
+            this.setState({ color: color.rgb, fill: color.rgb });
         } else {
-            this.props.setShapeStroke(color.hex);
-            this.setState({ color, stroke: color.hex });
+            this.props.setShapeStroke(`rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`);
+            this.setState({ color: color.rgb, stroke: color.rgb });
         }
     }
 
     render() {
         const { strokeWidth, shapepanel, shape } = this.props;
-        const { picker } = this.state;
+        const { fill, stroke, picker } = this.state;
 
         const styles = reactCSS({
             default: {
@@ -135,13 +146,13 @@ class ShapePanel extends Component {
                     width: '28px',
                     height: '28px',
                     borderRadius: '2px',
-                    background: shape ? shape.fill : this.state.fill,
+                    background: shape ? shape.fill : `rgba(${fill.r}, ${fill.g}, ${fill.b}, ${fill.a})`,
                 },
                 stroke: {
                     width: '28px',
                     height: '28px',
                     borderRadius: '2px',
-                    background: shape ? shape.stroke : this.state.stroke,
+                    background: shape ? shape.stroke : `rgba(${stroke.r}, ${stroke.g}, ${stroke.b}, ${stroke.a})`,
                 },
                 swatch: {
                     padding: '5px',
