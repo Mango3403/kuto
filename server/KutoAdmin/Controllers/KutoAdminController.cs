@@ -220,7 +220,7 @@ namespace KutoAdmin.Controllers
         public ActionResult GenImgLibJson()
         {
             // 获取当前程序所在路径，并将要创建的文件命名为info.json 
-            string galleryDir = Server.MapPath("..\\assets\\imglib\\");
+            string galleryDir = Server.MapPath("..\\static\\imglib\\");
             ViewBag.galleryDir = galleryDir;
             string galleryCfg = galleryDir + "\\gallery.json";
 
