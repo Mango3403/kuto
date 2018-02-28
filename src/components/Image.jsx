@@ -49,40 +49,15 @@ class Panel extends Component {
         options: [],
         selections: [],
         imgs: [],
-        loading: false,
+        url: '/static/imgLib/卡通/七龙珠',
+        param: 1,
     };
 
     componentDidMount() {
-        const { options } = this.state;
-        let request = new XMLHttpRequest();
-        request.open('GET', '/static/imgLib/人物/动漫/list.json', true);
+        const { options, url } = this.state;
 
-        request.onload = () => {
-            if (request.status >= 200 && request.status < 400) {
-                let data = JSON.parse(request.responseText);
-                let imgs = [];
-                let key = 0;
-                for (const img of data) {
-                    key += 1;
-                    let obj = {
-                        key,
-                        src: '/static/imgLib/人物/动漫/' + img,
-                    };
-                    imgs.push(obj);
-                }
-                this.setState({ imgs });
-            } else {
-                // We reached our target server, but it returned an error
-                console.log('未找到服务器');
-            }
-        };
+        this.getImages(url);
 
-        request.onerror = function () {
-            // There was a connection error of some sort
-            console.log('与服务器连接出现问题');
-        };
-
-        request.send();
         this.getOptions();
     }
 
@@ -149,49 +124,58 @@ class Panel extends Component {
     }
 
     // 大类下拉菜单方法
-    handleChangeOptions = (e, { name, text, value }) => {
+    handleChangeOptions = (e, { value }) => {
         const { options } = this.state;
-
-        const url = '/static/imgLib/' + options[value - 1].text;
 
         let selections = this.getSelections(value);
 
-        this.getSelectionImages(1, url, selections);
+        const url = `/static/imgLib/${options[value - 1].text}`;
 
-        this.toggleLoading();
+        const u = `${url}/${selections[0].text}`;
+
+        this.getImages(u);
 
         this.setState({ url });
     }
 
     // 小类下拉菜单方法
-    handleChangeSelections = (e, { name, text, value }) => {
-        const { url, selections } = this.state;
+    handleChangeSelections = (e, { value }) => {
+        const { selections, url } = this.state;
 
-        this.getSelectionImages(value, url, selections);
-        
-        this.toggleLoading();
+        const u = `${url}/${selections[value - 1].text}`;
+
+        this.getImages(u);
+
+        this.setState({ param: value });
     }
 
     // 获取图片
-    getSelectionImages = (value, url, selections) => {
+    getImages = (url, imgs = [], key = 0, count = 0) => {
         let request = new XMLHttpRequest();
-        request.open('GET', url + '/' + selections[value - 1].text + '/list.json', true);
-        console.log(url + '/' + selections[value - 1].text + '/list.json');
+        request.open('GET', `${url}/list.json`, true);
 
         request.onload = () => {
             if (request.status >= 200 && request.status < 400) {
                 let data = JSON.parse(request.responseText);
-                let imgs = [];
-                let key = 0;
-                for (const img of data) {
-                    key += 1;
-                    let obj = {
-                        key,
-                        src: url + '/' + selections[value - 1].text + '/' + img,
-                    };
-                    imgs.push(obj);
+                let _imgs = imgs;
+                let _key = key;
+                let len = data.length > 21 ? 21 : data.length;
+                for (let i = count; i < len + count; i++) {
+                    const element = data[i];
+                    if (!element) {
+                        return false;
+                    } else {
+                        _key += 1;
+                        let obj = {
+                            key: _key,
+                            src: `${url}/${element}`,
+                            message: `图片${_key}`
+                        };
+                        _imgs.push(obj);
+                    }
                 }
-                this.setState({ imgs, loading: true });
+
+                this.setState({ imgs: _imgs });
             } else {
                 // We reached our target server, but it returned an error
                 console.log('未找到服务器');
@@ -204,6 +188,21 @@ class Panel extends Component {
         };
 
         request.send();
+    }
+
+    // 滚动到图片底部后，再获取
+    handleScroll = (e) => {
+        const { imgs, url, selections, param } = this.state;
+        if (selections.length > 0) {
+            let offset = Math.ceil(e.target.scrollHeight - e.target.scrollTop);
+            let len = imgs.length;
+            if (offset < 240 && len >= 21) {
+                const { text } = selections[param - 1];
+                const u = `${url}/${text}`;
+                this.getImages(u, imgs, imgs[len - 1].key, len - 1);
+                console.log(imgs[len - 1].key);
+            }
+        }
     }
 
     // 点击上传按钮
@@ -227,17 +226,8 @@ class Panel extends Component {
         };
     }
 
-    // loading开关
-    toggleLoading = () => {
-        setTimeout(() => {
-            this.setState({
-                loading: false,
-            });
-        }, 1000);
-    }
-
     render() {
-        const { value, imgs, options, selections, loading } = this.state;
+        const { value, imgs, options, selections } = this.state;
 
         return (
             <div style={{ padding: '0', overflow: 'hidden', display: 'flex', flexWrap: 'wrap' }}>
@@ -246,39 +236,36 @@ class Panel extends Component {
                         <Button primary size="tiny" onClick={this.clickFileInput}>上传</Button>
                         <input style={styles.inputFileButton} type="file" id="upload" accept="image/*" onChange={this.uploadImage} />
                     </Menu.Item>
-                    <Dropdown item compact scrolling options={options} placeholder="人物" value={value} onChange={this.handleChangeOptions} />
-                    <Dropdown item compact scrolling options={selections} placeholder={selections.length ? selections[0].text : "动漫"} value={value} onChange={this.handleChangeSelections} />
+                    <Dropdown item compact scrolling options={options} placeholder="卡通" value={value} onChange={this.handleChangeOptions} />
+                    <Dropdown item compact scrolling options={selections} placeholder={selections.length ? selections[0].text : "七龙珠"} value={value} onChange={this.handleChangeSelections} />
                 </Menu>
 
-                <div style={{ maxHeight: '230px', minWidth: '100%', overflowX: 'hidden' }}>
+                <div style={{ maxHeight: '230px', minWidth: '100%', overflowX: 'hidden' }} onScroll={this.handleScroll}>
                     <hr />
-                    {
-                        loading ?
-                            <div className="spinner"></div> :
-                            <Image.Group
-                                className="wrap"
-                                style={{
-                                    margin: 0,
-                                    width: '100%',
-                                    flexWrap: 'wrap',
-                                    display: 'flex',
-                                    justifyContent: 'space-around',
-                                }}
-                            >
-                                {
-                                    imgs.map(p => (
-                                        <Image
-                                            key={p.key}
-                                            bordered
-                                            height={100}
-                                            width={100}
-                                            src={p.src}
-                                            onClick={this.clickImage}
-                                        />
-                                    ))
-                                }
-                            </Image.Group>
-                    }
+                    <Image.Group
+                        className="wrap"
+                        style={{
+                            margin: 0,
+                            width: '100%',
+                            flexWrap: 'wrap',
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                        }}
+                    >
+                        {
+                            imgs.map(img => (
+                                <Image
+                                    key={img.key}
+                                    bordered
+                                    height={100}
+                                    width={100}
+                                    src={img.src}
+                                    alt={img.message}
+                                    onClick={this.clickImage}
+                                />
+                            ))
+                        }
+                    </Image.Group>
                 </div>
             </div>
         );

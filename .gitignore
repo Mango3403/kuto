@@ -26,3 +26,4 @@ src/server/.vs/KutoAdmin/v15/sqlite3/storage.ide
 
 server/KutoAdmin/static
 server/KutoAdmin/custom
+public/static/imgLib
