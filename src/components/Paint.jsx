@@ -46,13 +46,13 @@ class PaintMenu extends Component {
         return (
             <Dropdown trigger={<Icon name="paint brush" />} item icon={null} button pointing="right" style={styles.dropDown} open={open} onClick={open ? null : this.props.drawingModeToggle}>
                 <Dropdown.Menu style={styles.dropDownMenu}>
-                    <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(5); this.handleClose(); }}>
+                    <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(5); this.handleClose() }}>
                         <Icon name="circle" />
                     </Dropdown.Item>
-                    <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(8); this.handleClose(); }}>
+                    <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(8); this.handleClose() }}>
                         <Icon name="circle" />
                     </Dropdown.Item>
-                    <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(12); this.handleClose(); }}>
+                    <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(12); this.handleClose() }}>
                         <Icon name="circle" />
                     </Dropdown.Item>
                 </Dropdown.Menu>

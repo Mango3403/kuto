@@ -3,6 +3,7 @@ import { Menu, Icon, Image } from 'semantic-ui-react';
 import { fabric } from 'fabric/dist/fabric';
 import { ImagePanel, FilterImagePanel } from './Image';
 import ClearWarning from './ClearWarning';
+import DeleteWarning from './DeleteWarning';
 import BackgroundPanel from './BackgroundPanel';
 import SavePanel from './SavePanel';
 import { ShapeMenu, ShapePanel } from './Shape';
@@ -56,12 +57,19 @@ class Controls extends Component {
         layerpanel: false,
         save: false,
         clearWarning: false,
+        deleteWarning: false,
         menu: true,
         dataurl: '',
     };
 
     componentDidMount() {
         fabric.Canvas.prototype.customiseControls({
+            tl: {
+                action: () => {
+                    this.openDeleteWarning();
+                },
+                cursor: 'default',
+            },
             bl: {
                 action: (e, target) => {
                     this.isType(target);
@@ -75,7 +83,7 @@ class Controls extends Component {
     clickViewButton = () => this.setState({ menu: !this.state.menu })
 
     // 图形下拉菜单
-    closeShapeMenu = () => this.setState({ shapemenu: false })    
+    closeShapeMenu = () => this.setState({ shapemenu: false })
     toggleShapeMenu = () => this.setState({ shapemenu: !this.state.shapemenu })
 
     // 编辑图形面板
@@ -130,6 +138,10 @@ class Controls extends Component {
     // 清空警告
     openClearWarning = () => this.setState({ clearWarning: true })
     closeClearWarning = () => this.setState({ clearWarning: false })
+
+    // 删除警告
+    openDeleteWarning = () => this.setState({ deleteWarning: true })
+    closeDeleteWarning = () => this.setState({ deleteWarning: false })
 
     // 绘制\控制模式按钮
     drawingModeToggle = () => {
@@ -300,6 +312,11 @@ class Controls extends Component {
                     clearWarning={this.state.clearWarning}
                     closeClearWarning={this.closeClearWarning}
                     clear={this.props.clear}
+                />
+                <DeleteWarning
+                    deleteWarning={this.state.deleteWarning}
+                    closeDeleteWarning={this.closeDeleteWarning}
+                    delete={this.props.delete}
                 />
             </div>
         );

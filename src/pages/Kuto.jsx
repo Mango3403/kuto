@@ -14,13 +14,8 @@ import top from '../static/images/control/top.svg';
 import bottom from '../static/images/control/bottom.svg';
 import hintImage from '../static/images/hint.png';
 
-let WINDOW_WIDTH = window.innerWidth / 2;
-let WINDOW_HEIGHT = 500;
-
-if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
-    WINDOW_WIDTH = window.innerWidth;
-    WINDOW_HEIGHT = window.innerHeight;
-}
+let WINDOW_WIDTH = window.innerWidth;
+let WINDOW_HEIGHT = window.innerHeight;
 
 const styles = {
     signLayout: {
@@ -71,13 +66,6 @@ class Kuto extends React.Component {
 
     componentWillMount() {
         fabric.Canvas.prototype.customiseControls({
-            tl: {
-                action: (e, target) => {
-                    // 删除IText时会报警告
-                    target.canvas.remove(target);
-                },
-                cursor: 'default',
-            },
             tr: {
                 action: 'rotate',
                 cursor: 'default',
@@ -141,7 +129,7 @@ class Kuto extends React.Component {
         });
 
         fabric.Object.prototype.padding = 20;
-        fabric.Object.prototype.centeredScaling = true;
+        // fabric.Object.prototype.centeredScaling = true;
         fabric.Object.prototype.originX = 'center';
         fabric.Object.prototype.originY = 'center';
     }
@@ -215,6 +203,12 @@ class Kuto extends React.Component {
     // 清空画布
     clear = () => {
         this.state.canvas.clear();
+    }
+
+    // 删除画布对象
+    delete = () => {
+        const { canvas } = this.state;
+        canvas.clear(canvas.getActiveObject());
     }
 
     // 置底
@@ -594,13 +588,13 @@ class Kuto extends React.Component {
 
         // 横向线
         for (let i = 0; i < (WINDOW_HEIGHT / grid / 2); i++) {
-            canvas.add(new fabric.Line([0, i * grid + WINDOW_HEIGHT / 2, WINDOW_WIDTH, i * grid  + WINDOW_HEIGHT / 2], { uuid: 'grid', stroke: '#949494', selectable: false }));
+            canvas.add(new fabric.Line([0, i * grid + WINDOW_HEIGHT / 2, WINDOW_WIDTH, i * grid + WINDOW_HEIGHT / 2], { uuid: 'grid', stroke: '#949494', selectable: false }));
             canvas.add(new fabric.Line([0, WINDOW_HEIGHT / 2 - i * grid, WINDOW_WIDTH, WINDOW_HEIGHT / 2 - i * grid], { uuid: 'grid', stroke: '#949494', selectable: false }));
         }
         // 纵向线
-        for (let i = 0; i < (WINDOW_WIDTH / grid / 2); i++) { 
+        for (let i = 0; i < (WINDOW_WIDTH / grid / 2); i++) {
             canvas.add(new fabric.Line([i * grid + WINDOW_WIDTH / 2, 0, i * grid + WINDOW_WIDTH / 2, WINDOW_HEIGHT], { uuid: 'grid', stroke: '#949494', selectable: false }));
-            canvas.add(new fabric.Line([WINDOW_WIDTH / 2 - i * grid, 0, WINDOW_WIDTH / 2 - i * grid, WINDOW_HEIGHT], { uuid: 'grid', stroke: '#949494', selectable: false }));        
+            canvas.add(new fabric.Line([WINDOW_WIDTH / 2 - i * grid, 0, WINDOW_WIDTH / 2 - i * grid, WINDOW_HEIGHT], { uuid: 'grid', stroke: '#949494', selectable: false }));
         }
     }
 
@@ -622,7 +616,7 @@ class Kuto extends React.Component {
         const grid = 50;
 
         for (var i = 0; i < (WINDOW_HEIGHT / grid / 2); i++) {
-            canvas.add(new fabric.Line([0, i * grid + WINDOW_HEIGHT / 2, WINDOW_WIDTH, i * grid  + WINDOW_HEIGHT / 2], { uuid: 'grid', stroke: '#949494', selectable: false }));
+            canvas.add(new fabric.Line([0, i * grid + WINDOW_HEIGHT / 2, WINDOW_WIDTH, i * grid + WINDOW_HEIGHT / 2], { uuid: 'grid', stroke: '#949494', selectable: false }));
             canvas.add(new fabric.Line([0, WINDOW_HEIGHT / 2 - i * grid, WINDOW_WIDTH, WINDOW_HEIGHT / 2 - i * grid], { uuid: 'grid', stroke: '#949494', selectable: false }));
         }
     }
@@ -762,6 +756,7 @@ class Kuto extends React.Component {
                     shape={this.state.shape}
 
                     clear={this.clear}
+                    delete={this.delete}
 
                     sendToBack={this.sendToBack}
                     bringToFront={this.bringToFront}
