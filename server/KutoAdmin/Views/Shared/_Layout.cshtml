@@ -21,12 +21,17 @@
             <div class="navbar-header">
                 @Html.ActionLink("酷兔定制", "Login", "KutoAdmin", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            @*<div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("开始定制", "Custom", "KutoAdmin")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            @*<div class="navbar-header" style="align-self:auto">
+             
+                @Html.ActionLink("退出", "Logout", "KutoAdmin")
+             
             </div>*@
+            @*<div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("开始定制", "Custom", "KutoAdmin")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>*@
         </div>
     </div>
     <div class="container body-content">

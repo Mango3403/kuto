@@ -136,6 +136,13 @@ namespace KutoAdmin.Controllers
                 var result1 = db.spSignin(username, pwd, re);
                 var result2 = result1.GetNextResult<int>();
                 var list1 = result1.ToList();
+                var id = 0;
+                id = (from t in db.Business_Users
+                        where t.username == username
+                        select t).FirstOrDefault().id;
+
+                Session["UserName"] = username.ToString();
+                Session["UserID"] = id.ToString();
 
                 if (re.Value.ToString() == "0")
                 {
@@ -143,7 +150,7 @@ namespace KutoAdmin.Controllers
                     //result = true;
                     //Response.Write("<script>alert('登录成功！');</script>");
                     //Response.End();
-                    return RedirectToAction("BusinessUserHome", new { BusinessUserID = 1 });
+                    return RedirectToAction("BusinessUserHome", new { BusinessUserID = id });
                 }
                 else
                 {
@@ -195,18 +202,33 @@ namespace KutoAdmin.Controllers
             }
         }
 
+        public ActionResult Logout()
+        {
+            Session["UserID"] = "";
+            Session["UserName"] = "";
+            return RedirectToAction("Login", "KutoAdmin");
+        }
+
         public ActionResult BusinessUserHome(int BusinessUserID)
         {
-            ViewBag.BusinessUserID = BusinessUserID;
-            var name = "";
-            using (KutoEntities db = new KutoEntities())
+            if(Session["UserID"].ToString() == BusinessUserID.ToString())
             {
-                name = (from t in db.Business_Users
-                        where t.id == BusinessUserID
-                        select t).FirstOrDefault().username;
+                ViewBag.BusinessUserID = BusinessUserID;
+
+                var name = "";
+                using (KutoEntities db = new KutoEntities())
+                {
+                    name = (from t in db.Business_Users
+                            where t.id == BusinessUserID
+                            select t).FirstOrDefault().username;
+                }
+                ViewBag.name = name;
+                return View();
             }
-            ViewBag.name = name;
-            return View();
+            else
+            {
+                 return RedirectToAction("Login","KutoAdmin");
+            }
 
 
         }

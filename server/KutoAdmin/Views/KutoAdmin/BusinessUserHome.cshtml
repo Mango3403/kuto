@@ -37,7 +37,12 @@
 <p style="font-size: 18px">@ViewBag.name — 欢迎您！</p>
 
 <a href="/qrcode.html?BusinessUserID=@ViewBag.BusinessUserID">查看本店二维码</a>
-@*<a href="/example/productpage.html">JSAPI支付</a>*@
+@*<a href="/example/productpage.html">JSAPI支付 /KutoAdmin?BusinessUserID=@ViewBag.BusinessUserID</a>*@
+
+
+
+
+<a style="text-align:right;margin-left:62em">@Html.ActionLink("退出", "Logout", "KutoAdmin")</a>
 
 <table id="list_data" class="easyui-datagrid" cellspacing="0" style="align-content:center" cellpadding="0">
     <thead>
