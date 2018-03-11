@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Segment, Image, Sidebar, Icon, Menu, Container, Grid, List } from 'semantic-ui-react';
-import { fabric } from 'fabric/dist/fabric';
 import bg1 from '../static/images/background/bg1.png';
 import bg2 from '../static/images/background/bg2.png';
 import ol1 from '../static/images/overlay/ol1.png';
