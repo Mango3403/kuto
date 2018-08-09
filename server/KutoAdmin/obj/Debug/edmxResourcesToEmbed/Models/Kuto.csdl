@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="KutoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="KutoModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
   <EntityType Name="CustomerPics">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="pic" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="createdTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="lastEditTime" Type="DateTime" Precision="3" />
@@ -18,7 +18,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="username" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="pwd" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Busin__1A14E395" FromRole="Business_Users" ToRole="CustomerPics" />
@@ -27,7 +27,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="LONG_" Type="Double" Nullable="false" />
@@ -35,7 +35,7 @@
     <NavigationProperty Name="CustomerPics" Relationship="KutoModel.FK__CustomerP__Custo__1920BF5C" FromRole="Customers" ToRole="CustomerPics" />
     <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityContainer Name="KutoEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="KutoEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
     <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" />
     <EntitySet Name="Business_Users" EntityType="Self.Business_Users" />
     <EntitySet Name="Customers" EntityType="Self.Customers" />

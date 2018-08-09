@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="KutoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="KutoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="CustomerPics">
     <Key>
       <PropertyRef Name="id" />
@@ -91,9 +91,9 @@
     <Parameter Name="returnvalue" Type="int" Mode="InOut" />
   </Function>
   <EntityContainer Name="KutoModelStoreContainer">
-    <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" Schema="god" store:Type="Tables" />
-    <EntitySet Name="Business_Users" EntityType="Self.Business_Users" Schema="users" store:Type="Tables" />
-    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="users" store:Type="Tables" />
+    <EntitySet Name="CustomerPics" EntityType="Self.CustomerPics" Schema="god" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="Business_Users" EntityType="Self.Business_Users" Schema="users" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="users" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
     <AssociationSet Name="FK__CustomerP__Busin__1A14E395" Association="Self.FK__CustomerP__Busin__1A14E395">
       <End Role="Business_Users" EntitySet="Business_Users" />
       <End Role="CustomerPics" EntitySet="CustomerPics" />
