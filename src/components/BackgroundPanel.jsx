@@ -285,7 +285,7 @@ class BackgroundPanel extends Component {
                         <Icon onClick={this.props.closeBackgroundPanel} name="close" bordered size="small" />
                     </Menu.Item>
                 </Menu>
-                <span>背景图</span>
+                <p style={{ marginTop: '14px' }}>背景图</p>
                 <Container style={{ overflowX: 'auto' }}>
                     <Image floated="left" bordered height={60} src={blank} onClick={this.props.removeGrid} style={styles.image} />
                     <Image.Group style={{ width: 1000 }}>
@@ -293,7 +293,7 @@ class BackgroundPanel extends Component {
                         <Image floated="left" bordered height={60} width={60} src={bg2} onClick={this.setHorizontalGrid} />
                     </Image.Group>
                 </Container>
-                <span>遮罩层</span>
+                <p>遮罩层</p>
                 <Container style={{ overflowX: 'auto' }}>
                     <Image floated="left" bordered height={60} src={blank} onClick={this.removeOverlayImage} style={styles.image} />
                     <div>

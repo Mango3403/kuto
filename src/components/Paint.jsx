@@ -23,16 +23,12 @@ class PaintMenu extends Component {
 
     componentDidMount() {
         // 调整画笔粗细按钮的样式
-        let circles = document.querySelectorAll('.circle.icon');
+        let circles = document.querySelectorAll('.circle.icon.brush-width');
+        let scale = 1;
 
-        for (let i = 0; i < circles.length - 1; i++) {
+        for (let i = 1, len = circles.length; i < len; i++) {
             const circle = circles[i];
-            let scale = 1;
-            if (i === 0) {
-                scale = 0.5;
-            } else if (i === 2) {
-                scale = 1.5;
-            }
+            scale += .3;
             circle.style.setProperty('font-size', `${scale}em`, 'important');
         }
     }
@@ -47,13 +43,13 @@ class PaintMenu extends Component {
             <Dropdown trigger={<Icon name="paint brush" />} item icon={null} button pointing="right" style={styles.dropDown} open={open} onClick={open ? null : this.props.drawingModeToggle}>
                 <Dropdown.Menu style={styles.dropDownMenu}>
                     <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(5); this.handleClose() }}>
-                        <Icon name="circle" />
+                        <Icon name="circle" className="brush-width" />
                     </Dropdown.Item>
                     <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(8); this.handleClose() }}>
-                        <Icon name="circle" />
+                        <Icon name="circle" className="brush-width" />
                     </Dropdown.Item>
                     <Dropdown.Item style={styles.dropDownItem} onClick={(e) => { setDrawingBrushWidth(12); this.handleClose() }}>
-                        <Icon name="circle" />
+                        <Icon name="circle" className="brush-width" />
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>

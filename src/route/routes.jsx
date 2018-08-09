@@ -8,7 +8,7 @@ import KutoForm from '../pages/KutoForm';
 import KutoHelp from '../pages/KutoHelp';
 
 const KutoRouter = () => (
-    <Router basename="/kuto">
+    <Router>
         <div>
             <Route path="/" exact component={Kuto} />
             <Route path="/form" component={KutoForm} />

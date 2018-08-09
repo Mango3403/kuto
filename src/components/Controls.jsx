@@ -21,8 +21,8 @@ const styles = {
         transform: 'translate(-50%, 0)',
         zIndex: 301,
     },
-    // 右侧菜单
-    rightMenu: {
+    // 右侧中部菜单
+    rightMiddleMenu: {
         position: 'fixed',
         top: '50%',
         right: 0,
@@ -217,7 +217,11 @@ class Controls extends Component {
                                 </Menu.Item>
                             </Menu>
 
-                            <Menu compact icon="labeled" vertical style={styles.rightMenu}>
+                            <Menu compact icon="labeled" vertical style={styles.rightMiddleMenu}>
+                                <Menu.Item style={styles.menuItem} onClick={this.toggleTooltip}>
+                                    <Icon name="help circle" />
+                                    {tooltip && <p style={styles.tooltipText}>帮助</p>}
+                                </Menu.Item>
                                 <Menu.Item style={isDrawingMode ? styles.menuItemDropdown : styles.menuItem}>
                                     {
                                         isDrawingMode ?
@@ -228,10 +232,6 @@ class Controls extends Component {
                                             <Icon name="hand pointer" onClick={this.drawingModeToggle} />
                                     }
                                     {tooltip && <p style={styles.tooltipText}>模式</p>}
-                                </Menu.Item>
-                                <Menu.Item style={styles.menuItem} onClick={this.toggleTooltip}>
-                                    <Icon name="help circle" />
-                                    {tooltip && <p style={styles.tooltipText}>帮助</p>}
                                 </Menu.Item>
                                 {
                                     this.props.layer &&

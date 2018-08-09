@@ -66,8 +66,8 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   <script>
-    let WINDOW_WIDTH = window.innerWidth / 2;
-    let WINDOW_HEIGHT = 500;
+    let WINDOW_WIDTH = window.innerWidth;
+    let WINDOW_HEIGHT = window.innerHeight;
 
     if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
       WINDOW_WIDTH = window.innerWidth;

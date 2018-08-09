@@ -8,9 +8,10 @@ import del from '../static/images/control/handle_del.png';
 import rotate from '../static/images/control/handle_rotate.png';
 import zoom from '../static/images/control/handle_zoom.png';
 import change from '../static/images/control/handle_change.png';
+import lock from '../static/images/control/handle_lock.png';
+import unlock from '../static/images/control/handle_unlock.png';
 import right from '../static/images/control/right.svg';
 import left from '../static/images/control/left.svg';
-import top from '../static/images/control/top.svg';
 import bottom from '../static/images/control/bottom.svg';
 import hintImage from '../static/images/hint.png';
 
@@ -62,9 +63,12 @@ class Kuto extends React.Component {
         valTop: '0.0',
         valWidth: '0.0',
         valHeight: '0.0',
+        isLock: false,
     };
 
     componentWillMount() {
+        let _this = this;
+
         fabric.Canvas.prototype.customiseControls({
             tr: {
                 action: 'rotate',
@@ -79,7 +83,38 @@ class Kuto extends React.Component {
                 cursor: 'default',
             },
             mt: {
-                action: 'scaleY',
+                action: function (e, target) {
+                    console.log(target);
+
+                    const { isLock } = _this.state;
+                    const controls = ['tl', 'ml', 'bl', 'mb', 'br', 'mr', 'tr', 'mt'];
+
+                    if (isLock) {
+                        target.customiseCornerIcons({
+                            mt: {
+                                icon: lock,
+                            },
+                        }, function () {
+                            target.canvas.renderAll();
+                        });
+                    } else {
+                        target.customiseCornerIcons({
+                            mt: {
+                                icon: unlock,
+                            },
+                        }, function () {
+                            target.canvas.renderAll();
+                        });
+                    }
+
+                    target.lockMovementX = target.lockMovementY = !isLock;
+
+                    for (let i = 0, len = controls.length; i < len - 2; i++) {
+                        target.setControlVisible(controls[i], isLock);
+                    };
+
+                    _this.setState({ isLock: !_this.state.isLock });
+                },
                 cursor: 'default',
             },
             ml: {
@@ -114,7 +149,7 @@ class Kuto extends React.Component {
                 icon: bottom,
             },
             mt: {
-                icon: top,
+                icon: lock,
             },
             ml: {
                 icon: left,
@@ -208,7 +243,7 @@ class Kuto extends React.Component {
     // 删除画布对象
     delete = () => {
         const { canvas } = this.state;
-        canvas.clear(canvas.getActiveObject());
+        canvas.remove(canvas.getActiveObject());
     }
 
     // 置底
@@ -247,7 +282,7 @@ class Kuto extends React.Component {
             left: 200,
             top: 200,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 1,
         });
 
@@ -261,7 +296,7 @@ class Kuto extends React.Component {
             top: 200,
             radius: 30,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 5,
         });
         this.state.canvas.add(circle).setActiveObject(circle).renderAll();
@@ -275,7 +310,7 @@ class Kuto extends React.Component {
             width: 100,
             height: 100,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 5,
         });
         this.state.canvas.add(triangle).setActiveObject(triangle).renderAll();
@@ -289,7 +324,7 @@ class Kuto extends React.Component {
             width: 100,
             height: 80,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 5,
         });
         this.state.canvas.add(rect).setActiveObject(rect).renderAll();
@@ -316,7 +351,7 @@ class Kuto extends React.Component {
             left: 200,
             top: 200,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 5,
         });
         this.state.canvas.add(polygon).setActiveObject(polygon).renderAll();
@@ -329,7 +364,7 @@ class Kuto extends React.Component {
             left: 200,
             top: 200,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 5,
         });
         this.state.canvas.add(polygon).setActiveObject(polygon).renderAll();
@@ -364,7 +399,7 @@ class Kuto extends React.Component {
             left: 200,
             top: 200,
             fill: null,
-            stroke: '#000',
+            stroke: '#333333',
             strokeWidth: 5,
         });
         this.state.canvas.add(polygon).setActiveObject(polygon).renderAll();
@@ -410,7 +445,7 @@ class Kuto extends React.Component {
 
         const text = new fabric.IText('你的内容', {
             fontSize: 40,
-            fill: '#949494', // 银色
+            fill: '#333333',
             fontFamily: 'Arial', // 默认字体
             textAlign: 'center',
         });
@@ -512,6 +547,8 @@ class Kuto extends React.Component {
     drawingMode = () => {
         const { canvas } = this.state;
         canvas.isDrawingMode = !canvas.isDrawingMode;
+        // 画笔默认粗细
+        canvas.freeDrawingBrush.width = 8;
     }
 
     // 当未获得BusinessUserId参数时弹出提示框
@@ -559,12 +596,11 @@ class Kuto extends React.Component {
     }
 
     // 设置画笔粗细
-    setDrawingBrushWidth = (width = 8) => {
+    setDrawingBrushWidth = width => {
         const { canvas } = this.state;
         if (canvas.isDrawingMode) {
             canvas.freeDrawingBrush.width = width;
         }
-        console.log(canvas.freeDrawingBrush);
     }
 
     // Controls组件方法
@@ -640,8 +676,6 @@ class Kuto extends React.Component {
                 this.setState({
                     image: e.target,
                 });
-            } else if (e.target.type === 'path') {
-                return false;
             } else {
                 this.setState({
                     shape: e.target,

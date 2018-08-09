@@ -134,7 +134,7 @@ class Panel extends Component {
         const u = `${url}/${selections[0].text}`;
 
         this.getImages(u);
-
+        
         this.setState({ url });
     }
 

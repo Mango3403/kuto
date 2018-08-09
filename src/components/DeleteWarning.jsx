@@ -2,7 +2,8 @@ import React from 'react';
 import { Confirm } from 'semantic-ui-react';
 
 class DeleteWarning extends React.Component {
-    handleConfirm = () => {
+    handleConfirm = (e) => {
+        e.preventDefault();
         this.props.delete();
         this.props.closeDeleteWarning();
     }
@@ -15,6 +16,7 @@ class DeleteWarning extends React.Component {
                     content={<div className="content"><h2>确定要删除吗?</h2></div>}
                     cancelButton="取消"
                     confirmButton="确定"
+                    closeOnDimmerClick={false}
                     onCancel={this.props.closeDeleteWarning}
                     onConfirm={this.handleConfirm}
                 />
