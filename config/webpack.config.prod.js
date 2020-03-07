@@ -247,7 +247,6 @@ module.exports = {
       template: paths.appHtml,
       minify: {
         removeComments: true,
-        collapseWhitespace: true,
         removeRedundantAttributes: true,
         useShortDoctype: true,
         removeEmptyAttributes: true,

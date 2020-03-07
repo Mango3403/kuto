@@ -4,6 +4,8 @@ import 'fabric-customise-controls';
 import { Transition, Image } from 'semantic-ui-react';
 import Controls from '../components/Controls';
 import Contact from '../components/Contact';
+import Record from '../components/Record';
+
 import del from '../static/images/control/handle_del.png';
 import rotate from '../static/images/control/handle_rotate.png';
 import zoom from '../static/images/control/handle_zoom.png';
@@ -18,30 +20,35 @@ import hintImage from '../static/images/hint.png';
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
 
+const sign = {
+    width: 14,
+    height: 14,
+    border: 1
+}
+
 const styles = {
     signLayout: {
         position: 'absolute',
-        width: WINDOW_WIDTH,
-        height: WINDOW_HEIGHT,
-    },
-    // 纵向准心
-    signCenterVertical: {
-        borderTop: '0.1px solid red',
-        position: 'absolute',
-        width: '15px',
-        height: '15px',
-        top: `${WINDOW_HEIGHT / 2}px`,
-        left: `${((WINDOW_WIDTH / 2) + 7.5) - 15}px`,
-        zIndex: '1',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     // 横向准心
+    signCenterVertical: {
+        borderTop: `${sign.border}px solid red`,
+        width: `${sign.width}px`,
+        height: `${sign.height}px`,
+        transform: `translate(${sign.width/2}px, ${sign.height/2-sign.border/2}px)`,
+        zIndex: '1',
+    },
+    // 纵向准心
     signCenterHorizontal: {
-        borderRight: '0.1px solid red',
-        position: 'absolute',
-        width: '15px',
-        height: '15px',
-        top: `${(WINDOW_HEIGHT / 2) - 7.5}px`,
-        left: `${(WINDOW_WIDTH / 2) - 15}px`,
+        borderRight: `${sign.border}px solid red`,
+        width: `${sign.width}px`,
+        height: `${sign.height}px`,
+        transform: `translate(-${sign.width-sign.border/2}px)`,
         zIndex: '1',
     },
 };
@@ -837,6 +844,7 @@ class Kuto extends React.Component {
                         {this.state.hint && <Image src={hintImage} />}
                     </Transition.Group>
                 </div>
+                <Record />
             </div>
         );
     }
